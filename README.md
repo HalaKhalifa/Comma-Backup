@@ -1,5 +1,5 @@
-# video-stream
-NNU CAP Team 1 Video Streaming Project for Team Project 2 course
+# Training Module Project
+NNU CAP Team 1 Project for Team Project 2 course
 
 
 ## After Clone
