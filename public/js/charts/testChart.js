@@ -1,7 +1,3 @@
-// import Chart from '../../node_modules/chart.js/auto'
-// const { Chart } = await import('chart.js');
-// import Chart from 'chart.js/auto'
-
 ;(async function () {
   const data = [
     { year: 2010, count: 10 },
