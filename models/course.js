@@ -5,9 +5,13 @@ const courseSchema = new mongoose.Schema({
     type :String,
     required:true
  },
+ description :{
+    type :String,
+    required:true
+ },
  image:{
-    data: Buffer,
-    contentType: String
+    type :String,
+    required:true
  },
 outline:{
     type :String,
@@ -31,7 +35,10 @@ stars:{
     type:Number,
     required:true
 },
-
-});
+topicID:{
+   type:mongoose.Schema.Types.ObjectId,
+   ref:'Topic'
+},
+},{timestamps:true});
 
 module.exports =  mongoose.model('Course', courseSchema)
