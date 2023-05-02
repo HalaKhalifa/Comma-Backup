@@ -12,14 +12,12 @@ app.use(express.json());
 
 //-- Express Router Configuration
 
-app.get("/",(req,res)=>{
-  res.render("pages/index",{})
-})
+
 
 //-------------------------------
 
 
 //-- Server
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
