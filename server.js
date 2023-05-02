@@ -6,7 +6,7 @@ const app = express();
 //-- Express configuration & Middleware
 app.set("view engine", "ejs"); // use EJS
 app.use(express.static(path.join(__dirname,'/public'))); // set path for assets folder
-
+app.set('views',path.join(__dirname,'/views'))
 app.use(express.json());
 //-----------------------------------
 
