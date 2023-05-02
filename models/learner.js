@@ -27,11 +27,24 @@ const learnerSchema = new Schema({
         message: 'Last name can only contain English letters with a space or Arabic letters with a space',
       },
   },
-  age: {
-    type: Number,
-    min: 6,
-    max: 80,
-    required: true,
+  dateOfBirth: {
+    day: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 31,
+    },
+    month: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 12,
+    },
+    year: {
+      type: Number,
+      min: 1900,
+      max: new Date().getFullYear(),
+    }
   },
   email: {
     type: String,
@@ -47,7 +60,9 @@ const learnerSchema = new Schema({
   password:{
     type: String,
     required: true
-  },
+  }
+  /*
+  ,
   phoneNumber: {
     type: String,
     validate: {
@@ -127,7 +142,9 @@ const learnerSchema = new Schema({
     link: {
       type: String,
     },
-  },
+  }
+  /*/
+  
 });
 learnerSchema.pre('save', function (next) {
     const learner = this;
@@ -160,4 +177,4 @@ learnerSchema.pre('save', function (next) {
       callback(null, isMatch);
     });
   };
-module.exports = mongoose.model("learner", learnerSchema);
+module.exports = mongoose.model("Learner", learnerSchema);
