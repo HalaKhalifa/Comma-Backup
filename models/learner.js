@@ -20,11 +20,13 @@ const learnerSchema = new Schema({
   lastName: {
     type: String,
     required: true,
-    validator: function (v) {
-        return /^[a-zA-Z\s]+$/.test(v) || /^[\u0621-\u064A\s]+$/.test(v);
+    validate: {
+        validator: function (v) {
+          return /^[a-zA-Z\s]+$/.test(v) || /^[\u0621-\u064A\s]+$/.test(v);
+        },
+        message: 'Last name can only contain English letters with a space or Arabic letters with a space',
       },
-      message: 'Last name can only contain English letters with a space or Arabic letters with a space',
-    },
+  },
   age: {
     type: Number,
     min: 6,
