@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
 const dashboardRouter = require('./routes/dashboard')
-const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
 
 const app = express()
 
@@ -17,7 +16,6 @@ app.use(express.urlencoded({ extended: true }))
 
 // -- Routes
 app.use('/dashboard', dashboardRouter)
-app.use('/dashboard2', dashboardContentfulRouter) // for reference only
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`server running on port ${process.env.SERVER_PORT}`)
