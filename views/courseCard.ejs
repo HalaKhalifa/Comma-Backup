@@ -1,0 +1,18 @@
+<%- include('partials/header'); %>
+    <div class="container-fluid CourseCardContainer">
+      <% for (var i = 0; i < coursesNames.length; i++) { %>
+        <div class="CourseCard">
+          <div class="row CourseCardRow1 ">
+            <img class="course-IMG" src="/images/course.jpg" />
+          </div>
+          <div class="row CourseCardRow2 ">
+            <h2 class="course-h2">
+              <%= coursesNames[i] %>
+                <h2>
+                  <p class="course-p">Hi this is a <%= coursesNames[i] %> course</p>
+          </div>
+      </div>
+      <% } %>
+    </div>
+
+    <%- include('partials/footer'); %>

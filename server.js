@@ -1,13 +1,13 @@
 require("dotenv").config();
 const path = require("path");
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const LearnersRoutes = require("./routes/exampleRouter");
 
 //-- Express configuration & Middleware
 app.set("view engine", "ejs"); // use EJS
-app.use(express.static(path.join(__dirname,'/public'))); // set path for assets folder
+app.use(express.static(path.join(__dirname, '/public'))); // set path for assets folder
 
 app.use(express.json());
 //-----------------------------------
@@ -15,6 +15,12 @@ app.use(express.json());
 //-- Express Router Configuration
 app.use("/learners", LearnersRoutes);
 
+app.get("/courses", (req, res) => {
+
+  const rating = 4;
+  const coursesNames= ['Data Analysis', 'Machine Learning', 'Big Data','Python'];
+  res.render("coursesPage", { title: "courses page" ,coursesNames:coursesNames});
+});
 
 //-------------------------------
 
