@@ -4,7 +4,7 @@ const router = express.Router()
 const { getDashboard } = require('../controllers/dashboard')
 
 router.get('/', (req, res) => {
-  getDashboard;
+  getDashboard(req, res)
 })
 
 module.exports = router
