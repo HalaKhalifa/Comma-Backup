@@ -17,4 +17,15 @@ const getDashboard = async (req, res) => {
   // todo: change to dashboard view
   res.render('pages/dashboard/index.ejs', context)
 }
-module.exports = { getDashboard }
+
+const getContentfulDashboard = async (req, res) => {
+  // * temporary context object
+  const context = {
+    title: 'Contentful Dashboard',
+    description: 'Contentful Dashboard page description'
+  }
+
+  // todo: change to dashboard view
+  res.render('pages/dashboard_contentful/index.ejs', context)
+}
+module.exports = { getDashboard, getContentfulDashboard }
