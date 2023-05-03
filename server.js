@@ -1,27 +1,21 @@
-require("dotenv").config();
 const path = require("path");
-const mongoose=require("mongoose");
 const express = require("express");
 const app = express();
-const LearnersRoutes = require("./routes/exampleRouter");
+const mongoose = require("mongoose");
+const registrationRoutes = require("./routes/registrationRoutes");
 
-//-- Express configuration & Middleware
-app.set("view engine", "ejs"); // use EJS
-app.use(express.static(path.join(__dirname,'/public'))); // set path for assets folder
+require("dotenv").config();
 
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
-//-----------------------------------
+app.use(express.urlencoded({ extended: false }));
+app.set("views", path.join(__dirname, "/views"));
 
-//-- Express Router Configuration
-app.use("/learners", LearnersRoutes);
+app.use("/signup", registrationRoutes);
 
-
-//-------------------------------
-
-
-//-- Server
-
-mongoose.connect(process.env.MONGODB_CONN, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose
+  .connect(process.env.MONGODB_CONN, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log(`Listening on port ${process.env.PORT}`);
