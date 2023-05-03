@@ -1,2 +1,13 @@
 </body>
+<script>
+window.onload = function() {
+    setTimeout(function() {
+        const err= document.getElementById('signup-error');
+        err.remove();
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.value = '';
+        });
+    }, 3000);
+};</script>
 </html>
