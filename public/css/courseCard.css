@@ -1,32 +1,32 @@
  .CourseCardContainer{
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content:space-evenly;
     margin-bottom: 15px;
  }
  .CourseCard{
     background-color: rgb(26, 26, 60);
-    width: 300px;
-    height: 350px   ;
+    width: 280px;
+    height: 352px   ;
     border-radius: 10px;
 }
 
 img.course-IMG {
-    width: 220px;
-    height: 210px;
+    width: 215px;
+    height: 184px;
     margin-top: 18px;
     margin-left: 40px;
     border-radius: 50%;
 }
 h2.course-h2{
     color: #ffffff;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
     margin-top: 10px;
 }
 .course-p{
     color: #ffffff;
-    font-size: 16px;
+    font-size: 13px;
     text-align: center;
 }
 .courses-page-pagination{
@@ -49,7 +49,7 @@ h2.course-h2{
     border-radius: 50%;
     border: 1px solid #e6e6e6; }
 .block-27 ul li.active a, .block-27 ul li.active span {
-    background: #4ba1fa;
+    background: rgb(26, 26, 60);
     color: #fff;
     border: 1px solid transparent; }
   
