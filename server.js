@@ -3,7 +3,7 @@ const express = require('express')
 const dashboardRouter = require('./routes/dashboard')
 const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
 const registrationRoutes = require('./routes/registrationRoutes')
-
+const route=require('./routes/outline.js');
 const app = express()
 
 require('dotenv').config()
@@ -20,7 +20,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only
 app.use('/signup', registrationRoutes)
-const route=require('./routes/exampleRoute.js');
 app.use('/',route);
 
 app.listen(process.env.SERVER_PORT, () => {
