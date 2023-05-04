@@ -1,4 +1,4 @@
-const Course = require('../models/course')
+const Course = require('../models/course.test')
 /**
  * Returns Number of courses created each month for the previous year
  * 
