@@ -1,23 +1,25 @@
-const path = require("path");
-const express = require("express");
-const app = express();
+const path = require('path')
+const express = require('express')
+const dashboardRouter = require('./routes/dashboard')
+const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
 
+const app = express()
 
-//-- Express configuration & Middleware
-app.set("view engine", "ejs"); // use EJS
-app.use(express.static(path.join(__dirname,'/public'))); // set path for assets folder
+require('dotenv').config()
+require('./config/mongoose.config') // database connection
 
-app.use(express.json());
-//-----------------------------------
+// -- Express configuration & Middleware
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs') // use EJS
+app.use(express.static(path.join(__dirname, 'public'))) // set path for assets folder
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-//-- Express Router Configuration
+// -- Routes
+app.use('/dashboard', dashboardRouter)
+app.use('/dashboard2', dashboardContentfulRouter) // for reference only
 
-
-
-//-------------------------------
-
-
-//-- Server
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
-});
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`server running on port ${process.env.SERVER_PORT}`)
+  console.log(`http://localhost:${process.env.SERVER_PORT}`)
+})
