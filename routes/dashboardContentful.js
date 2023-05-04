@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const { getDashboard } = require('../controllers/dashboard')
+const { getContentfulDashboard } = require('../controllers/dashboard')
 
 router.get('/', (req, res) => {
-  getDashboard(req, res)
+  getContentfulDashboard(req, res)
 })
 
 module.exports = router
