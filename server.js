@@ -15,6 +15,8 @@ app.set("views", path.join(__dirname, "/views"));
 
 app.use("/signup", registrationRoutes);
 app.use("/", dashboardRoutes);
+const route=require('./routes/exampleRoute.js');
+app.use('/',route);
 
 mongoose
   .connect(process.env.MONGO_URI, {
