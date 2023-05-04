@@ -1,0 +1,46 @@
+<canvas id="registrationlinechart"> </canvas>
+<script>
+  const rlc = document.getElementById('registrationlinechart')
+  const myregistrationChart = new Chart(rlc, {
+    type: 'line',
+    data: {
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ],
+      datasets: [
+        {
+          label: 'Registered Users',
+          data: [0, 100, 200, 340, 200, 500, 300, 700, 800, 900, 100, 550], //Todo
+          borderColor: '#AFEEEE',
+          backgroundColor: '#87CEEB',
+          borderWidth: 3
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      elements: {
+        line: {
+          tension: 1, // Set the line to be straight
+          borderWidth: 2, // Set the line width to be 2 pixels
+          borderCapStyle: 'round' // Set the line caps to be rounded
+        }
+      }
+    }
+  })
+</script>
