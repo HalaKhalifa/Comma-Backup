@@ -1,11 +1,11 @@
-  <div class="line-chart-container" >
+  <div class="line-chart-container col-4" >
   <canvas id="test1" aria-label="Hello ARIA World" role="img"></canvas>
-</div>
+  </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const coursesCounts = <%- JSON.stringify(coursesCounts) %>;
+  const coursesCounts = <%- JSON.stringify(analytics.NoOfCoursesList) %>;
   const ctx = document.getElementById('test1');
   var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"]
   var data = coursesCounts;

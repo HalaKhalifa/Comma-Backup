@@ -1,3 +1,4 @@
+const {getNoCreatedCourses} = require("./course")
 const getDashboard = async (req, res) => {
   // * temporary context object
   const context = {
@@ -10,8 +11,10 @@ const getDashboard = async (req, res) => {
     analytics: {
       users: 100,
       views: 1000,
-      likes: 10000
+      likes: 10000,
+      NoOfCoursesList:await getNoCreatedCourses(),
     }
+
   }
 
   // todo: change to dashboard view

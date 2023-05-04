@@ -4,7 +4,7 @@ const Course = require('../models/course.test')
  * 
  * Send a JSON response wtih "coursesCounts" as a LIST
  */
-const getNoCreatedCourses = async (req, res) => {
+const getNoCreatedCourses = async () => {
   try {
     const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // 30 days ago
     const interval = 30 * 24 * 60 * 60 * 1000 // 30 days in milliseconds
@@ -25,10 +25,9 @@ const getNoCreatedCourses = async (req, res) => {
       courseCounts.push(count)
     }
 
-    res.json({ coursesCounts: courseCounts });
+    return courseCounts;
   } catch (error) {
     console.error("error : couldn't get Courses", error)
-    res.status(500).json({ message: "couldn't get Courses." });
   }
 }
 module.exports = { getNoCreatedCourses }
