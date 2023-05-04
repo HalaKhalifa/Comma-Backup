@@ -8,21 +8,21 @@ const route=require('./routes/outline.js');
 const app = express()
 const authRoutes = require("./routes/authRoutes");
 const homeRoutes = require("./routes/homeRoutes");
+const session = require("express-session");
+const profileRoutes=require('./routes/profileRoute');
+
 
 require('dotenv').config()
 require('./config/mongoose.config') // database connection
 
-
 //-- Express configuration & Middleware
-
 app.set("view engine", "ejs"); // use EJS
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static(path.join(__dirname, "/public"))); // set path for assets folder
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-const session = require("express-session");
+app.use('/',profileRoutes);
 
 app.use(
   session({
@@ -31,8 +31,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-// -- Express configuration & Middleware
-
 
 // -- Routes
 app.use('/dashboard', dashboardRouter)
