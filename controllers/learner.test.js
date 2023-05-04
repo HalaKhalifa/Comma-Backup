@@ -30,7 +30,7 @@ const updateLearner = async (req, res) => {
         return doc
     } catch (error) {
         console.error("error : couldn't update Learner", error);
-        return null;
+        res.status(500)
     }
 }
 module.exports = {getLearners,updateLearner,getOneLearner}
