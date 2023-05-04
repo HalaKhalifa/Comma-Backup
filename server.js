@@ -10,7 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
-const LearnersRoutes = require("./routes/exampleRouter");
+// const LearnersRoutes = require("./routes/exampleRouter");
 
 
 require('dotenv').config()
@@ -33,13 +33,7 @@ app.use(
   })
 );
 
-app.get("/courses", (req, res) => {
 
-  const rating = 4;
-  const courseIMG=["/images/course.jpg" ,"/images/python-course.jpg","/images/machine-learning.jpg" ,"/images/data_analytics.jpg"]
-  const coursesNames= ['Data Science: Deep Learning and Neural Networks in Python','The Complete Python Programming Course','Fullstack Python & Django','Python Network Programming for Network Engineers (Python 3)'];
-  res.render("coursesPage", { title: "courses page" ,coursesNames:coursesNames ,courseIMG:courseIMG});
-});
 // -- Routes
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only
