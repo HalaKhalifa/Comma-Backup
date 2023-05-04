@@ -1,0 +1,19 @@
+</script>      
+  <div id="courses-table" data-courses=<%= analytics.CoursesTableData %> ></div>
+  <script>
+    const coursesTableElement = document.getElementById('courses-table')
+    const tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
+    const grid = new gridjs.Grid({
+      sort: true,
+      resizable: true,
+      search: true,
+      fixedHeader: true,
+      pagination: {
+        limit: 10,
+      },
+      columns: [ "Title", "Views", "Percentage"],
+      data: tableCoursesData
+    }).render(coursesTableElement);
+  </script>
+</body>
+</html>
