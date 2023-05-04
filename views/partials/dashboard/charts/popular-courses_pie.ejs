@@ -7,7 +7,6 @@
       <div class="align-self-center w-100">
         <div class="py-3">
           <div class="chart chart-xs">
-            <!-- todo: change in jsvascript only data -->
             <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesData %> ></canvas>
           </div>
         </div>
@@ -17,8 +16,8 @@
 </div>
 
 <script>
-  var pieElement = document.getElementById('popular-courses-pie')
-  var popularCoursesData = JSON.parse(pieElement.dataset.courses)
+  const pieElement = document.getElementById('popular-courses-pie')
+  const popularCoursesData = JSON.parse(pieElement.dataset.courses)
   
   ;(async () => {
     new Chart(pieElement, {
@@ -26,8 +25,9 @@
       data: {
         labels: popularCoursesData.map((course) => course.title),
         datasets: [
+          // * this can be toggled to show different data points
           // {
-          //   label: 'Views',
+          //   label: ' Views',
           //   data: popularCoursesData.map((course) => course.views)
           // },
           {

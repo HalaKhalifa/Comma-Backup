@@ -15,7 +15,11 @@ function getPopularCourses(limit = 3) {
   //   }
   // })
   const allViews = courses.reduce((previosCount, newCourse) => previosCount + newCourse.views, 0)
-
+  let MaxLimitExceeded = 0
+  if (limit > courses.length) {
+    limit = courses.length
+    MaxLimitExceeded = 1
+  }
   let popularCourses = courses
     .sort((courseX, courseY) => {
       courseX.views > courseY.views ? 1 : -1
@@ -37,7 +41,7 @@ function getPopularCourses(limit = 3) {
     views: allViews - popularViews,
     percentage: (((allViews - popularViews) / allViews) * 100).toFixed(2)
   }
-  popularCourses.push(otherCoursesObj)
+  !MaxLimitExceeded && popularCourses.push(otherCoursesObj)
   return popularCourses
 }
 

@@ -11,7 +11,8 @@ const getDashboard = async (req, res) => {
       email: 'jhonDoe@gmail.com'
     },
     analytics: {
-      popularCoursesData: JSON.stringify(getPopularCourses(4))
+      popularCoursesData: JSON.stringify(getPopularCourses(4)),
+      CoursesTableData: JSON.stringify(getPopularCourses(10))
     }
   }
 
