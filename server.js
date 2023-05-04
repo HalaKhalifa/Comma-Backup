@@ -14,7 +14,6 @@ app.set('view engine', 'ejs') // use EJS
 app.use(express.static(path.join(__dirname, 'public'))) // set path for assets folder
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
 // -- Routes
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only

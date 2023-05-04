@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-const learner = require('../../models/Learner')
+const learner = require('../models/learner.test')
 
-const getLearners = async (req, res) => {
+const getLearners = async () => {
     try {
         const learners = await learner.find();
-        return {"learners" : learners};
+        return learners;
     } catch (error) {
         console.error("error : couldn't get Learners", error);
         return null;
