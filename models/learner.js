@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
-const emailRegularExpression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegularExpression = /^\+\d{1,3}\s\d{9}$/;
+//const emailRegularExpression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//const phoneRegularExpression = /^\+\d{1,3}\s\d{9}$/;
 const learnerSchema = new Schema({
   id: {
     type: Number,
@@ -10,22 +10,27 @@ const learnerSchema = new Schema({
   firstName: {
     type: String,
     required: true,
+    /*
     validate: {
         validator: function (v) {
           return /^[a-zA-Z\s]+$/.test(v) || /^[\u0621-\u064A\s]+$/.test(v);
         },
         message: 'First name can only contain English letters with a space or Arabic letters with a space',
       },
+    */
+    
   },
   lastName: {
     type: String,
     required: true,
+    /*
     validate: {
         validator: function (v) {
           return /^[a-zA-Z\s]+$/.test(v) || /^[\u0621-\u064A\s]+$/.test(v);
         },
         message: 'Last name can only contain English letters with a space or Arabic letters with a space',
-      },
+      },*/
+    
   },
   dateOfBirth: {
     day: {
@@ -50,12 +55,15 @@ const learnerSchema = new Schema({
     type: String,
     unique: true,
     required: true,
+    /*
     validate: {
       validator: function (v) {
         return emailRegularExpression.test(v);
       },
       message: (props) => `${props.value} is not a valid email address!`,
     },
+    */ 
+    
   },
   password:{
     type: String,
@@ -146,7 +154,8 @@ const learnerSchema = new Schema({
   /*/
   
 });
-learnerSchema.pre('save', function (next) {
+/**
+ * learnerSchema.pre('save', function (next) {
     const learner = this;
   
     if (!learner.isModified('password')) {
@@ -177,4 +186,6 @@ learnerSchema.pre('save', function (next) {
       callback(null, isMatch);
     });
   };
+ */
+
 module.exports = mongoose.model("Learner", learnerSchema);
