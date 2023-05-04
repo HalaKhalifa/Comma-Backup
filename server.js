@@ -1,39 +1,25 @@
-const path = require("path");
-const express = require("express");
-const app = express();
+const path = require('path')
+const express = require('express')
+const dashboardRouter = require('./routes/dashboard')
+const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
 
-const mongoose = require('mongoose');
-//-- Express configuration & Middleware
-app.set("view engine", "ejs"); // use EJS
-app.use(express.static(path.join(__dirname,'/public'))); // set path for assets folder
-app.use(express.json());
+const app = express()
 
-const dashboardRoutes = require('./routes/dashboard'); // replace with the actual path to your routes file
-app.use('/', dashboardRoutes);
+require('dotenv').config()
+require('./config/mongoose.config') // database connection
 
-//-----------------------------------
+// -- Express configuration & Middleware
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs') // use EJS
+app.use(express.static(path.join(__dirname, 'public'))) // set path for assets folder
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
+// -- Routes
+app.use('/dashboard', dashboardRouter)
+app.use('/dashboard2', dashboardContentfulRouter) // for reference only
 
-
-
-
-
-
-mongoose.connect('mongodb://127.0.0.1:27017/test3', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`server running on port ${process.env.SERVER_PORT}`)
+  console.log(`http://localhost:${process.env.SERVER_PORT}`)
 })
-.then(() => console.log('Connected to MongoDB...'))
-.catch((err) => console.error('Could not connect to MongoDB...', err));
-//-- Express Router Configuration
-
-const Course = require('./models/course');
-
-
-//-------------------------------
-
-
-//-- Server
-app.listen(5000, () => {
-  console.log(`Listening on port 5000`);
-});

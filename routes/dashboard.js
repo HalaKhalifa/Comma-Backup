@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const {getNumbersOfCoursesCreatedInPrevYear} = require("../controllers/course")
+const {getNoCreatedCourses} = require("../controllers/course")
 
 router.get('/courses-count', async (req, res) => {
-    try {
-      const counts = await getNumbersOfCoursesCreatedInPrevYear(req,res)
-      res.json({ coursesCounts: counts });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Error getting course counts.' });
-    }
+      await getNoCreatedCourses(req,res)
   });
 
-module.exports = router;
+const { getDashboard } = require('../controllers/dashboard')
+
+router.get('/', (req, res) => {
+  getDashboard(req, res)
+})
+
+module.exports = router
