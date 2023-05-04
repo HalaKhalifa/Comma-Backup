@@ -28,3 +28,7 @@ NNU CAP Team 1 Project for Team Project 2 course
 ## Branching
 - Each collaborator must create a branch for each feature following the name patter: {collaborator_name-feature}
 Ex. samer-login
+
+## Dashboard Template 
+- https://adminkit.gumroad.com/
+  The Free Version

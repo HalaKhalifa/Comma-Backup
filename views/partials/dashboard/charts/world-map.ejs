@@ -1,0 +1,53 @@
+<div class="col-4">
+  <div id="world_map" style="height:350px;"></div>
+</div>
+<script src="js/dashboard/markers.utils.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var map = new jsVectorMap({
+            map: "world",
+            selector: "#world_map",
+            regionsSelectable: true,
+            zoomButtons: true,
+            markers: markers,
+            markerStyle: {
+                initial: {
+                    r: 9,
+                    strokeWidth: 7,
+                    stokeOpacity: .4,
+                    fill: window.theme.primary
+                },
+                hover: {
+                    fill: window.theme.primary,
+                    stroke: window.theme.primary
+                }
+            },
+            zoomOnScroll: false,
+            series: {
+regions: [{
+  attribute: "fill",
+  legend: {
+    title: "Top Visitors",
+  },
+  scale: {
+    Jordan: "#c79efd",
+    "Palestine": "#ffc371",
+    Egypt: "#08d191",
+    USA:"#FF0000"
+  },
+  values: {
+    // But when dealing with regions's series you should specify the region key.
+    PS: "Palestine",
+    JO: "Jordan",
+    IL: "Palestine",
+    EG: "Egypt",
+    US: "USA",
+  },
+}]
+}
+        });
+        window.addEventListener("resize", () => {
+            map.updateSize();
+        });
+    });
+</script>

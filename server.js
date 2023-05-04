@@ -1,30 +1,29 @@
-const path = require("path");
-const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const registrationRoutes = require("./routes/registrationRoutes");
-const dashboardRoutes = require("./routes/dashboard"); // replace with the actual path to your routes file
+const path = require('path')
+const express = require('express')
+const dashboardRouter = require('./routes/dashboard')
+const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
+const registrationRoutes = require('./routes/registrationRoutes')
 
-require("dotenv").config();
+const app = express()
 
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "/public")));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.set("views", path.join(__dirname, "/views"));
+require('dotenv').config()
+require('./config/mongoose.config') // database connection
 
-app.use("/signup", registrationRoutes);
-app.use("/", dashboardRoutes);
+// -- Express configuration & Middleware
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs') // use EJS
+app.use(express.static(path.join(__dirname, 'public'))) // set path for assets folder
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// -- Routes
+app.use('/dashboard', dashboardRouter)
+app.use('/dashboard2', dashboardContentfulRouter) // for reference only
+app.use('/signup', registrationRoutes)
 const route=require('./routes/exampleRoute.js');
 app.use('/',route);
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(process.env.SERVER_PORT, () => {
-      console.log(`Listening on port ${process.env.SERVER_PORT}`);
-    });
-  });
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`server running on port ${process.env.SERVER_PORT}`)
+  console.log(`http://localhost:${process.env.SERVER_PORT}`)
+})
