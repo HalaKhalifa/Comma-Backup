@@ -1,6 +1,6 @@
-const {getLearners} = require("./learner.test")
+//const {getLearners} = require("./learner.test") Commented until collection is filled
 const { getPopularCourses } = require('./course')
-
+const {getNoCreatedCourses} = require("./course")
 const getDashboard = async (req, res) => {
   // * temporary context object
 var staticData = [{
@@ -26,8 +26,13 @@ var staticData = [{
     analytics: {
       LearnersList : staticData /*await getLearners() */,
       popularCoursesData: JSON.stringify(getPopularCourses(4)),
-      CoursesTableData: JSON.stringify(getPopularCourses(10))
+      CoursesTableData: JSON.stringify(getPopularCourses(10)),
+      users: 100,
+      views: 1000,
+      likes: 10000,
+      NoOfCoursesList:await getNoCreatedCourses(),
     }
+
   }
 
   res.render('pages/dashboard/index.ejs', context)
