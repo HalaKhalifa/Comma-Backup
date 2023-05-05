@@ -1,0 +1,169 @@
+#container {
+    font-weight: 300;
+    font-family: "Open Sans", sans-serif;
+  }
+div.card.border-info{
+    background: #fff;
+    max-width:27rem;
+    height: max-content;
+    box-shadow: 0px 0px 32px -8px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    position: fixed;
+    top: 150px;
+     z-index: 2999;
+}
+div.card-header-r{
+    padding: 30px 15px;
+    background-color: #fff;
+}
+.rating {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .btn.btn-primary{
+
+    margin-top: 1rem;
+    width: 111px;
+  }
+  .stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    align-items: center;
+    margin-top: -33px;
+    margin-right: 165px;
+    
+  }
+  #num{
+    color: #1f1f1f;
+    font-size: 1.25rem;
+   line-height: 1.75rem;
+    font-weight: 600;
+   letter-spacing: -0.1px;
+  }
+  .star {
+    font-size: 24px;
+    color:gold;
+    margin: 0 5px;
+  }
+  .reviews{
+    color: #636363;
+    letter-spacing: 0;
+   font-size:small;
+   line-height: 1.25rem;
+    font-weight: 400;
+   margin-left: 191px;
+   margin-top: -38px;
+  }
+  .enroll{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .num-enroll{
+    margin-top: 27px;
+    width: 178px;
+    margin-left: 99px;
+  }
+#course-name{
+  color: #1f1f1f;
+  font-size:x-large;
+  line-height: 1.75rem;
+ font-weight: 600;
+  letter-spacing: -0.1px;
+}
+div.title{
+   font-size: medium;
+  line-height: 18px;
+  margin-top: 13px;
+}
+
+div#wrapper {
+ float: left;
+ width: 66%;
+ margin-left: 25px;
+ margin-top: 7px;
+}
+ div#card-enroll {
+    float: right;
+    width: 29.9%;
+}
+#content{
+    margin-top: 30px;
+}
+#content h4{
+  color: #343232;
+ height: 0px;
+ margin-top: 15px;
+ margin-left: 32px;
+}
+.description{
+    border: 0.18rem solid lightgrey;
+    padding: clamp(1rem, 2vw, 3rem);
+    border-radius: 0.5rem;
+    height: 21rem;
+    width: 61rem;
+    margin-top: 78px;
+}
+
+ .description ul{
+   display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-top: 30px;
+    padding: 0;     
+  }
+ #list-learn {
+    flex-basis: 50%;
+    height: 100px;
+    box-sizing: border-box;
+    letter-spacing: 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    min-height: 24px;
+
+   
+  }
+  #check{
+   color: #747aff;
+  }
+  #content p{
+    margin-top: 46px;
+    margin-bottom: 1rem;
+    margin-left: 21px;
+  }
+ .list ol {
+        max-width: 700px;
+      position: relative;
+  }
+  .list ol::before {
+     content: '';
+     width: 0.5rem;
+      height: 100%;
+     position: absolute;
+     top: 0;
+     left: 8%;
+     background:#e6eeff;
+     z-index: -1;
+   }
+ .li-outline {
+       padding: 0.5rem 1.5rem 1rem;
+      border-radius: 1.5rem;
+    background: #e6eeff;
+  }
+  .li-outline + .li-outline{
+     margin-top: 1rem;
+  }
+ ::marker {
+    font-weight: 600;
+    color: #b3ccff	;
+   font-size: 1.8rem;
+ }
+ #outline{
+   color: #343232;
+   margin-top: 40px;
+   height: 55px;
+  margin-left: 12px;
+ }
