@@ -1,14 +1,20 @@
-const course = require("../models/course")
+const course = require("../models/course");
 
-const paginationResult= async(req,res)=>{
-let page = req.params.page
-let limit= 8;
-let offset= (page * limit) -1 
+const paginationResult = async (req, res) => {
+const courses = await course.find();
+  let page = parseInt(req.query.page) || 1;
+  let limit = 8;
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const pageCourses = courses.slice(startIndex, endIndex);
 
-const courseResult= await course.find().limit().offset()
-   res.status(200).json(courseResult)
-}
+  // render coursesPage with courseNames ,courseIMG to display theme
+  res.render("coursesPage", {
+    courses, 
+    page ,
+    title: "courses page",
+    pageCourses:pageCourses
+  });
+};
 
-module.export={
-    paginationResult
-}
+module.exports = { paginationResult };

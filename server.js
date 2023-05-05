@@ -15,10 +15,9 @@ app.use(express.json());
 //-- Express Router Configuration
 app.use("/learners", LearnersRoutes);
 
-const coursesPageRoute= require("./routes/allCoursesRoute")
-app.get("/courses",coursesPageRoute)
+const coursesPageRoute = require("./routes/allCoursesRoute");
+app.get("/courses", coursesPageRoute);
 //-------------------------------
-
 
 //-- Server
 

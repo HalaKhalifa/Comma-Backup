@@ -1,17 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const courseController=require('../controllers/paginationController')
+const courseController = require("../controllers/paginationController");
 
-router.get('/courses', courseController.paginationResult);
+router.get("/courses",courseController.paginationResult);
 
-router.get("/courses", (req, res) => {
-
-    const rating = 4;
-    const courseIMG=["/images/course.jpg" ,"/images/python-course.jpg","/images/machine-learning.jpg" ,"/images/data_analytics.jpg"]
-    const coursesNames= ['Data Science: Deep Learning and Neural Networks in Python','The Complete Python Programming Course','Fullstack Python & Django','Python Network Programming for Network Engineers (Python 3)'];
-    res.render("coursesPage", { title: "courses page" ,coursesNames:coursesNames ,courseIMG:courseIMG});
-  });
-  
-
-
-  module.exports = router;
+module.exports = router;
