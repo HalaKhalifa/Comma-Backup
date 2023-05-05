@@ -5,32 +5,45 @@
     margin-bottom: 15px;
  }
  .CourseCard{
-    background-color: rgb(26, 26, 60);
-    width: 280px;
-    height: 352px   ;
+    background-color: #F0F8FF;
+    box-shadow: 0px 0px 32px -8px rgba(0, 0, 0, 0.5);
+    width: 270px;
+    height: 330px   ;
     border-radius: 10px;
 }
 
 img.course-IMG {
-    width: 215px;
-    height: 184px;
+    width: 211px;
+    height: 160px;
     margin-top: 18px;
-    margin-left: 40px;
-    border-radius: 50%;
+    margin-left: 44px;
+    border-radius: 20%;
 }
 h2.course-h2{
-    color: #ffffff;
+    color: rgb(26, 26, 60);
     font-size: 15px;
     text-align: center;
     margin-top: 10px;
 }
 .course-p{
-    color: #ffffff;
-    font-size: 12px;
+    font-size: 14px;
     text-align: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background: #F0F8FF;
+    color: rgb(26, 26, 60);
+    transform: translateY(100%);
+    transition: all 0.35s ease;
+    visibility: hidden;
 }
+.CourseCard:hover .course-p{
+    transform: translateY(0);
+    visibility: visible;
+}
+
 .courses-page-pagination{
-    margin-left: 40%;
+    margin-left: 30%;
 }
 .block-27 ul {
     padding: 0;

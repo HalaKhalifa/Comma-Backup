@@ -1,6 +1,6 @@
 <%- include('partials/header'); %>
     <div class="container-fluid CourseCardContainer">
-      <% for (var i = 0; i < (pageCourses.length)/2; i++) { %>
+      <% for (var i = 0; i < (pageCourses.length)/4; i++) { %>
         <div class="CourseCard">
           <div class="row CourseCardRow1 ">
             <img class="course-IMG" src=<%= pageCourses[i].image %> />
@@ -15,7 +15,7 @@
       <% } %>
     </div>
     <div class="container-fluid CourseCardContainer">
-    <% for (var j = (pageCourses.length)/2; j < (pageCourses.length); j++) { %>
+    <% for (var j = (pageCourses.length)/4; j < (pageCourses.length)/2; j++) { %>
       <div class="CourseCard">
         <div class="row CourseCardRow1 ">
           <img class="course-IMG" src=<%= pageCourses[j].image %> />
@@ -29,6 +29,36 @@
     </div>
     <% } %>
     </div>
+    <div class="container-fluid CourseCardContainer">
+      <% for (var z = (pageCourses.length)/2; z < ((pageCourses.length)/2)+4; z++) { %>
+        <div class="CourseCard">
+          <div class="row CourseCardRow1 ">
+            <img class="course-IMG" src=<%= pageCourses[z].image %> />
+          </div>
+          <div class="row CourseCardRow2 ">
+            <h2 class="course-h2">
+              <%= pageCourses[z].title %>
+                <h2>
+                  <p class="course-p"><%= pageCourses[z].description %></p>
+          </div>
+      </div>
+      <% } %>
+      </div>
+      <div class="container-fluid CourseCardContainer">
+        <% for (var z = ((pageCourses.length)/2)+4; z < (pageCourses.length); z++) { %>
+          <div class="CourseCard">
+            <div class="row CourseCardRow1 ">
+              <img class="course-IMG" src=<%= pageCourses[z].image %> />
+            </div>
+            <div class="row CourseCardRow2 ">
+              <h2 class="course-h2">
+                <%= pageCourses[z].title %>
+                  <h2>
+                    <p class="course-p"><%= pageCourses[z].description %></p>
+            </div>
+        </div>
+        <% } %>
+        </div>
 
     <%- include('partials/footer'); %>
 
