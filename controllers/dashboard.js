@@ -3,7 +3,19 @@ const { getPopularCourses } = require('./course')
 
 const getDashboard = async (req, res) => {
   // * temporary context object
-
+var staticData = [{
+  name: 'Yaser Jom3a',
+  email: 'Yaser@Jom3a.com',
+  active: "online",
+},{
+  name: 'A7mad Med7at',
+  email: 'A7mad@Med7at.com',
+  active: "offline",
+},{
+  name: 'George Kordahi',
+  email: 'George@Kordahi.com',
+  active: "online",
+}]
   const context = {
     title: 'Dashboard',
     description: 'Dashboard page description',
@@ -12,7 +24,7 @@ const getDashboard = async (req, res) => {
       email: 'jhonDoe@gmail.com'
     },
     analytics: {
-      LearnersList : await getLearners(),
+      LearnersList : staticData /*await getLearners() */,
       popularCoursesData: JSON.stringify(getPopularCourses(4)),
       CoursesTableData: JSON.stringify(getPopularCourses(10))
     }
