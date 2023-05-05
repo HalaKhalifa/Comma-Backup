@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const LearnersRoutes = require("./routes/exampleRouter");
+const coursesPageRoute = require("./routes/paginationRoute");
 
 //-- Express configuration & Middleware
 app.set("view engine", "ejs"); // use EJS
@@ -15,7 +16,6 @@ app.use(express.json());
 //-- Express Router Configuration
 app.use("/learners", LearnersRoutes);
 
-const coursesPageRoute = require("./routes/allCoursesRoute");
 app.get("/courses", coursesPageRoute);
 //-------------------------------
 
