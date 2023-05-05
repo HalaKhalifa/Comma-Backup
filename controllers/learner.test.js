@@ -6,7 +6,17 @@ const getLearners = async (req, res) => {
     let query = req.query
     let skip = query.offset || 0
     let limit = query.limit || 0
-    const learners = await learner.find().skip(skip).limit(limit).exec()
+    let search = query.search || ''
+    const subtext = '?limit'
+    const index = search.indexOf(subtext)
+    if (index !== -1) {
+      search = search.substring(0, index)
+    }
+    const learners = await learner
+      .find({ name: { $regex: search, $options: 'i' } })
+      .skip(skip)
+      .limit(limit)
+      .exec()
     return { learners: learners, count: await learner.estimatedDocumentCount() }
   } catch (error) {
     console.error("error : couldn't get Learners", error)
