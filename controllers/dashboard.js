@@ -1,5 +1,5 @@
-const {getLearners} = require("./learner.test")
-const { getPopularCourses } = require('./course')
+const { getLearners } = require('./learner.test')
+const { getPopularCourses, getEnrolledFinished } = require('./course')
 
 const getDashboard = async (req, res) => {
   // * temporary context object
@@ -12,9 +12,10 @@ const getDashboard = async (req, res) => {
       email: 'jhonDoe@gmail.com'
     },
     analytics: {
-      LearnersList : await getLearners(),
+      LearnersList: await getLearners(),
       popularCoursesData: JSON.stringify(getPopularCourses(4)),
-      CoursesTableData: JSON.stringify(getPopularCourses(10))
+      CoursesTableData: JSON.stringify(getPopularCourses(10)),
+      enrolledFinished: JSON.stringify(getEnrolledFinished(4))
     }
   }
 

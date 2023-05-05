@@ -1,32 +1,32 @@
 const Course = require('../models/course')
-const { courses } = require('../utils/data')
+const { courses } = require('../utils/course.test')
 
 const getNumbersOfCoursesCreatedInPrevYear = async (req, res) => {
-    try {
-        const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days ago
-        const interval = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+  try {
+    const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // 30 days ago
+    const interval = 30 * 24 * 60 * 60 * 1000 // 30 days in milliseconds
 
-        const courseCounts = [];
+    const courseCounts = []
 
-        for (let i = 0; i < 12; i++) {
-            const startDate = new Date(monthAgo.getTime() + interval * i);
-            const endDate = new Date(startDate.getTime() + interval);
+    for (let i = 0; i < 12; i++) {
+      const startDate = new Date(monthAgo.getTime() + interval * i)
+      const endDate = new Date(startDate.getTime() + interval)
 
-            const count = await Course.countDocuments({
-            createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-            },
-  });
+      const count = await Course.countDocuments({
+        createdAt: {
+          $gte: startDate,
+          $lt: endDate
+        }
+      })
 
-  courseCounts.push(count);
-}
-
-return courseCounts ;
-    } catch (error) {
-        console.error("error : couldn't get Courses", error);
-        return null;
+      courseCounts.push(count)
     }
+
+    return courseCounts
+  } catch (error) {
+    console.error("error : couldn't get Courses", error)
+    return null
+  }
 }
 
 /**
@@ -44,10 +44,13 @@ function getPopularCourses(limit = 3) {
   //   }
   // })
   const allViews = courses.reduce((previosCount, newCourse) => previosCount + newCourse.views, 0)
-  let MaxLimitExceeded = 0
+  let MaxLimitExceeded = false
+  if (isNaN(limit) || limit < 0) {
+    limit = 3
+  }
   if (limit > courses.length) {
     limit = courses.length
-    MaxLimitExceeded = 1
+    MaxLimitExceeded = true
   }
   let popularCourses = courses
     .sort((courseX, courseY) => {
@@ -74,5 +77,17 @@ function getPopularCourses(limit = 3) {
   return popularCourses
 }
 
-module.exports = { getPopularCourses,getNumbersOfCoursesCreatedInPrevYear }
+/**
+ * ### Returns an array containing enrolled & finished courses.
+ * @param {Number} limit - The number of courses to return. **Default = `10`**.
+ * @returns {Array} An array of courses with enrolled & finished properties.
+ */
+function getEnrolledFinished(limit = 10) {
+  const enrolledFinished = courses
+  const sortedEnrolledFinished = enrolledFinished.sort((courseX, courseY) =>
+    courseX.finished / courseX.enrolled < courseY.finished / courseY.enrolled ? 1 : -1
+  )
 
+  return sortedEnrolledFinished
+}
+module.exports = { getPopularCourses, getNumbersOfCoursesCreatedInPrevYear, getEnrolledFinished }
