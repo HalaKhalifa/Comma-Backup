@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
+const homeRoute=require('./routes/homeRoute.js');
 // const LearnersRoutes = require("./routes/exampleRouter");
 
 
@@ -38,9 +39,10 @@ app.use(
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only
 app.use('/signup', registrationRoutes)
+app.use('/',homeRoute);
+app.use("/", homeRoutes);
 app.use('/',route);
 app.use("/", authRoutes);
-app.use("/", homeRoutes);
 
 
 app.listen(process.env.SERVER_PORT, () => {
