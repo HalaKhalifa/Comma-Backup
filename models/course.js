@@ -29,7 +29,7 @@ enrolledUsers:{
 },
 rating:{
     type:Number,
-    required:true
+    required:false
 },
 stars:{
     type:Number,
@@ -38,6 +38,14 @@ stars:{
 topicID:{
    type:mongoose.Schema.Types.ObjectId,
    ref:'Topic'
+},
+publishedAt:{
+    type:Number,
+    required:true
+},
+view:{
+    type:Number,
+    required:true
 },
 },{timestamps:true});
 
