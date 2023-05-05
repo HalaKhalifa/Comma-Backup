@@ -2,7 +2,7 @@ const Course = require('../models/course.test')
 const { courses } = require('../utils/data')
 /**
  * Returns Number of courses created each month for the previous year
- * 
+ *
  * Send a JSON response wtih "coursesCounts" as a LIST
  */
 const getNoCreatedCourses = async () => {
@@ -22,11 +22,10 @@ const getNoCreatedCourses = async () => {
           $lt: endDate
         }
       })
-      console.log(count)
       courseCounts.push(count)
     }
 
-    return courseCounts;
+    return courseCounts
   } catch (error) {
     console.error("error : couldn't get Courses", error)
   }
@@ -77,4 +76,4 @@ function getPopularCourses(limit = 3) {
   return popularCourses
 }
 
-module.exports = { getPopularCourses,getNoCreatedCourses }
+module.exports = { getPopularCourses, getNoCreatedCourses }
