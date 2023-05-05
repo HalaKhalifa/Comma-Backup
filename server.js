@@ -3,15 +3,13 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 require('dotenv').config();
-//-- Express configuration & Middleware
-app.set("view engine", "ejs"); // use EJS
-app.use(express.static(path.join(__dirname,'/public'))); // set path for assets folder
-
+app.set("view engine", "ejs"); 
+app.use(express.static(path.join(__dirname,'/public'))); 
 app.use(express.json());
 //-----------------------------------
 
 //-- Express Router Configuration
-const route=require('./routes/exampleRoute.js');
+const route=require('./routes/singlePageRoute.js');
 app.use('/',route);
 
 

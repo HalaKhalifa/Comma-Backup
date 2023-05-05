@@ -3,9 +3,9 @@ const mongoose  = require('mongoose');
 
 const getSingleCourse = async (req,res) => {
     const courses = await course.find().sort({createdAt: -1});
-    const x=courses[8].id;
+    const course1=courses[10].id;//example test
    
-    const singleCourse = await course.findById(x); 
+    const singleCourse = await course.findById(course1); 
      console.log(singleCourse)
     if ( !singleCourse ) {
         return res.status(404).json({error: 'No such course'});
