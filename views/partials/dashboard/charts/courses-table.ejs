@@ -16,7 +16,9 @@
 </div>
 <script>
   const coursesTableElement = document.getElementById('courses-table')
-  let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses).map((course) => {
+  // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
+  let tableCoursesData = <%- analytics.CoursesTableData %>;
+  tableCoursesData = tableCoursesData.map((course) => {
     return {
       ...course,
       percentage: course.percentage + ' %'
@@ -33,11 +35,14 @@
       limit: 10
     },
     columns: [
-      { name: 'Title', width: '100px' },
+      { name: 'Title', width: '150px' },
       { name: 'Views', width: '120px' },
-      { name: 'Percentage', width: '150px' },
-      { name: 'Enrolled', width: '130px' },
-      { name: 'Finished', width: '140px' }
+      { name: 'enrolled', width: '130px' },
+      { name: 'rating', width: '130px' },
+      { name: 'stars', width: '130px' },
+
+      // * not implemented yet
+      // { name: 'Finished', width: '140px' }
     ],
     data: tableCoursesData
   }).render(coursesTableElement)

@@ -1,5 +1,4 @@
 const Course = require('../models/course')
-const { courses } = require('../utils/course.test')
 
 const getNumbersOfCoursesCreatedInPrevYear = async (req, res) => {
   try {
@@ -32,19 +31,23 @@ const getNumbersOfCoursesCreatedInPrevYear = async (req, res) => {
 /**
  * ### Returns an array of popular courses.
  * @param {Number} limit - The number of courses to return. **Default = `3`**.
- * @returns {Array} An array of popular courses[limit + 1] (with others object)
+ * @param {Number} others - total sum of all other courses. **Default = `false`**.
+ * @returns {Array} An array of popular courses[limit + 1] (with others object if added)
  */
-function getPopularCourses(limit = 3) {
-  // todo: get courses from database when controllers ready => Uncomment below
-  // let courses = getCourses()
-  // courses = courses.map((course) => {
-  //   return {
-  //     title: course.title,
-  //     views: course.views
-  //   }
-  // })
-  const allViews = courses.reduce((previosCount, newCourse) => previosCount + newCourse.views, 0)
+async function getPopularCourses(limit = 3, others = false) {
+  let courses = await getCourses(limit, 'DESC')
+  courses = courses.reduce((result, course) => {
+    if (course.title)
+      result.push({
+        title: course.title?.substring(0, 15) + '...',
+        views: course.enrolledUsers
+      })
+    return result
+  }, [])
+
+  const allViews = await getCoursesEnrolls()
   let MaxLimitExceeded = false
+
   if (isNaN(limit) || limit < 0) {
     limit = 3
   }
@@ -68,12 +71,14 @@ function getPopularCourses(limit = 3) {
     (previosCount, newCourse) => previosCount + newCourse.views,
     0
   )
-  const otherCoursesObj = {
-    title: 'Others',
-    views: allViews - popularViews,
-    percentage: (((allViews - popularViews) / allViews) * 100).toFixed(2)
+  if (!MaxLimitExceeded && others) {
+    const otherCoursesObj = {
+      title: 'Others',
+      views: allViews - popularViews,
+      percentage: (((allViews - popularViews) / allViews) * 100).toFixed(2)
+    }
+    popularCourses.push(otherCoursesObj)
   }
-  !MaxLimitExceeded && popularCourses.push(otherCoursesObj)
   return popularCourses
 }
 
@@ -82,12 +87,61 @@ function getPopularCourses(limit = 3) {
  * @param {Number} limit - The number of courses to return. **Default = `10`**.
  * @returns {Array} An array of courses with enrolled & finished properties.
  */
-function getEnrolledFinished(limit = 10) {
-  const enrolledFinished = courses
+async function getEnrolledFinished(limit = 10) {
+  let courses = await getCourses(limit, 'DESC')
+  // console.log(courses)
+  const enrolledFinished = courses.map((course) => {
+    return {
+      title: course.title?.substring(0, 15) + '...',
+      enrolled: course.enrolledUsers,
+      // todo: change to real data when ready, this is randomly generated number
+      finished: Math.floor(Math.random() * course.enrolledUsers) / 2
+    }
+  })
   const sortedEnrolledFinished = enrolledFinished.sort((courseX, courseY) =>
     courseX.finished / courseX.enrolled < courseY.finished / courseY.enrolled ? 1 : -1
   )
-
-  return sortedEnrolledFinished
+  return sortedEnrolledFinished.slice(0, limit)
 }
-module.exports = { getPopularCourses, getNumbersOfCoursesCreatedInPrevYear, getEnrolledFinished }
+
+// todo: this function should be seperated into a service file
+async function getCourses(limit = 100, sort = 0) {
+  try {
+    if (sort === 'DESC') sort = -1
+    else if (sort === 'ASC') sort = 1
+    else sort = 0
+
+    const courses = await Course.find().sort({ enrolledUsers: sort }).limit(limit)
+    return courses
+  } catch (error) {
+    console.error("error : couldn't get Courses", error)
+    return null
+  }
+}
+
+// todo: this function should be seperated into a service file
+async function getCoursesEnrolls() {
+  try {
+    const sum = await Course.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalEnrolls: { $sum: '$enrolledUsers' }
+        }
+      }
+    ])
+    return sum[0].totalEnrolls
+  } catch (error) {
+    console.error("error : couldn't get Courses", error)
+    return null
+  }
+}
+// todo: a seperate function to use courses to display in table
+// asyn function() {
+
+module.exports = {
+  getPopularCourses,
+  getNumbersOfCoursesCreatedInPrevYear,
+  getEnrolledFinished,
+  getCourses
+}

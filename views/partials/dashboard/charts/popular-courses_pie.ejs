@@ -17,8 +17,8 @@
 
 <script>
   const pieElement = document.getElementById('popular-courses-pie')
-  const popularCoursesData = JSON.parse(pieElement.dataset.courses)
-
+  // const popularCoursesData = JSON.parse(pieElement.dataset.courses)
+  const popularCoursesData = <%- analytics.popularCoursesData %>;
   ;(async () => {
     new Chart(pieElement, {
       type: 'pie',
