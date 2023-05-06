@@ -8,6 +8,9 @@ const get_signup = (req, res) => {
 function capitalizefLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+const nameRegex = /^[a-z]+$/
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
 
 const post_signup = async (req, res) => {
   const { firstname, lastname, email, password, confirmPassword } = req.body
@@ -19,6 +22,18 @@ const post_signup = async (req, res) => {
     return
   }
 
+  if (!nameRegex.test(firstname)) {
+    error = 'First name should contain only lowercase letters'
+    res.render('signup', { title: 'Sign Up', error })
+    return
+  }
+
+  if (!nameRegex.test(lastname)) {
+    error = 'Last name should contain only lowercase letters'
+    res.render('signup', { title: 'Sign Up', error })
+    return
+  }
+
   const learnerExists = await Learner.findOne({ email })
   if (learnerExists) {
     error = 'Email already exists'
@@ -26,7 +41,6 @@ const post_signup = async (req, res) => {
     return
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
   if (!emailRegex.test(email)) {
     error = 'Invalid email address'
     res.render('signup', { title: 'Sign Up', error })
@@ -38,7 +52,6 @@ const post_signup = async (req, res) => {
     res.render('signup', { title: 'Sign Up', error })
     return
   }
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
   if (!passwordRegex.test(password)) {
     error =
       'Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter'
