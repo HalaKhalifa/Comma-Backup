@@ -23,3 +23,50 @@
   word-break: break-word;
   border: 0;
 }
+.datatable-edit-modal {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  border: none;
+  border-radius: 10px;
+  
+}
+
+.datatable-edit-modal::backdrop {
+  background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+  animation: fade-in 1s;
+}
+
+@keyframes fade-in {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+.users-datatable-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.users-datatable-table tbody tr:last-of-type {
+  border-bottom: 2px solid #6200ff;
+}
+/* .users-datatable-table{
+
+}
+.users-datatable-thead{
+
+}
+.users-datatable-tbody{
+
+}
+.users-datatable-tr{
+
+}
+.users-datatable-td{
+
+} */
