@@ -12,7 +12,6 @@ const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
 // const LearnersRoutes = require("./routes/exampleRouter");
 
-
 require('dotenv').config()
 require('./config/mongoose.config') // database connection
 

@@ -1,6 +1,6 @@
     //import model
     const profileController=(req,res) => {
-        const user = {
+            const user = {
             firstName: 'Kiran',
             lastName: 'Acharya',
             dob: '1995-05-12',
@@ -27,4 +27,9 @@
           };
           res.render("profile", {title:'profile' , user});
     }
-    module.exports={profileController}
+    const profileControllerPost=(req,res) => {
+      console.log(req.body);
+    }
+    module.exports={profileController,profileControllerPost}
+
+    
