@@ -1,32 +1,42 @@
 const Course = require('../models/course.test')
 const { courses } = require('../utils/data')
+/* Dummy Data TESTING TEMP*/
+function arraySum(arr) {
+  let sum = 0
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i]
+  }
+  return sum
+}
+const dummydata = [84, 92, 58, 66, 102, 124, 30, 45, 27, 48, 49, 95]
+
 /**
  * Returns Number of courses created each month for the previous year
- * 
+ *
  * Send a JSON response wtih "coursesCounts" as a LIST
  */
-const getNoCreatedCourses = async () => {
+const NumberOfCoursesInYear = async () => {
   try {
     const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // 30 days ago
-    const interval = 30 * 24 * 60 * 60 * 1000 // 30 days in milliseconds
+    const interval = -(30 * 24 * 60 * 60 * 1000) // 30 days in milliseconds
 
-    const courseCounts = []
+    let courseCounts = []
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 11; i++) {
       const startDate = new Date(monthAgo.getTime() + interval * i)
       const endDate = new Date(startDate.getTime() + interval)
-
+      const startDateString = startDate.toISOString().substring(0, 10)
+      const endDateString = endDate.toISOString().substring(0, 10)
       const count = await Course.countDocuments({
         createdAt: {
-          $gte: startDate,
-          $lt: endDate
+          $gte: endDateString,
+          $lt: startDateString
         }
       })
-      console.log(count)
       courseCounts.push(count)
     }
-
-    return courseCounts;
+    courseCounts = [...dummydata] // DUMMY DATA UNTIL THERE IS DATABASE
+    return courseCounts.reverse()
   } catch (error) {
     console.error("error : couldn't get Courses", error)
   }
@@ -77,4 +87,4 @@ function getPopularCourses(limit = 3) {
   return popularCourses
 }
 
-module.exports = { getPopularCourses,getNoCreatedCourses }
+module.exports = { getPopularCourses, NumberOfCoursesInYear }

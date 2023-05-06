@@ -1,19 +1,83 @@
-  <div class="line-chart-container col-4" >
-  <canvas id="test1" aria-label="Number of new Courses Each Month" role="img"></canvas>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="col-5">
+  <div class="ag-format-container">
+    <div class="ag-courses_box">
+      <div class="ag-courses_item">
+        <div href="#" class="ag-courses-item_container">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_text-box">
+            <span class="ag-courses-item_text">
+              Number of courses in the past year
+            </span>
+          </div>
+          <div class="line-chart-container" >
+            <canvas id="test1" aria-label="Number of new Courses Each Month" role="img"></canvas>
+            </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+function monthsFromNow(months) {
+  const now = new Date();
+  const currentMonthIndex = now.getMonth();
+  const reversedMonths = [...months.slice(currentMonthIndex), ...months.slice(0, currentMonthIndex)].reverse();
+  return reversedMonths;
+}
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"]
+const mothsfromcurrent = monthsFromNow(months).reverse();
   const coursesCounts = <%- JSON.stringify(analytics.NoOfCoursesList) %>;
   const ctx = document.getElementById('test1');
-  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"]
   var coursesCounts_data = coursesCounts;
   var datasetLabel = "Number of Courses"
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: months,
+      labels: mothsfromcurrent,
       datasets: [{
         label: datasetLabel,
         data: coursesCounts_data,
