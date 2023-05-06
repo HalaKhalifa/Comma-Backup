@@ -15,7 +15,7 @@ const getCourse = async (req,res) => {
     const singleCourse = await Course.findById(id);
 
     if ( !singleCourse ) {
-        return res.status(404).json({error: 'No such learner'});
+        return res.status(404).json({error: 'No such course'});
     }
 
     res.status(200).json(singleCourse);
