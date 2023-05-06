@@ -1,9 +1,9 @@
-const User = require("../models/user");
+const User = require("./models/user");
 
 const {
   set_session,
   get_session_loggedIn,
-} = require("../middleware/sessionMiddleWare");
+} = require("./middleware/sessionMiddleWare");
 
 const bcrypt = require("bcrypt");
 

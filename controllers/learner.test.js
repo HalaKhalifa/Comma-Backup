@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const learner = require('../models/learner.test')
+const Course = require('../models/course.test.js')
 
 const getCountryLearners = async () => {
   try {
@@ -51,4 +52,82 @@ const updateLearner = async (req, res) => {
     res.status(500)
   }
 }
-module.exports = { getLearners, updateLearner, getOneLearner, getCountryLearners }
+
+const getNoOflearner = async (req, res) => {
+  try {
+    const NoOflearner = await learner.countDocuments()
+    return NoOflearner
+  } catch (err) {
+    // error
+    console.error(err)
+    res.status(500).send('Internal server error')
+  }
+}
+
+const getTotalEnrolledUserCount = async () => {
+  try {
+    const courses = await Course.find() // retrive all doc as a array
+    let totalEnrolledUserCount = 0
+
+    courses.forEach((course) => {
+      totalEnrolledUserCount += course.enrolledUsers.length
+    })
+    /* enrolledUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ], should Be Like this ,  as array  */
+    return totalEnrolledUserCount
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Internal server error')
+  }
+}
+//returns a promise
+
+//executed when the promise returned by getTotalEnrolledUserCount()
+getTotalEnrolledUserCount()
+  .then((count) => {
+    //console.log('Total enrollment count:' );  testing .
+    return count
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+
+// NoofRegistrationPerMonth
+const NoOfMonthlyRegistration = async () => {
+  try {
+    const registrationCountByMonth = await learner.aggregate([
+      {
+        $group: {
+          _id: { $month: '$createdAt' },
+          count: { $sum: 1 }
+        }
+      }
+    ])
+
+    return registrationCountByMonth //array of objects
+  } catch (error) {
+    console.error(error)
+    throw new Error('Failed to retrieve monthly registration count')
+  }
+}
+NoOfMonthlyRegistration()
+  .then((registrationCountByMonth) => {
+    return registrationCountByMonth
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+
+module.exports = {
+  getLearners,
+  updateLearner,
+  getOneLearner,
+  getNoOflearner,
+  getTotalEnrolledUserCount,
+  NoOfMonthlyRegistration,
+  getCountryLearners
+}

@@ -1,7 +1,11 @@
 //const {getLearners} = require("./learner.test") Commented until collection is filled
-const { getPopularCourses } = require('./course')
-const { getNoCreatedCourses } = require('./course')
-const { getCountryLearners } = require('./learner.test')
+const { getPopularCourses, getNoCreatedCourses, getNoOfCourses } = require('./course')
+const {
+  getCountryLearners,
+  getNoOflearner,
+  getTotalEnrolledUserCount,
+  NoOfMonthlyRegistration
+} = require('./learner.test')
 const getDashboard = async (req, res) => {
   // * temporary context object
   var staticData = [
@@ -36,7 +40,11 @@ const getDashboard = async (req, res) => {
       views: 1000,
       likes: 10000,
       NoOfCoursesList: await getNoCreatedCourses(),
-      NoOfCountryLearners: await getCountryLearners()
+      NoOfCountryLearners: await getCountryLearners(),
+      NoOfCourses: await getNoOfCourses(),
+      NoOflearner: await getNoOflearner(),
+      TotalEnrolledUserCount: await getTotalEnrolledUserCount(),
+      NoOfMonthlyRegistration: await NoOfMonthlyRegistration()
     }
   }
 

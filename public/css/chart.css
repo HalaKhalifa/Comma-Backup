@@ -1,24 +1,17 @@
-.chart-container{
-   
-    float: right;
-    border: 1px solid #f7f7f7;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgb(255, 255, 255);
-  }
-  .AdminCard
-   {
-  width: 20pc;
-  height: 10pc;
-  margin-top: 20px;
-  margin-right: 20px;
+.chart-container {
+  float: right;
+  border: 1px solid #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgb(255, 255, 255);
+}
+
+.cards-container {
+  display: flex; /* set display to flex */
+  flex-direction: row; /* set flex direction to horizontal */
+  justify-content: space-between; /* space out the cards */
+}
+
+.admincard {
+  width: 18rem;
   margin-bottom: 20px;
-  margin-left: 20px;
-  box-shadow: 0 0 5px 0 #52c9c9;
-  
-  }
-  .cards-container {
-    display: flex; /* set display to flex */
-    flex-direction: row; /* set flex direction to horizontal */
-    justify-content: space-between; /* space out the cards */
-  }
-  
+}
