@@ -3,7 +3,7 @@ const express = require('express')
 const dashboardRouter = require('./routes/dashboard')
 const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
 const registrationRoutes = require('./routes/registrationRoutes')
-const route=require('./routes/outline.js');
+const outline=require('./routes/outline.js');
 const app = express()
 const authRoutes = require("./routes/authRoutes");
 const homeRoutes = require("./routes/homeRoutes");
@@ -11,7 +11,7 @@ const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
 // const LearnersRoutes = require("./routes/exampleRouter");
 const coursesPageRoute = require("./routes/paginationRoute");
-const route=require('./routes/singlePageRoute.js');
+const singlePageRoute=require('./routes/singlePageRoute.js');
 
 require("dotenv").config();
 require('./config/mongoose.config') // database connection
@@ -41,10 +41,10 @@ app.use(
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only
 app.use('/signup', registrationRoutes)
-app.use('/',route);
+// app.use('/',route);
 app.use("/", authRoutes);
 app.use("/", homeRoutes);
-app.use('/',route);
+app.use('/outline',singlePageRoute);
 app.get("/courses", coursesPageRoute);
 
 
