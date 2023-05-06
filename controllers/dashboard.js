@@ -1,11 +1,19 @@
 //const {getLearners} = require("./learner.test") Commented until collection is filled
-const { getPopularCourses, getNoCreatedCourses, getNoOfCourses } = require('./course')
+const {
+  getPopularCourses,
+  getNoCreatedCourses,
+  getNoOfCourses,
+  getEnrolledFinished,
+  getAllCoursesTable
+} = require('./course')
 const {
   getCountryLearners,
   getNoOflearner,
   getTotalEnrolledUserCount,
-  NoOfMonthlyRegistration
+  NoOfMonthlyRegistration,
+  getLearners
 } = require('./learner.test')
+
 const getDashboard = async (req, res) => {
   // * temporary context object
   var staticData = [
@@ -33,18 +41,16 @@ const getDashboard = async (req, res) => {
       email: 'jhonDoe@gmail.com'
     },
     analytics: {
-      LearnersList: staticData /*await getLearners() */,
-      popularCoursesData: JSON.stringify(getPopularCourses(4)),
-      CoursesTableData: JSON.stringify(getPopularCourses(10)),
-      users: 100,
-      views: 1000,
-      likes: 10000,
+      LearnersList: await getLearners(),
+      popularCoursesPie: JSON.stringify(await getPopularCourses()),
+      allCoursesTable: JSON.stringify(await getAllCoursesTable()),
       NoOfCoursesList: await getNoCreatedCourses(),
       NoOfCountryLearners: await getCountryLearners(),
       NoOfCourses: await getNoOfCourses(),
       NoOflearner: await getNoOflearner(),
       TotalEnrolledUserCount: await getTotalEnrolledUserCount(),
-      NoOfMonthlyRegistration: await NoOfMonthlyRegistration()
+      NoOfMonthlyRegistration: await NoOfMonthlyRegistration(),
+      enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished())
     }
   }
 
