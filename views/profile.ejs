@@ -6,27 +6,28 @@
         <div class="profile-tab-nav border-right">
           <div class="p-4">
             <div class="img-circle profile-img text-center mb-3">
-              <img src="<%= user.img %>" alt="Image" class="profile-shadow">
+              <img id="img" src="<%= user.img %>" alt="Image"
+                class="profile-shadow">
             </div>
             <h4 class="text-center">Kiran Acharya</h4>
           </div>
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
             aria-orientation="vertical">
-            <a class="nav-link profile-link active" id="account-tab" data-toggle="pill"
-              href="#account" role="tab" aria-controls="account"
-              aria-selected="true">
+            <a class="nav-link profile-link active" id="account-tab"
+              data-toggle="pill" href="#account" role="tab"
+              aria-controls="account" aria-selected="true">
               <i class="fa fa-user text-center mr-1 profile-icon"></i>
               Personal Information
             </a>
-            <a class="nav-link profile-link" id="education-tab" data-toggle="pill"
-              href="#education" role="tab" aria-controls="education"
-              aria-selected="false">
+            <a class="nav-link profile-link" id="education-tab"
+              data-toggle="pill" href="#education" role="tab"
+              aria-controls="education" aria-selected="false">
               <i class="fa fa-university text-center mr-1 profile-icon"></i>
               Education
             </a>
-            <a class="nav-link profile-link" id="communication-tab" data-toggle="pill"
-              href="#communication" role="tab" aria-controls="communication"
-              aria-selected="false">
+            <a class="nav-link profile-link" id="communication-tab"
+              data-toggle="pill" href="#communication" role="tab"
+              aria-controls="communication" aria-selected="false">
               <i class="fa fa-comments text-center mr-1 profile-icon"></i>
               Communication
             </a>
@@ -36,21 +37,22 @@
               <i class="fa fa-briefcase text-center mr-1 profile-icon"></i>
               Career
             </a>
-            <a class="nav-link profile-link" id="interests-tab" data-toggle="pill"
-              href="#interests" role="tab" aria-controls="interests"
-              aria-selected="false">
+            <a class="nav-link profile-link" id="interests-tab"
+              data-toggle="pill" href="#interests-skills" role="tab"
+              aria-controls="interests-skills" aria-selected="false">
               <i class="fa fa-star text-center mr-1 profile-icon"></i>
               Interests & Skills
             </a>
-            <a class="nav-link profile-link" id="password-tab" data-toggle="pill"
-              href="#password" role="tab" aria-controls="password"
-              aria-selected="false">
+            <a class="nav-link profile-link" id="password-tab"
+              data-toggle="pill" href="#password" role="tab"
+              aria-controls="password" aria-selected="false">
               <i class="fa fa-key text-center mr-1 profile-icon"></i>
               Password
             </a>
           </div>
         </div>
-        <div class="tab-content profile-tab-content p-4 p-md-5" id="v-pills-tabContent">
+        <div class="tab-content profile-tab-content p-4 p-md-5"
+          id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="account" role="tabpanel"
             aria-labelledby="account-tab">
             <h3 class="mb-4">Personal Information</h3>
@@ -58,13 +60,15 @@
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>First Name</label>
-                  <input type="text" class="form-control" value="<%= user.firstName %>">
+                  <input type="text" class="form-control"
+                    value="<%= user.firstName %>" id='firstName'>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Last Name</label>
-                  <input type="text" class="form-control" value="<%= user.lastName %>">
+                  <input type="text" class="form-control"
+                    value="<%= user.lastName %>" id="lastName">
                 </div>
               </div>
               <div class="col-md-6">
@@ -75,21 +79,24 @@
                       <input type="date" id="birthday" class='form-control'
                         name="birthday" min="1950-01-01"
                         max="<%= maxDate.toISOString().slice(0,10) %>"
-                        value="<%= user.birthday %>">
-        
+                        value="<%= user.dob %>" id="birthday">
+
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Gender</label>
                   <select name="gender" id="gender" class="form-control">
-                    <option value="Male" <%= user.gender === 'Male' ? 'selected' : '' %>>Male</option>
-                    <option value="Female" <%= user.gender === 'Female' ? 'selected' : '' %>>Female</option>
-                    <option value="other" <%= user.gender === 'other' ? 'selected' : '' %>>I prefer not to answer</option>
+                    <option value="Male" <%=user.gender==='Male' ? 'selected'
+                      : '' %>>Male</option>
+                    <option value="Female" <%=user.gender==='Female'
+                      ? 'selected' : '' %>>Female</option>
+                    <option value="other" <%=user.gender==='other' ? 'selected'
+                      : '' %>>I prefer not to answer</option>
                   </select>
                 </div>
               </div>
-        
+
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Language</label>
@@ -110,47 +117,55 @@
               <div class="col-md-12">
                 <div class="form-group profile-form-group">
                   <label>Bio</label>
-                  <textarea class="form-control" rows="4"><%= user.bio %></textarea>
+                  <textarea class="form-control" rows="4"
+                    id="bio"><%= user.bio %></textarea>
                 </div>
               </div>
             </div>
             <div>
-              <button class="btn btn-primary">Update</button>
+              <button class="btn btn-primary update-btn"
+                id="update-btn-personal">Update</button>
               <button class="btn btn-light">Cancel</button>
             </div>
           </div>
-          <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+          <div class="tab-pane fade" id="education" role="tabpanel"
+            aria-labelledby="education-tab">
             <h3 class="mb-4">Education</h3>
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group profile-form-group">
                   <label>Level of Education</label>
-                    <select name="education-level" id="education-level" class="form-control">
-                      <option value="school">Highschool</option>
-                      <option value="diploma">Diploma</option>
-                      <option value="bachelors">Bachelors</option>
-                      <option value="master">Masters</option>
-                      <option value="phd">Doctorate</option>
-                    </select>
-                                  </div>
+                  <select name="education-level" id="education-level"
+                    class="form-control">
+                    <option value="school">Highschool</option>
+                    <option value="diploma">Diploma</option>
+                    <option value="bachelors">Bachelors</option>
+                    <option value="master">Masters</option>
+                    <option value="phd">Doctorate</option>
+                  </select>
+                </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group profile-form-group">
                   <label>Major</label>
-                  <input class="form-control" value="<%= user.major %>">
+                  <input id="major" class="form-control"
+                    value="<%= user.major %>">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group profile-form-group">
                   <label>Finished Courses</label>
-                  <input class="form-control" value="<%= user.finishedCourses %>">
+                  <input id='finished-courses' class="form-control"
+                    value="<%= user.finishedCourses %>">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group profile-form-group">
                   <label>Expected graduation year</label>
-                  <select name="graudation-year" id="graudation-year" class="form-control">
-                    <option value="Graduated">Graduated</option>
+                  <select name="graudation-year" id="graudation-year"
+                    class="form-control">
+                    <option id="graduation-year" value="Graduated">Graduated
+                    </option>
                     <option value="2023">2023</option>
                     <option value="2024">2024</option>
                     <option value="2025">2025</option>
@@ -165,12 +180,13 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-primary">Update</button>
+              <button class="btn btn-primary update-btn"
+                id="update-btn-education">Update</button>
               <button class="btn btn-light">Cancel</button>
             </div>
           </div>
-          
-      
+
+
           <div class="tab-pane fade" id="communication" role="tabpanel"
             aria-labelledby="communication-tab">
             <h3 class="mb-4">Communication</h3>
@@ -178,14 +194,15 @@
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Email Address</label>
-                  <input type="email" class="form-control"
+                  <input id="email" type="email" class="form-control"
                     value="kiran.acharya@example.com">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Phone Number</label>
-                  <input type="text" class="form-control" value="123-456-7890">
+                  <input id="phone" type="text" class="form-control"
+                    value="123-456-7890">
                 </div>
               </div>
               <div class="col-md-6">
@@ -203,20 +220,21 @@
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Social Media & Connected Accounts</label>
-                  <input type="text" class="form-control "
+                  <input id='social-media' type="text" class="form-control "
                     value="@kiran_acharya">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Time Availability</label>
-                  <input type="text" class="form-control"
+                  <input id='time-availability' type="text" class="form-control"
                     value="Weekdays after 6pm, weekends anytime">
                 </div>
               </div>
             </div>
             <div>
-              <button class="btn btn-primary">Update</button>
+              <button class="btn btn-primary update-btn"
+                id="update-btn-communication">Update</button>
               <button class="btn btn-light">Cancel</button>
             </div>
           </div>
@@ -227,96 +245,244 @@
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Current Occupation</label>
-                  <input type="text" class="form-control"
-                    value="Software Engineer">
+                  <input id="current-occupation" type="text"
+                    class="form-control" value="Software Engineer">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Professional Background</label>
-                  <input type="text" class="form-control"
-                    value="Computer Science">
+                  <input id="professional-background" type="text"
+                    class="form-control" value="Computer Science">
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group profile-form-group">
                   <label>Career Goals</label>
-                  <textarea class="form-control"
+                  <textarea class="form-control" id="career-goals"
                     rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea>
                 </div>
               </div>
             </div>
             <div>
-              <button class="btn btn-primary">Update</button>
+              <button class="btn btn-primary update-btn"
+                id="update-btn-career">Update</button>
               <button class="btn btn-light">Cancel</button>
             </div>
           </div>
-          <div class="tab-pane fade" id="interests" role="tabpanel" aria-labelledby="interests-tab">
+          <div class="tab-pane fade" id="interests-skills" role="tabpanel"
+            aria-labelledby="interests-tab">
             <h3 class="mb-4">Interests & Skills</h3>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Interests and Hobbies</label>
-                  <textarea class="form-control" rows="4">Reading, hiking, cooking</textarea>
+                  <textarea id="interests" class="form-control"
+                    rows="4">Reading, hiking, cooking</textarea>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Learning Goals</label>
-                  <textarea class="form-control" rows="4">Learn a new programming language, improve public speaking skills</textarea>
+                  <textarea id="learning-goals" class="form-control"
+                    rows="4">Learn a new programming language, improve public speaking skills</textarea>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Soft Skills</label>
-                  <textarea class="form-control" rows="4">Communication, teamwork, time management</textarea>
+                  <textarea id="soft-skills" class="form-control"
+                    rows="4">Communication, teamwork, time management</textarea>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Hard Skills</label>
-                  <textarea class="form-control" rows="4">JavaScript, Python, HTML/CSS</textarea>
+                  <textarea id="hard-skills" class="form-control"
+                    rows="4">JavaScript, Python, HTML/CSS</textarea>
                 </div>
               </div>
             </div>
             <div>
-              <button class="btn btn-primary">Update</button>
+              <button class="btn btn-primary update-btn"
+                id="update-btn-interest">Update</button>
               <button class="btn btn-light">Cancel</button>
             </div>
           </div>
-          <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+          <div class="tab-pane fade" id="password" role="tabpanel"
+            aria-labelledby="password-tab">
             <h3 class="mb-4">Password</h3>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group profile-form-group">
                   <label>Current Password</label>
-                  <input type="password" class="form-control" placeholder="Enter your current password">
+                  <input type="password" class="form-control"
+                    placeholder="Enter your current password">
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group profile-form-group">
                   <label>New Password</label>
-                  <input type="password" class="form-control" placeholder="Enter a new password">
+                  <input type="password" class="form-control"
+                    placeholder="Enter a new password">
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group profile-form-group">
                   <label>Confirm New Password</label>
-                  <input type="password" class="form-control" placeholder="Confirm your new password">
+                  <input type="password" class="form-control"
+                    placeholder="Confirm your new password">
                 </div>
               </div>
             </div>
             <div>
-              <button class="btn btn-primary">Update</button>
+              <button class="btn btn-primary update-btn"
+                id="update-btn-password">Update</button>
               <button class="btn btn-light">Cancel</button>
             </div>
           </div>
-          
-          
+
+
 
         </div>
       </div>
   </section>
+  <script>
+    console.log('hi');
+    let personalData = {
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
+      dob: document.getElementById('birthday').value,
+      gender: document.getElementById('gender').value,
+      language: document.getElementById('languages').value,
+      bio: document.getElementById('bio').value
+    }
+    let educationData = {
+      educationLevel: document.getElementById('education-level').value,
+      major: document.getElementById('major').value,
+      finishedCourses: document.getElementById('finished-courses').value,
+      graduationYear: document.getElementById('graduation-year').value
+    }
+    /*Personal Info Update Button*/
+    var updateBtn = document.getElementById('update-btn-personal');
+    updateBtn.addEventListener('click', async () => {
+      personalData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        dob: document.getElementById('birthday').value,
+        gender: document.getElementById('gender').value,
+        language: document.getElementById('languages').value,
+        bio: document.getElementById('bio').value
+      }
+      fetch('/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(personalData)
+      })
+        .then(response => response.json())
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    })
+    /*Education Update Button*/
+    var updateBtnEducation = document.getElementById('update-btn-education');
+    updateBtnEducation.addEventListener('click', async () => {
+      educationData = {
+        educationLevel: document.getElementById('education-level').value,
+        major: document.getElementById('major').value,
+        finishedCourses: document.getElementById('finished-courses').value,
+        graduationYear: document.getElementById('graduation-year').value
+      }
+      fetch('/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(educationData)
+      })
+        .then(response => response.json())
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    })
+    var communicationData = {
+      emailAddress: document.getElementById('email').value,
+      phoneNumber: document.getElementById('phone').value,
+      preferredCommunication: document.getElementById('preferred-method').value,
+      socialMedia: document.getElementById('social-media').value,
+      timeAvailability: document.getElementById('time-availability').value,
+    }
+    var updateBtnCommunication = document.getElementById('update-btn-communication');
+    updateBtnCommunication.addEventListener('click', async () => {
+      communicationData = {
+        emailAddress: document.getElementById('email').value,
+        phoneNumber: document.getElementById('phone').value,
+        preferredCommunication: document.getElementById('preferred-method').value,
+        socialMedia: document.getElementById('social-media').value,
+        timeAvailability: document.getElementById('time-availability').value
+      }
+      fetch('/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(communicationData)
+      })
+    })
+    var careerData = {
+      currentOccupation: document.getElementById('current-occupation').value,
+      professionalBackground: document.getElementById('professional-background').value,
+      careerGoals: document.getElementById('career-goals').value
+    }
+    var updateBtnCareer = document.getElementById('update-btn-career');
+    updateBtnCareer.addEventListener('click', async () => {
+      careerData = {
+        currentOccupation: document.getElementById('current-occupation').value,
+        professionalBackground: document.getElementById('professional-background').value,
+        careerGoals: document.getElementById('career-goals').value,
+      }
+      fetch('/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(careerData)
+      })
+        .then(response => response.json())
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    })
+    var interestData = {
+      interests: document.getElementById('interests').value,
+      learningGoals: document.getElementById('learning-goals').value,
+      softSkills: document.getElementById('soft-skills').value,
+      hardSkills: document.getElementById('hard-skills').value,
+    }
+    var updateBtnInterest = document.getElementById('update-btn-interest');
+    updateBtnInterest.addEventListener('click', async () => {
+      interestData = {
+        interests: document.getElementById('interests').value,
+        learningGoals: document.getElementById('learning-goals').value,
+        softSkills: document.getElementById('soft-skills').value,
+        hardSkills: document.getElementById('hard-skills').value,
+      }
+      fetch('/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(interestData)
+      })
+        .then(response => response.json())
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    })
+  </script>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
