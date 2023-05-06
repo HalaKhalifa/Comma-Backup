@@ -20,18 +20,33 @@ const getCountryLearners = async () => {
   }
 }
 
-const getLearners = async () => {
+const getLearners = async (req, res) => {
   try {
-    const learners = await learner.find()
-    return learners
+    let query = req.query
+    let skip = query.offset || 0
+    let limit = query.limit || 0
+    let search = query.search || ''
+    const subtext = '?limit'
+    let index = search.indexOf(subtext)
+    if (index !== -1) {
+      search = search.substring(0, index)
+    }
+    let learners = await learner
+      .find({ name: { $regex: search, $options: 'i' } })
+      .skip(skip)
+      .limit(limit)
+      .exec()
+    const data = { learners: learners, count: await learner.estimatedDocumentCount() }
+    res.status(200).json(data)
   } catch (error) {
     console.error("error : couldn't get Learners", error)
     return null
   }
 }
-const getOneLearner = async (req, res) => {
+
+const getOneLearner = async (condition) => {
   try {
-    const doc = await learner.findOne(req.body.condition).exec()
+    let doc = await learner.findOne(condition).exec()
     return doc
   } catch (error) {
     console.error("error : couldn't get Learner", error)
@@ -39,14 +54,51 @@ const getOneLearner = async (req, res) => {
   }
 }
 const updateLearner = async (req, res) => {
+  function hasNonSpaceCharacters(str) {
+    return /\S/.test(str)
+  }
   try {
-    var doc = await getOneLearner(req, res)
-    Object.keys(req.body.updatedata).forEach((key) => {
-      doc[key] = req.body.updatedata[key]
+    let message = {}
+    let doc = await getOneLearner(req.body.condition)
+    Object.keys(req.body.updatedata).forEach(async (key) => {
+      req.body.updatedata.email = req.body.updatedata.email.trim()
+      if (await getOneLearner(req.body.updatedata)) {
+        message = {
+          action: 'Updating ' + doc[key],
+          status: 'fail',
+          reason: 'Value Must Be Unique'
+        }
+        let jsonRes = { message: "Couldn't update " + key, changes: message }
+        res.status(400).send(jsonRes)
+        return null
+      } else if (!doc) {
+        message = {
+          action: 'Updating ',
+          status: 'fail',
+          reason: "Value to be Updated Doesn't Exist"
+        }
+        let jsonRes = { message: "Couldn't update " + key, changes: message }
+        res.status(400).send(jsonRes)
+        return null
+      } else if (hasNonSpaceCharacters(req.body.updatedata[key])) {
+        message = {
+          action: 'Updating ' + doc[key] + ' to ' + req.body.updatedata[key].trim(),
+          status: 'success'
+        }
+        doc[key] = req.body.updatedata[key].trim()
+        let jsonRes = { message: 'Update Success ' + key, changes: message }
+        res.status(200).json(jsonRes)
+        await doc.save()
+      } else if (!hasNonSpaceCharacters(req.body.updatedata[key])) {
+        message = {
+          action: 'Updating ' + doc[key],
+          status: 'fail',
+          reason: 'No Value'
+        }
+        let jsonRes = { message: "Couldn't update " + key, changes: message }
+        res.status(400).send(jsonRes)
+      }
     })
-    await doc.save()
-    res.status(200).send()
-    return doc
   } catch (error) {
     console.error("error : couldn't update Learner", error)
     res.status(500)

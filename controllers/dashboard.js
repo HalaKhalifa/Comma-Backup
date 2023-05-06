@@ -41,7 +41,6 @@ const getDashboard = async (req, res) => {
       email: 'jhonDoe@gmail.com'
     },
     analytics: {
-      LearnersList: await getLearners(),
       popularCoursesPie: JSON.stringify(await getPopularCourses()),
       allCoursesTable: JSON.stringify(await getAllCoursesTable()),
       NoOfCoursesList: await getNoCreatedCourses(),

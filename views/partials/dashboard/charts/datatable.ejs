@@ -1,16 +1,21 @@
 <div>
-  <dialog id="datatable-edit-success-alert">
+  <dialog id="datatable-edit-success-alert" style="border: none; box-shadow: 5px 10px #6f00ff;
+  border-radius: 8px;">
     <div class="h4">Changed Successfully</div>
+  </dialog>
+  <dialog id="datatable-edit-fail-alert" style="border: none; box-shadow: 5px 10px #6f00ff;
+  border-radius: 8px;">
+    <div class="h4">an error occurred when trying to change data</div>
   </dialog>
     <div>
       <dialog class="datatable-edit-modal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header mb-2">
-              <div class="h4">Enter New Value</div>
+              <div class="h4">Enter New Email</div>
             </div>
             <div class="modal-body mb-1">
-              <input type="text" id="inputField" placeholder="Enter Value Here" />
+              <input type="text" id="inputField-email-datatable" placeholder="Enter Value Here" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary"  id="datatable-cancel-edit-button">Cancel</button>
@@ -20,84 +25,10 @@
         </div>
       </dialog>
     </div>
-    <script>
-      // Define the save function outside the showEditModal function
-      function saveData(email) {
-        const dialog = document.querySelector(".datatable-edit-modal")
-        var value = document.getElementById("inputField").value;
-        console.log("Value entered: " + value);
-        dialog.close()
-    
-        fetch('/dashboard/', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ "condition": {"email":email} , "updatedata" : { "email" : value}})
-        })
-        .then(response => response.json())
-        .then(response => console.log(JSON.stringify(response)))
-    
-        // Remove the event listener for the save button
-        document.getElementById("datatable-save-edit-button").removeEventListener("click", saveData);
-      }
-    
-      function showEditModal(email) {
-        const dialog = document.querySelector(".datatable-edit-modal")
-        dialog.showModal()
-    
-        // Add the event listener for the save button only if it hasn't been added before
-        if (!document.getElementById("datatable-save-edit-button").hasAttribute("data-listener-added")) {
-          document.getElementById("datatable-save-edit-button").addEventListener("click", function() {
-            saveData(email);
-            document.getElementById("datatable-edit-success-alert").showModal();
-            setTimeout(function() {
-              document.getElementById("datatable-edit-success-alert").close();
-}, 1000);
-          });
-          document.getElementById("datatable-save-edit-button").setAttribute("data-listener-added", "true");
-        }
-      }
-    
-      document.getElementById("datatable-cancel-edit-button").addEventListener("click", function() {
-        const dialog = document.querySelector(".datatable-edit-modal")
-        dialog.close()
-    
-        // Remove the event listener for the save button
-        document.getElementById("datatable-save-edit-button").removeEventListener("click", saveData);
-      });
-    </script>
        <div class="col-6">
         <h3>Users</h3>
     <div id="datatable-users-table"></div>
       </div> 
     <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-    <script>
-        const datatable_learners_data = <%- JSON.stringify(analytics.LearnersList) %>;
-        const datatable_learners_grid = new gridjs.Grid({
-            sort: true,
-            resizable: true,
-            search:true,
-            fixedHeader: true,
-            pagination: {
-                limit: 10,
-            },
-            columns: ["Name", "Email", "active",{name : "Action", formatter: (_, row) => gridjs.html(`<button type="button" class="edit-button" data-email="${row.cells[1].data}">Edit</button>`)}],
-            data:datatable_learners_data
-        }).render(document.getElementById("datatable-users-table"));
-
-
-        document.addEventListener("click", (e) => {
-            if (e.target && e.target.classList.contains("edit-button")) {
-                const email = e.target.getAttribute("data-email");
-                handleEdit(email);
-            }
-        });
-
-        // function to handle edit operation
-        function handleEdit(email) {
-            showEditModal(email)
-        }
-    </script>
+    <script src="js/dashboard/userstable.js"></script>
     </div>
