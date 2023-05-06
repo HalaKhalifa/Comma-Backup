@@ -32,6 +32,8 @@ app.use(
     saveUninitialized: false,
   })
 );
+const route=require('./routes/singlePageRoute.js');
+app.use('/',route);
 
 
 // -- Routes
