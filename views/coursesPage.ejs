@@ -1,11 +1,12 @@
 <div class="courses-container">
-    <div class="course-4cards-row">
-<%- include('CourseCard',{ coursesNames: coursesNames },{courseIMG:courseIMG}); %>
-</div>
+    
+    <div class="courses-page-sorting">
+        <%- include('sorting'); %>
+       </div>
 
-<div class="course-4cards-row">
-    <%- include('CourseCard',{ coursesNames: coursesNames },{courseIMG:courseIMG}); %>
-    </div>
+    <div class="course-4cards-row">
+<%- include('CourseCard',{pageCourses:pageCourses }); %>
+</div>
 
     <div class="courses-page-pagination">
     <%- include('pagination'); %>

@@ -11,10 +11,7 @@ const homeRoutes = require("./routes/homeRoutes");
 const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
 // const LearnersRoutes = require("./routes/exampleRouter");
-
-
-require('dotenv').config()
-require('./config/mongoose.config') // database connection
+const coursesPageRoute = require("./routes/paginationRoute");
 
 //-- Express configuration & Middleware
 app.set("view engine", "ejs"); // use EJS
@@ -41,7 +38,7 @@ app.use('/signup', registrationRoutes)
 app.use('/',route);
 app.use("/", authRoutes);
 app.use("/", homeRoutes);
-
+app.get("/courses", coursesPageRoute);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`server running on port ${process.env.SERVER_PORT}`)
