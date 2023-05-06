@@ -24,27 +24,27 @@
             },
             zoomOnScroll: false,
             series: {
-regions: [{
-  attribute: "fill",
-  legend: {
-    title: "Top Visitors",
-  },
-  scale: {
-    Jordan: "#c79efd",
-    "Palestine": "#ffc371",
-    Egypt: "#08d191",
-    USA:"#FF0000"
-  },
-  values: {
-    // But when dealing with regions's series you should specify the region key.
-    PS: "Palestine",
-    JO: "Jordan",
-    IL: "Palestine",
-    EG: "Egypt",
-    US: "USA",
-  },
-}]
-}
+            regions: [{
+              attribute: "fill",
+              legend: {
+                title: "Top Visitors",
+              },
+              scale: {
+                Jordan: "#c79efd",
+                "Palestine": "#ffc371",
+                Egypt: "#08d191",
+                USA:"#FF0000"
+              },
+              values: {
+                // But when dealing with regions's series you should specify the region key.
+                PS: "Palestine",
+                JO: "Jordan",
+                IL: "Palestine",
+                EG: "Egypt",
+                US: "USA",
+              },
+            }]
+            }
         });
         window.addEventListener("resize", () => {
             map.updateSize();
