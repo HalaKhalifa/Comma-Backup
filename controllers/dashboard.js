@@ -4,16 +4,15 @@ const {
   getNoCreatedCourses,
   getNoOfCourses,
   getEnrolledFinished,
-  getAllCoursesTable
+  getAllCoursesTable,
+  NumberOfCoursesInYear
 } = require('./course')
 const {
   getCountryLearners,
   getNoOflearner,
   getTotalEnrolledUserCount,
-  NoOfMonthlyRegistration,
-  getLearners
+  NoOfMonthlyRegistration
 } = require('./learner.test')
-
 const getDashboard = async (req, res) => {
   // * temporary context object
   var staticData = [
@@ -43,7 +42,7 @@ const getDashboard = async (req, res) => {
     analytics: {
       popularCoursesPie: JSON.stringify(await getPopularCourses()),
       allCoursesTable: JSON.stringify(await getAllCoursesTable()),
-      NoOfCoursesList: await getNoCreatedCourses(),
+      NoOfCoursesList: await NumberOfCoursesInYear(),
       NoOfCountryLearners: await getCountryLearners(),
       NoOfCourses: await getNoOfCourses(),
       NoOflearner: await getNoOflearner(),

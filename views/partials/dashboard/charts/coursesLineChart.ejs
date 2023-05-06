@@ -1,9 +1,24 @@
-<div class="line-chart-container col-4" >
-  <canvas id="courses-line-chart-dashboard-months" aria-label="Number of new Courses Each Month" role="img"></canvas>
+
+  <div class="col-5">
+  <div class="ag-format-container">
+    <div class="ag-courses_box">
+      <div class="ag-courses_item">
+        <div href="#" class="ag-courses-item_container">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_text-box">
+            <span class="ag-courses-item_text">
+              Number of courses in the past year
+            </span>
+          </div>
+          <div class="line-chart-container" >
+            <canvas id="courses-line-chart-dashboard-months" aria-label="Number of new Courses Each Month" role="img"></canvas>
+            </div>
+        </div>
+      </div>
+    </div>
   </div>
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
   const coursesCounts = <%- JSON.stringify(analytics.NoOfCoursesList) %>;
   const ctx = document.getElementById('courses-line-chart-dashboard-months');
@@ -85,3 +100,8 @@
   });
   
 </script>
+<script>
+const coursesCounts = <%- JSON.stringify(analytics.NoOfCoursesList) %>;
+</script>
+</script>
+<script src="js/dashboard/courseyearlinechart.js"></script>
