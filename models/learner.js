@@ -68,7 +68,7 @@ const learnerSchema = new Schema({
   password:{
     type: String,
     required: true
-  }
+  } 
   /*
   ,
   phoneNumber: {

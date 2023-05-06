@@ -1,27 +1,17 @@
 <canvas id="registrationlinechart"> </canvas>
 <script>
+const NoOfMonthlyRegistration = <%-JSON.stringify(analytics.NoOfMonthlyRegistration)%>;
+const months = NoOfMonthlyRegistration.map((item) => item._id); 
+const counts = NoOfMonthlyRegistration.map((item) => item.count);
   const rlc = document.getElementById('registrationlinechart')
   const myregistrationChart = new Chart(rlc, {
     type: 'line',
     data: {
-      labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ],
+      labels:months ,
       datasets: [
         {
           label: 'Registered Users',
-          data: [0, 100, 200, 340, 200, 500, 300, 700, 800, 900, 100, 550], //Todo
+          data: counts, 
           borderColor: '#AFEEEE',
           backgroundColor: '#87CEEB',
           borderWidth: 3
