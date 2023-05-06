@@ -1,5 +1,5 @@
 const { getLearners } = require('./learner.test')
-const { getPopularCourses, getEnrolledFinished, getCourses } = require('./course')
+const { getPopularCourses, getEnrolledFinished, getAllCoursesTable } = require('./course')
 
 const getDashboard = async (req, res) => {
   // * temporary context object
@@ -13,9 +13,9 @@ const getDashboard = async (req, res) => {
     },
     analytics: {
       LearnersList: await getLearners(),
-      popularCoursesData: JSON.stringify(await getPopularCourses(5)),
-      CoursesTableData: JSON.stringify(await getCourses(55)),
-      enrolledFinished: JSON.stringify(await getEnrolledFinished(10))
+      popularCoursesPie: JSON.stringify(await getPopularCourses()),
+      allCoursesTable: JSON.stringify(await getAllCoursesTable()),
+      enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished())
     }
   }
 

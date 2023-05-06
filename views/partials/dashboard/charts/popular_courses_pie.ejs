@@ -7,7 +7,7 @@
       <div class="align-self-center w-100">
         <div class="py-3">
           <div class="chart chart-xs">
-            <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesData %> ></canvas>
+            <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesPie %> ></canvas>
           </div>
         </div>
       </div>
@@ -17,22 +17,22 @@
 
 <script>
   const pieElement = document.getElementById('popular-courses-pie')
-  // const popularCoursesData = JSON.parse(pieElement.dataset.courses)
-  const popularCoursesData = <%- analytics.popularCoursesData %>;
+  // const popularCoursesPie = JSON.parse(pieElement.dataset.courses)
+  const popularCoursesPie = <%- analytics.popularCoursesPie %>;
   ;(async () => {
     new Chart(pieElement, {
       type: 'pie',
       data: {
-        labels: popularCoursesData.map((course) => course.title),
+        labels: popularCoursesPie.map((course) => course.title),
         datasets: [
           // * this can be toggled to show different data points
           // {
           //   label: ' Views',
-          //   data: popularCoursesData.map((course) => course.views)
+          //   data: popularCoursesPie.map((course) => course.views)
           // },
           {
             label: ' %',
-            data: popularCoursesData.map((course) => course.percentage)
+            data: popularCoursesPie.map((course) => course.percentage)
           },
         ]
       }

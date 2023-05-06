@@ -29,12 +29,12 @@ const getNumbersOfCoursesCreatedInPrevYear = async (req, res) => {
 }
 
 /**
- * ### Returns an array of popular courses.
- * @param {Number} limit - The number of courses to return. **Default = `3`**.
- * @param {Number} others - total sum of all other courses. **Default = `false`**.
+ * #### Returns an array of popular courses.
+ * @param {Number} limit - The number of courses to return. **Default = `7`**.
+ * @param {Boolean} others - total sum of all other courses. **Default = `false`**.
  * @returns {Array} An array of popular courses[limit + 1] (with others object if added)
  */
-async function getPopularCourses(limit = 3, others = false) {
+async function getPopularCourses(limit = 5, others = false) {
   let courses = await getCourses(limit, 'DESC')
   courses = courses.reduce((result, course) => {
     if (course.title)
@@ -83,7 +83,7 @@ async function getPopularCourses(limit = 3, others = false) {
 }
 
 /**
- * ### Returns an array containing enrolled & finished courses.
+ * #### Returns an array containing enrolled & finished courses.
  * @param {Number} limit - The number of courses to return. **Default = `10`**.
  * @returns {Array} An array of courses with enrolled & finished properties.
  */
@@ -104,13 +104,49 @@ async function getEnrolledFinished(limit = 10) {
   return sortedEnrolledFinished.slice(0, limit)
 }
 
-// todo: this function should be seperated into a service file
-async function getCourses(limit = 100, sort = 0) {
+/**
+ * #### returns all(currently limited) courses.
+ * @param {Number} limit - The number of courses to query. **Default = `100`**.
+ * @param {Boolean} sort - defines the sorting of the records. `'ASC'` | `'DESC'` | `false`. Default = `false`.
+ * @returns {Array} An array of course objects.
+ */
+async function getAllCoursesTable(limit = 100) {
+  // todo: fucntionality should be changed to return a range of courses
+  try {
+    let courses = await getCourses(limit)
+    console.log('getAllCoursesTable 1~ courses:', courses)
+
+    courses = courses.reduce((result, course) => {
+      if (course.title)
+        result.push({
+          title: course.title?.substring(0, 40) + course.title?.length > 40 ? '...' : '',
+          enrolled: course.enrolledUsers,
+          rating: course.rating,
+          stars: course.stars,
+          // todo: change totalHours to real data when ready, this is randomly generated
+          totalHours: course.totalHours | (Math.random() * 100)
+        })
+      return result
+    }, [])
+    console.log('courses ~ courses:', courses)
+    return courses
+  } catch (error) {
+    console.error("error : couldn't get Courses", error)
+    return null
+  }
+}
+
+/**
+ * #### queries courses schema.
+ * @param {Number} limit - The number of courses to query. **Default = `100`**.
+ * @param {Boolean} sort - defines the sorting of the records. `'ASC'` | `'DESC'`, **Default** = `false`.
+ * @returns {Array} An array of course objects.
+ */
+async function getCourses(limit = 100, sort = false) {
   try {
     if (sort === 'DESC') sort = -1
     else if (sort === 'ASC') sort = 1
-    else sort = 0
-
+    else sort = false
     const courses = await Course.find().sort({ enrolledUsers: sort }).limit(limit)
     return courses
   } catch (error) {
@@ -119,7 +155,10 @@ async function getCourses(limit = 100, sort = 0) {
   }
 }
 
-// todo: this function should be seperated into a service file
+/**
+ * #### queries aggregate sum function on enrolled users.
+ * @returns {Number} total sum of enrolled users.
+ */
 async function getCoursesEnrolls() {
   try {
     const sum = await Course.aggregate([
@@ -136,12 +175,11 @@ async function getCoursesEnrolls() {
     return null
   }
 }
-// todo: a seperate function to use courses to display in table
-// asyn function() {
 
 module.exports = {
   getPopularCourses,
   getNumbersOfCoursesCreatedInPrevYear,
   getEnrolledFinished,
-  getCourses
+  getCourses,
+  getAllCoursesTable
 }
