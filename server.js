@@ -11,6 +11,7 @@ const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
 // const LearnersRoutes = require("./routes/exampleRouter");
 const coursesPageRoute = require("./routes/paginationRoute");
+const route=require('./routes/singlePageRoute.js');
 
 require("dotenv").config();
 require('./config/mongoose.config') // database connection
@@ -32,8 +33,8 @@ app.use(
     saveUninitialized: false,
   })
 );
-const route=require('./routes/singlePageRoute.js');
-app.use('/',route);
+
+
 
 
 // -- Routes
@@ -43,6 +44,7 @@ app.use('/signup', registrationRoutes)
 app.use('/',route);
 app.use("/", authRoutes);
 app.use("/", homeRoutes);
+app.use('/',route);
 app.get("/courses", coursesPageRoute);
 
 
