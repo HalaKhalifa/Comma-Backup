@@ -1,5 +1,5 @@
 const Course = require('../models/course')
-const { courses } = require('../utils/data')
+//const { courses } = require('../utils/data')
 
 const getNumbersOfCoursesCreatedInPrevYear = async (req, res) => {
     try {
