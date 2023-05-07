@@ -6,32 +6,18 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear
-} = require('./course')
+} = require('./dashboardCourses')
 const {
   getCountryLearners,
   getNoOflearner,
   getTotalEnrolledUserCount,
   NoOfMonthlyRegistration
 } = require('./learner.test')
+const { usersData } = require('../utils/dashboard')
+
 const getDashboard = async (req, res) => {
   // * temporary context object
-  var staticData = [
-    {
-      name: 'Yaser Jom3a',
-      email: 'Yaser@Jom3a.com',
-      active: 'online'
-    },
-    {
-      name: 'A7mad Med7at',
-      email: 'A7mad@Med7at.com',
-      active: 'offline'
-    },
-    {
-      name: 'George Kordahi',
-      email: 'George@Kordahi.com',
-      active: 'online'
-    }
-  ]
+  const staticData = usersData
   const context = {
     title: 'Dashboard',
     description: 'Dashboard page description',
@@ -46,7 +32,8 @@ const getDashboard = async (req, res) => {
       NoOfCountryLearners: await getCountryLearners(),
       NoOfCourses: await getNoOfCourses(),
       NoOflearner: await getNoOflearner(),
-      TotalEnrolledUserCount: await getTotalEnrolledUserCount(),
+      // TotalEnrolledUserCount: await getTotalEnrolledUserCount(), // TODO: fix this function
+      TotalEnrolledUserCount: [],
       NoOfMonthlyRegistration: await NoOfMonthlyRegistration(),
       enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished())
     }

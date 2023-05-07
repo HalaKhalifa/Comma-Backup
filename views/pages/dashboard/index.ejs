@@ -6,24 +6,23 @@
 					<%- include('../../partials/dashboard/navbar'); %>
 					<main class="content">
 						<div class="row">
-						<%- include('../../partials/dashboard/charts/coursesLineChart'); %>
+						<%- include('../../partials/dashboard/charts/enrolled_finished_courses'); %>
 						<%- include('../../partials/dashboard/charts/popular_courses_pie'); %>
 					</div>
 					<div class="row">
 						<%- include('../../partials/dashboard/charts/world-map'); %>
-						<%- include('../../partials/dashboard/charts/datatable'); %>
-					</div>
-					<div class="row">
-						<% include('../../partials/dashboard/charts/numberscard' ); %>
-						<%- include('../../partials/dashboard/charts/all_courses_table'); %>
 					</div>
 					<div class="row">
 						<%- include('../../partials/dashboard/charts/trafficBarchart'); %>
 						<%- include('../../partials/dashboard/charts/registrationlinechart'); %>
 					</div>
 					<div class="row">
-						<%- include('../../partials/dashboard/charts/enrolled_finished_courses'); %>
-						
+						<% include('../../partials/dashboard/charts/numberscard' ); %>
+						<%- include('../../partials/dashboard/charts/all_courses_table'); %>
+					</div>
+					<div class="row">
+						<%- include('../../partials/dashboard/charts/coursesLineChart'); %>
+						<%- include('../../partials/dashboard/charts/datatable'); %>
 					</div>
 					</main>
 				</div>
