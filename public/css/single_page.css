@@ -62,8 +62,10 @@ div.card-header-r{
   }
   .num-enroll{
     margin-top: 27px;
-    width: 178px;
-    margin-left: 99px;
+    width: max-content;
+    margin-left: 78px;
+    display: flex;
+
   }
 #course-name{
   color: #1f1f1f;
@@ -105,7 +107,6 @@ div#wrapper {
     width: 61rem;
     margin-top: 78px;
 }
-
  .description ul{
    display: flex;
     flex-wrap: wrap;
@@ -123,8 +124,6 @@ div#wrapper {
     font-weight: 400;
     margin-bottom: 16px;
     min-height: 24px;
-
-   
   }
   #check{
    color: #747aff;
@@ -161,9 +160,15 @@ div#wrapper {
     color: #b3ccff	;
    font-size: 1.8rem;
  }
+ #distance{
+  width: 10px;
+ }
  #outline{
    color: #343232;
    margin-top: 40px;
    height: 55px;
   margin-left: 12px;
+ }
+ #enrolledUsers{
+  font-weight: bold;
  }

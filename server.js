@@ -47,7 +47,7 @@ app.use("/", homeRoutes);
 // app.use('/',route);
 app.use("/", authRoutes);
 app.use("/", homeRoutes);
-app.use('/outline',singlePageRoute);
+app.get('/outline',singlePageRoute);
 app.get("/courses", coursesPageRoute);
 
 

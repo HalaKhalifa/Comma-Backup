@@ -77,13 +77,13 @@
                         <% } %>
                         <% displayRatingStars(singleCourse.stars) %>
                       </div>
-                    <p class="reviews">(<%= singleCourse.rating %>)</p>
+                    <p class="reviews">(<%= singleCourse.rating %>) reviews</p>
                     </div>
                     <div class="enroll">
                     <button type="button" class="btn btn-primary">Enroll</button>
                     <span class="num-enroll"> 
-                        <strong> <%= singleCourse.enrolledUsers %> </strong>
-                        already enrolled
+                       <div id="enrolledUsers"><%= singleCourse.enrolledUsers %></div><div id="distance"></div>
+                       <div>already enrolled</div> 
                     </span>
                 </div>
                 </div>
