@@ -7,12 +7,25 @@ function monthsFromNow(months) {
   ].reverse()
   return reversedMonths
 }
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const mothsfromcurrent = monthsFromNow(months).reverse()
-const ctx = document.getElementById('test1')
+var months_list_short = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+const mothsfromcurrent = monthsFromNow(months_list_short).reverse()
+const courses_dashboardLineChart = document.getElementById('courses-line-chart-dashboard-months')
 var coursesCounts_data = coursesCounts
 var datasetLabel = 'Number of Courses'
-new Chart(ctx, {
+new Chart(courses_dashboardLineChart, {
   type: 'line',
   data: {
     labels: mothsfromcurrent,

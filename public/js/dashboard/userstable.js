@@ -74,7 +74,7 @@ const datatable_learners_grid = new gridjs.Grid({
     'Email',
     'Activity',
     {
-      name: 'Action',
+      name: 'Change Email',
       formatter: (_, row) =>
         gridjs.html(
           `<button type="button" class="edit-button-datatable text-nowrap" data-email="${row.cells[1].data}">Edit</button>`
