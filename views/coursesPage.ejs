@@ -1,9 +1,16 @@
 <div class="courses-container">
-    
+
+    <%- include('coursesPage1'); %>
+
     <div class="courses-page-sorting">
         <%- include('sorting'); %>
        </div>
-
+       
+   <div class="coursesPageTEXT">
+    <h2> The world's Largest selection of courses</h2>
+    <p>choose from 150,000 online courses with new additions published every month</p>
+   </div>
+   
     <div class="course-4cards-row">
 <%- include('CourseCard',{pageCourses:pageCourses }); %>
 </div>

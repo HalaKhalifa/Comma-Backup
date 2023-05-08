@@ -18,7 +18,6 @@ app.use("/learners", LearnersRoutes);
 
 app.get("/courses", coursesPageRoute);
 //-------------------------------
-
 //-- Server
 
 mongoose.connect(process.env.MONGODB_CONN, { useNewUrlParser: true, useUnifiedTopology: true })
