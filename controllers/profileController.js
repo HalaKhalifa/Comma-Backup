@@ -1,5 +1,6 @@
     const profileSchema=require('../models/profilelearner.test');
-    const profileController=(req,res) => {
+    const { get_session_loggedIn } = require("../middleware/sessionMiddleWare");
+    const profileController= async (req,res) => {
             const user = {
             firstName: 'Kiran',
             lastName: 'Acharya',
@@ -25,12 +26,15 @@
             hardSkills: 'JavaScript, Python, HTML/CSS',
             img:'https://cdn-icons-png.flaticon.com/512/3917/3917705.png'
           };
+          const user_id = get_session_loggedIn(req);
+          console.log(user_id);
+          console.log("im in profile");
           res.render("profile", {title:'profile' , user});
     }
     const profileControllerPost = (req, res) => {
       const userData = req.body;
       profileSchema.findOneAndUpdate(
-        { emailAddress: 'jane.smith@example.com'},
+        { emailAddress: res.body.emailAddress},
         { $set: userData 
         },
         { new: true },

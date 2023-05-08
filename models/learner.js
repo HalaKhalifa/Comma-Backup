@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const Schema = mongoose.Schema
 const learnerSchema = new Schema({
   firstname: {
@@ -10,7 +9,6 @@ const learnerSchema = new Schema({
     type: String,
     required: true
   },
-
   email: {
     type: String,
     required: true

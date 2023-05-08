@@ -47,7 +47,7 @@ const post_login = async (req, res) => {
 
   if (user.email === email && passwordsMatch) {
     await set_session(req, user._id)
-
+    console.log(user._id);
     res.redirect('home')
   } else {
     let error = 'Password and Email did not match'
