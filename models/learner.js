@@ -101,4 +101,4 @@ const learnerSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('LearnerSchema', learnerSchema)
+module.exports = mongoose.model('Learner', learnerSchema)
