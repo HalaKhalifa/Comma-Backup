@@ -10393,6 +10393,9 @@ fieldset:disabled .btn {
   position: relative;
   width: 100%;
 }
+.pie-chart {
+  width: fit-content;
+}
 .chart-xs {
   min-height: 200px;
 }

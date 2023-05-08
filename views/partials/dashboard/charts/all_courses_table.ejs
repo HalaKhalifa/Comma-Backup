@@ -1,0 +1,50 @@
+<div class="col-md-6 col-xxl-4 d-flex order-2 order-xxl-4"></div>
+  <div class="card flex-fill w-100">
+    <div class="px-4 pt-3">
+      <h5 class="card-title mb-0">All Courses</h5>
+  </div>
+  <div class="px-4 pb-4 d-flex">
+    <div class="align-self-center w-100">
+      <div class="py-3">
+        <div class="chart chart-xs">
+          <div id="courses-table" data-courses=<%= analytics.allCoursesTable %> ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const coursesTableElement = document.getElementById('courses-table')
+  // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
+  let tableCoursesData = <%- analytics.allCoursesTable %>;
+  tableCoursesData = tableCoursesData.map((course) => {
+    return {
+      ...course,
+      percentage: course.percentage + ' %'
+    }
+  })
+
+  ;(async () => {
+  new gridjs.Grid({
+    sort: true,
+    resizable: true,
+    search: true,
+    fixedHeader: true,
+    pagination: {
+      limit: 10
+    },
+    columns: [
+      { name: 'Title', width: '180px' },
+      { name: 'enrolled', width: '130px' },
+      { name: 'rating', width: '130px' },
+      { name: 'stars', width: '130px' },
+      { name: 'totalHours', width: '130px' },
+
+      // * not implemented yet
+      // { name: 'Finished', width: '140px' }
+    ],
+    data: tableCoursesData
+  }).render(coursesTableElement)
+  })()
+
+</script>

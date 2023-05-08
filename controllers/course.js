@@ -1,78 +1,23 @@
 const Course = require('../models/course')
-// const { courses } = require('../utils/data')
-
-const getNumbersOfCoursesCreatedInPrevYear = async (req, res) => {
-    try {
-        const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days ago
-        const interval = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
-
-        const courseCounts = [];
-
-        for (let i = 0; i < 12; i++) {
-            const startDate = new Date(monthAgo.getTime() + interval * i);
-            const endDate = new Date(startDate.getTime() + interval);
-
-            const count = await Course.countDocuments({
-            createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-            },
-  });
-
-  courseCounts.push(count);
-}
-
-return courseCounts ;
-    } catch (error) {
-        console.error("error : couldn't get Courses", error);
-        return null;
-    }
-}
 
 /**
- * ### Returns an array of popular courses.
- * @param {Number} limit - The number of courses to return. **Default = `3`**.
- * @returns {Array} An array of popular courses[limit + 1] (with others object)
+ * #### queries courses schema.
+ * @param {Number} limit - The number of courses to query. **Default = `100`**.
+ * @param {Boolean} sort - defines the sorting of the records. `'ASC'` | `'DESC'`, **Default** = `false`.
+ * @returns {Array} An array of course objects.
  */
-function getPopularCourses(limit = 3) {
-  // todo: get courses from database when controllers ready => Uncomment below
-  // let courses = getCourses()
-  // courses = courses.map((course) => {
-  //   return {
-  //     title: course.title,
-  //     views: course.views
-  //   }
-  // })
-  const allViews = courses.reduce((previosCount, newCourse) => previosCount + newCourse.views, 0)
-  let MaxLimitExceeded = 0
-  if (limit > courses.length) {
-    limit = courses.length
-    MaxLimitExceeded = 1
+async function getCourses(limit = 100, sort = false) {
+  try {
+    // todo : Add sorting with false to work
+    if (sort === 'DESC') sort = -1
+    else if (sort === 'ASC') sort = 1
+    else sort = false
+    const courses = await Course.find().sort({ enrolledUsers: sort }).limit(limit)
+    return courses
+  } catch (error) {
+    console.error("error : couldn't get Courses", error)
+    return null
   }
-  let popularCourses = courses
-    .sort((courseX, courseY) => {
-      courseX.views > courseY.views ? 1 : -1
-    })
-    .slice(0, limit)
-    .map((course) => {
-      return {
-        ...course,
-        percentage: ((course.views / allViews) * 100).toFixed(2)
-      }
-    })
-
-  const popularViews = popularCourses.reduce(
-    (previosCount, newCourse) => previosCount + newCourse.views,
-    0
-  )
-  const otherCoursesObj = {
-    title: 'Others',
-    views: allViews - popularViews,
-    percentage: (((allViews - popularViews) / allViews) * 100).toFixed(2)
-  }
-  !MaxLimitExceeded && popularCourses.push(otherCoursesObj)
-  return popularCourses
 }
 
-module.exports = { getPopularCourses,getNumbersOfCoursesCreatedInPrevYear }
-
+module.exports = { getCourses }

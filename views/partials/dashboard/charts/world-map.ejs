@@ -1,5 +1,16 @@
-<div class="col-4">
-  <div id="world_map" style="height:350px;"></div>
+<div class="card flex-fill w-100">
+    <div class="px-4 pt-3">
+    <h5 class="card-title mb-0">World Map Overview</h5>
+    </div>
+    <div class="px-4 d-flex">
+    <div class="align-self-center w-100">
+        <div class="py-3">
+        <div class="chart chart-xs">
+            <div id="world_map"style="height:500px" ></div>
+        </div>
+        </div>
+    </div>
+    </div>
 </div>
 <script src="js/dashboard/markers.utils.js"></script>
 <script>
@@ -23,28 +34,16 @@
                 }
             },
             zoomOnScroll: false,
-            series: {
-regions: [{
-  attribute: "fill",
-  legend: {
-    title: "Top Visitors",
-  },
-  scale: {
-    Jordan: "#c79efd",
-    "Palestine": "#ffc371",
-    Egypt: "#08d191",
-    USA:"#FF0000"
-  },
-  values: {
-    // But when dealing with regions's series you should specify the region key.
-    PS: "Palestine",
-    JO: "Jordan",
-    IL: "Palestine",
-    EG: "Egypt",
-    US: "USA",
-  },
-}]
-}
+            visualizeData: {
+              scale: ['#e0cfff', '#5700f7'],
+              values: {
+                EG: 0.1,
+                US: 0.2,
+                CA: 0.6,
+                BR: 0.1,
+                // ...
+              }
+            }
         });
         window.addEventListener("resize", () => {
             map.updateSize();

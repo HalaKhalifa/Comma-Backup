@@ -1,9 +1,23 @@
-const {getLearners} = require("./learner.test")
-const { getPopularCourses } = require('./course')
+//const {getLearners} = require("./learner.test") Commented until collection is filled
+const {
+  getPopularCourses,
+  getNoCreatedCourses,
+  getNoOfCourses,
+  getEnrolledFinished,
+  getAllCoursesTable,
+  NumberOfCoursesInYear
+} = require('./dashboardCourses')
+const {
+  getCountryLearners,
+  getNoOflearner,
+  getTotalEnrolledUserCount,
+  NoOfMonthlyRegistration
+} = require('./learner.test')
+const { usersData } = require('../helpers/dashboard')
 
 const getDashboard = async (req, res) => {
   // * temporary context object
-
+  const staticData = usersData
   const context = {
     title: 'Dashboard',
     description: 'Dashboard page description',
@@ -12,13 +26,44 @@ const getDashboard = async (req, res) => {
       email: 'jhonDoe@gmail.com'
     },
     analytics: {
-      LearnersList : await getLearners(),
-      popularCoursesData: JSON.stringify(getPopularCourses(4)),
-      CoursesTableData: JSON.stringify(getPopularCourses(10))
+      popularCoursesPie: JSON.stringify(await getPopularCourses()),
+      allCoursesTable: JSON.stringify(await getAllCoursesTable()),
+      NoOfCoursesList: await NumberOfCoursesInYear(),
+      NoOfCountryLearners: await getCountryLearners(),
+      NoOfCourses: await getNoOfCourses(),
+      NoOflearner: await getNoOflearner(),
+      // TotalEnrolledUserCount: await getTotalEnrolledUserCount(), // TODO: fix this function
+      TotalEnrolledUserCount: [],
+      NoOfMonthlyRegistration: await NoOfMonthlyRegistration(),
+      enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished())
     }
   }
 
   res.render('pages/dashboard/index.ejs', context)
+}
+
+const getDashboardCourses = async (req, res) => {
+  const context = {
+    title: 'All courses'
+  }
+
+  res.render('pages/dashboard/courses.ejs', context)
+}
+
+const getDashboardAdmins = async (req, res) => {
+  const context = {
+    title: 'All admins'
+  }
+
+  res.render('pages/dashboard/admins.ejs', context)
+}
+
+const getDashboardLearners = async (req, res) => {
+  const context = {
+    title: 'All learners'
+  }
+
+  res.render('pages/dashboard/learners.ejs', context)
 }
 
 const getContentfulDashboard = async (req, res) => {
@@ -32,4 +77,10 @@ const getContentfulDashboard = async (req, res) => {
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
 
-module.exports = { getDashboard, getContentfulDashboard }
+module.exports = {
+  getDashboard,
+  getContentfulDashboard,
+  getDashboardCourses,
+  getDashboardAdmins,
+  getDashboardLearners
+}

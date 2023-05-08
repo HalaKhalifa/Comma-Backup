@@ -1,191 +1,108 @@
-const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
-//const emailRegularExpression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//const phoneRegularExpression = /^\+\d{1,3}\s\d{9}$/;
+const mongoose = require('mongoose')
+
+const Schema = mongoose.Schema
 const learnerSchema = new Schema({
-  id: {
-    type: Number,
-  },
-  firstName: {
+  firstname: {
     type: String,
-    required: true,
-    /*
-    validate: {
-        validator: function (v) {
-          return /^[a-zA-Z\s]+$/.test(v) || /^[\u0621-\u064A\s]+$/.test(v);
-        },
-        message: 'First name can only contain English letters with a space or Arabic letters with a space',
-      },
-    */
-    
+    required: true
   },
-  lastName: {
+  lastname: {
     type: String,
-    required: true,
-    /*
-    validate: {
-        validator: function (v) {
-          return /^[a-zA-Z\s]+$/.test(v) || /^[\u0621-\u064A\s]+$/.test(v);
-        },
-        message: 'Last name can only contain English letters with a space or Arabic letters with a space',
-      },*/
-    
-  },
-  dateOfBirth: {
-    day: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 31,
-    },
-    month: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 12,
-    },
-    year: {
-      type: Number,
-      min: 1900,
-      max: new Date().getFullYear(),
-    }
+    required: true
   },
   email: {
     type: String,
-    unique: true,
-    required: true,
-    /*
-    validate: {
-      validator: function (v) {
-        return emailRegularExpression.test(v);
-      },
-      message: (props) => `${props.value} is not a valid email address!`,
-    },
-    */ 
-    
+    required: true
   },
-  password:{
+  password: {
     type: String,
     required: true
-  }
-  /*
-  ,
-  phoneNumber: {
-    type: String,
-    validate: {
-      validator: function (v) {
-        return phoneRegularExpression.test(v);
-      },
-      message: (props) =>
-        `${props.value} is not a valid phone number!`,
-    },
   },
-
+  dob: {
+    type: Date,
+    required: false
+  },
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other'],
-    required: true,
+    required: false
   },
-  address: {
-    country: {
-      type: String,
-      required: true,
-    },
-    state: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    zip: {
-      type: String,
-      required: true,
-    },
-  },
-  education: {
-    level: {
-      type: String,
-      required: true,
-    },
-    field: {
-      type: String,
-      required: true,
-    },
-  },
-  priorKnowledge: {
-    field: {
-      type: String,
-      required: true,
-    },
-    courses: {
-      type: String,
-      required: true,
-    },
-  },
-  interest: {
+  language: {
     type: String,
-    required: true,
+    required: false
   },
-  workExperience: {
-    position: {
-      type: String,
-    },
-    level: {
-      type: String,
-    },
-    employer: {
-      type: String,
-    },
-    years: {
-      type: String,
-    },
-    field: {
-      type: String,
-    },
+  bio: {
+    type: String,
+    required: false
+  },
+  educationLevel: {
+    type: String,
+    required: false
+  },
+  major: {
+    type: String,
+    required: false
+  },
+  // todo: change to a schema
+  finishedCourses: {
+    type: Number,
+    required: false
+  },
+  graduationYear: {
+    type: Number,
+    required: false
+  },
+  phoneNumber: {
+    type: String,
+    required: false
+  },
+  preferredCommunication: {
+    type: String,
+    required: false
   },
   socialMedia: {
-    link: {
-      type: String,
-    },
+    type: String,
+    required: false
+  },
+  // ? what is this
+  timeAvailability: {
+    type: String,
+    required: false
+  },
+  currentOccupation: {
+    type: String,
+    required: false
+  },
+  professionalBackground: {
+    type: String,
+    required: false
+  },
+  // --------------
+  // todo: change to a schema
+  careerGoals: {
+    type: String,
+    required: false
+  },
+  interests: {
+    type: String,
+    required: false
+  },
+  learningGoals: {
+    type: String,
+    required: false
+  },
+  // ------------------
+  softSkills: {
+    type: String,
+    required: false
+  },
+  hardSkills: {
+    type: String,
+    required: false
+  },
+  img: {
+    type: String,
+    required: false
   }
-  /*/
-  
-});
-/**
- * learnerSchema.pre('save', function (next) {
-    const learner = this;
-  
-    if (!learner.isModified('password')) {
-      return next();
-    }
-  
-    bcrypt.genSalt(10, function (err, salt) {
-      if (err) {
-        return next(err);
-      }
-  
-      bcrypt.hash(learner.password, salt, function (err, hash) {
-        if (err) {
-          return next(err);
-        }
-  
-        learner.password = hash;
-        next();
-      });
-    });
-  });
-  learnerSchema.methods.comparePassword = function (candidatePassword, callback) {
-    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-      if (err) {
-        return callback(err);
-      }
-  
-      callback(null, isMatch);
-    });
-  };
- */
+})
 
-module.exports = mongoose.model("Learner", learnerSchema);
+module.exports = mongoose.model('LearnerSchema', learnerSchema)

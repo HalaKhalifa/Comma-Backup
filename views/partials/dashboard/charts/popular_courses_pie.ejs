@@ -1,13 +1,13 @@
-<div class="col-12 col-md-6 col-xxl-4 d-flex order-2 order-xxl-4">
+<div class="col-md-6 col-xxl-6 d-flex order-2 order-xxl-6">
   <div class="card flex-fill w-100">
-    <div class="card-header">
+    <div class="px-4 pt-3">
       <h5 class="card-title mb-0">Top Popular Courses</h5>
     </div>
-    <div class="card-body d-flex">
+    <div class="px-4 pb-4 d-flex">
       <div class="align-self-center w-100">
         <div class="py-3">
-          <div class="chart chart-xs">
-            <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesData %> ></canvas>
+          <div class="pie-chart chart chart-xs">
+            <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesPie %> ></canvas>
           </div>
         </div>
       </div>
@@ -17,22 +17,22 @@
 
 <script>
   const pieElement = document.getElementById('popular-courses-pie')
-  const popularCoursesData = JSON.parse(pieElement.dataset.courses)
-  
+  // const popularCoursesPie = JSON.parse(pieElement.dataset.courses)
+  const popularCoursesPie = <%- analytics.popularCoursesPie %>;
   ;(async () => {
     new Chart(pieElement, {
       type: 'pie',
       data: {
-        labels: popularCoursesData.map((course) => course.title),
+        labels: popularCoursesPie.map((course) => course.title),
         datasets: [
           // * this can be toggled to show different data points
           // {
           //   label: ' Views',
-          //   data: popularCoursesData.map((course) => course.views)
+          //   data: popularCoursesPie.map((course) => course.views)
           // },
           {
             label: ' %',
-            data: popularCoursesData.map((course) => course.percentage)
+            data: popularCoursesPie.map((course) => course.percentage)
           },
         ]
       }
