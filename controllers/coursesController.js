@@ -3,7 +3,7 @@ const Course = require("../models/course");
 const getCoursesList = async (req,res) => {
 
     const courses = await Course.find().sort({createdAt: -1}); // -1 mean desc
-
+    
     res.status(200).json(courses);
 
 }
