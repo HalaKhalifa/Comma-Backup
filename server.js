@@ -9,10 +9,14 @@ const authRoutes = require("./routes/authRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const session = require("express-session");
 const profileRoutes=require('./routes/profileRoute');
-const homeRoute=require('./routes/homeRoute.js');
+// const homeRoute=require('./routes/homeRoute.js');
 // const LearnersRoutes = require("./routes/exampleRouter");
 const coursesPageRoute = require("./routes/paginationRoute");
 const singlePageRoute=require('./routes/singlePageRoute.js');
+const landingPage=require('./routes/landingPage');
+const searchController=require("./controllers/searchController")
+const  isLoggedIn=require("./middleware/isLoggedIn");
+
 
 require("dotenv").config();
 require('./config/mongoose.config') // database connection
@@ -39,17 +43,27 @@ app.use(
 
 
 // -- Routes
+app.use('/',landingPage);
+app.use('/signup', registrationRoutes)
+app.get("/login", authRoutes);
+app.use('/courses', isLoggedIn);
+app.get("/courses", coursesPageRoute);
+app.get('/outline',singlePageRoute);
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only
-app.use('/signup', registrationRoutes)
-app.use('/',homeRoute);
-app.use("/", homeRoutes);
-// app.use('/',route);
-app.use("/", authRoutes);
-app.use("/", homeRoutes);
-app.use('/outline',singlePageRoute);
-app.get("/courses", coursesPageRoute);
 
+// app.use('/',homeRoute); //abo zahra
+// app.use("/", homeRoutes); //qzih
+// app.use("/", homeRoutes);
+
+
+// Set up search route using searchController
+app.post('/search', async (req, res) => {
+  const searchQuery = req.body.searchText;
+  if(searchQuery && searchQuery.trim().length > 0){
+  const searchResults = await searchController(searchQuery); 
+  console.log(searchResults);
+}});
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`server running on port ${process.env.SERVER_PORT}`)

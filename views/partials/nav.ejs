@@ -1,0 +1,128 @@
+<!-- <nav class="navbar bg-body-secondary">
+    <div class="container-fluid">
+        <div> 
+            <img  src="/img/commaLogo.png"  width="90" height="70" />
+        </div>
+        <!-Search bar -
+        <div class="search-box">
+            <button class="btn-search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg></i></button>
+            <input type="text" class="input-search" placeholder="Type to Search...">
+          </div>
+      <!Right elements -
+    <div class="d-flex align-items-center">
+        <!-Notifications -
+        <div class="dropdown">
+          <a
+            class="link-secondary me-3 dropdown-toggle hidden-arrow"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-bell"></i>
+            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            <li>
+              <a class="dropdown-item" href="#">Some news</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Another news</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </div>
+        <! Avatar -
+        <div class="dropdown">
+          <a
+            class="dropdown-toggle d-flex align-items-center hidden-arrow"
+            href="#"
+            id="navbarDropdownMenuAvatar"
+            role="button"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+              class="rounded-circle"
+              height="25"
+              alt="Black and White Portrait of a Man"
+              loading="lazy"
+            />
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuAvatar"
+          >
+            <li>
+              <a class="dropdown-item" href="#">My profile</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Settings</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <! Right elements -
+    </div>
+</nav> -->
+<nav>
+    <% if (username === null) { %>
+      <ul>
+        <header class="navbar">
+            <section class="navbar-section">
+                <a class="navbar-brand logo" href="./">
+                    <img class="logo-img" src="./images/logo.svg" alt=""><span>Comma</span>
+                </a>
+            </section>
+            <!--Search bar -->
+            <div class="search-box">
+                <form action="/search" method="POST">
+                <button class="btn-search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg></i></button>
+                <input type="text" name="searchText"class="input-search" placeholder="Type to Search...">
+            </form>  
+            </div>
+            <a class="btn btn-primary btn-hire-me" href="/login" >Log in</a>
+        </header> 
+      </ul>
+      <% } else { %>
+      <ul>
+        <li><a href="/profile"><%= username %></a></li>
+        <li><a href="/logout">Log Out</a></li>
+      </ul>
+   <% } %>
+  </nav>
+<!-- <header class="navbar">
+    <section class="navbar-section">
+        <a class="navbar-brand logo" href="./">
+            <img class="logo-img" src="./images/logo.svg" alt=""><span>Comma</span>
+        </a>
+    </section>
+    <!-Search bar --
+    <div class="search-box">
+        <button class="btn-search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg></i></button>
+        <input type="text" class="input-search" placeholder="Type to Search...">
+      </div>
+    <section class="navbar-section hide-sm">
+        <a class="btn btn-link" href="#we-do">About us</a>
+        <a class="btn btn-link" href="/courses">Courses</a>
+        <a class="btn btn-link" href="#we-work">Pricing</a>
+        <a class="btn btn-link" href="#team">Our Team</a>
+        <a class="btn btn-primary btn-hire-me" href="/login" >Log in</a>
+    </section>
+</header> -->

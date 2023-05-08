@@ -10,6 +10,7 @@ const courses = await course.find();
 
   // render coursesPage with courseNames ,courseIMG to display theme
   res.render("coursesPage", {
+    req:req,
     courses, 
     page ,
     title: "courses page",
