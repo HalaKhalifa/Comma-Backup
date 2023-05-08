@@ -44,11 +44,11 @@
     </div>
     </div> 
     <div id="card-enroll">
-        <div class="card border-info mb-4">
+        <div class="card border-info mb-4" id="info-r">
             <div class="card-header-r">
                 <div>
                 <h2 id="course-name"> <%= singleCourse.title %></h2>
-                <div class="title"><%= singleCourse.description %></div>
+                <div class="title-r"><%= singleCourse.description %></div>
             </div></div>
             
             <div class="card-body">
@@ -80,7 +80,7 @@
                     <p class="reviews">(<%= singleCourse.rating %>) reviews</p>
                     </div>
                     <div class="enroll">
-                    <button type="button" class="btn btn-primary">Enroll</button>
+                    <button type="button" class="btn btn-primary" id="btn-enroll">Enroll</button>
                     <span class="num-enroll"> 
                        <div id="enrolledUsers"><%= singleCourse.enrolledUsers %></div><div id="distance"></div>
                        <div>already enrolled</div> 

@@ -2,7 +2,7 @@
     font-weight: 300;
     font-family: "Open Sans", sans-serif;
   }
-div.card.border-info{
+#info-r{
     background: #fff;
     max-width:27rem;
     height: max-content;
@@ -20,8 +20,7 @@ div.card-header-r{
     font-size: 18px;
     margin-bottom: 10px;
   }
-  .btn.btn-primary{
-
+  #btn-enroll{
     margin-top: 1rem;
     width: 111px;
   }
@@ -74,7 +73,7 @@ div.card-header-r{
  font-weight: 600;
   letter-spacing: -0.1px;
 }
-div.title{
+div.title-r{
    font-size: medium;
   line-height: 18px;
   margin-top: 13px;
