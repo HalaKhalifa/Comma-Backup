@@ -14,7 +14,8 @@ const coursesPageRoute = require("./routes/paginationRoute");
 const singlePageRoute=require('./routes/singlePageRoute.js');
 const landingPage=require('./routes/landingPage');
 const searchController=require("./controllers/searchController")
-const  isLoggedIn=require("./middleware/isLoggedIn");
+const  isLoggedIn=require("./middleware/isLoggedIn.js.Ftest");
+ const paginationController = require('./controllers/paginationController')
 
 
 require("dotenv").config();
@@ -62,8 +63,14 @@ app.post('/search', async (req, res) => {
   if(searchQuery && searchQuery.trim().length > 0){
   const searchResults = await searchController(searchQuery); 
   console.log(searchResults);
-  res.render('paginationController.js',{searchResults:searchResults});
-}});
+  res.redirect(`/courses?search=${searchQuery}`);
+}
+else {
+ res.redirect("/courses");
+}
+});
+
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`server running on port ${process.env.SERVER_PORT}`)
   console.log(`http://localhost:${process.env.SERVER_PORT}`)

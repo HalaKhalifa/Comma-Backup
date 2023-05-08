@@ -15,26 +15,26 @@ const courseSchema = new mongoose.Schema({
  },
 outline:{
     type :String,
-    required:true
+    required:false
 },
 totalHours:{
     type:Number,
     default:0,
-    required:true
+    required:false
 },
 enrolledUsers:{
     type:Number,
     default:0,
-    required:true
+    required:false
 },
 rating:{
     type:Number,
-    required:true,
+    required:false,
     default:0
 },
 stars:{
     type:Number,
-    required:true
+    required:false
 },
 topicID:{
    type:mongoose.Schema.Types.ObjectId,
@@ -42,15 +42,15 @@ topicID:{
 },
 publishedAt:{
     type:Number,
-    required:true
+    required:false
 },
 view:{
     type:Number,
-    required:true
+    required:false
 },
 assessments:{
     type:String,
-    required:true,
+    required:false,
     default:'After each topic',
 },
 tags:{
