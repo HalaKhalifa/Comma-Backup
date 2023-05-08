@@ -9,7 +9,10 @@
               <img id="img" src="<%= user.img %>" alt="Image"
                 class="profile-shadow">
             </div>
-            <h4 class="text-center">Kiran Acharya</h4>
+            <h4 class="text-center">
+              <%= user.firstname %>
+                <%= user.lastname %>
+            </h4>
           </div>
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
             aria-orientation="vertical">
@@ -163,7 +166,7 @@
                 <div class="form-group profile-form-group">
                   <label>Expected graduation year</label>
                   <select name="graudation-year" id="graudation-year"
-                    class="form-control">
+                    class="form-control" value="<%= user.graduationYear %>">
                     <option id="graduation-year" value="Graduated">Graduated
                     </option>
                     <option value="2023">2023</option>
@@ -195,14 +198,17 @@
                 <div class="form-group profile-form-group">
                   <label>Email Address</label>
                   <input id="email" type="email" class="form-control"
-                    value="<%= user.email %>">
+                    value="<%= user.email %>"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+
+
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Phone Number</label>
                   <input id="phone" type="text" class="form-control"
-                    value="123-456-7890">
+                    value="<%= user.phoneNumber %>">
                 </div>
               </div>
               <div class="col-md-6">
@@ -320,6 +326,7 @@
                   <label>Current Password</label>
                   <input type="password" class="form-control"
                     placeholder="Enter your current password">
+
                 </div>
               </div>
               <div class="col-md-12">
@@ -418,6 +425,13 @@
     }
     var updateBtnCommunication = document.getElementById('update-btn-communication');
     updateBtnCommunication.addEventListener('click', async () => {
+      const emailInput = document.getElementById('email');
+      event.preventDefault();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailRegex.test(emailInput.value)) {
+        alert('Invalid email address');
+        return;
+      }
       communicationData = {
         email: document.getElementById('email').value,
         phoneNumber: document.getElementById('phone').value,
@@ -483,6 +497,20 @@
           console.error('Error:', error);
         });
     })
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const toggleButton = document.querySelector("i");
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleButton.classList.remove("fa-eye");
+        toggleButton.classList.add("fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        toggleButton.classList.remove("fa-eye-slash");
+        toggleButton.classList.add("fa-eye");
+      }
+    }
   </script>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

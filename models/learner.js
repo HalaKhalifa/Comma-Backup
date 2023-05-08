@@ -46,7 +46,7 @@ const learnerSchema = new Schema({
     required: false
   },
   graduationYear: {
-    type: Number,
+    type: String,
     required: false
   },
 

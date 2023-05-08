@@ -1,15 +1,26 @@
     const profileSchema=require('../models/learner');
     const { get_session_loggedIn } = require("../middleware/sessionMiddleWare");
-    const profileController= async (req,res) => {
+    const profileController=  async(req,res) => {
           const user_id = get_session_loggedIn(req);
-          const user = profileSchema.findOne(user_id);
+          const userQuery = profileSchema.findOne({_id:user_id});
+          const user = await userQuery.exec();
           console.log(user_id);
           console.log("im in profile");
-          res.render("profile", {title:'profile' , user});
+          console.log('user data:', user);
+          res.render("profile", {title:'profile' , user });
     }
-    const profileControllerPost = (req, res) => {
-      const user_id =  get_session_loggedIn(req);
+    const profileControllerPost = async (req, res) => {
+      const user_id = get_session_loggedIn(req);
       const userData = req.body;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+      if (!emailRegex.test(userData.email)) {
+        let error = 'Invalid email address'
+        const user = await profileSchema.findOne({_id:user_id});
+        res.render('profile', { title: 'profile', user, error })
+        return
+      }
+      console.log(user_id.body);
+      console.log('profile data');
       profileSchema.findOneAndUpdate(
         {_id:user_id},
         { $set: userData 
@@ -25,7 +36,6 @@
         }
       );
     };
-
     module.exports={profileController,profileControllerPost}
 
     
