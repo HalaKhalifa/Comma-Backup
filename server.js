@@ -22,8 +22,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, "/public"))); // set path for assets folder
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/',profileRoutes);
-
 app.use(
   session({
     secret: "your-secret-key",
@@ -31,6 +29,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use('/',profileRoutes);
 
 
 // -- Routes

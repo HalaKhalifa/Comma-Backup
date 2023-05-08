@@ -56,7 +56,8 @@ const learnerSchema = new Schema({
   },
   preferredCommunication: {
     type: String,
-    required: false
+    required: false,
+    enum:['email','phone','social media','other']
   },
   socialMedia: {
     type: String,

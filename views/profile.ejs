@@ -61,14 +61,14 @@
                 <div class="form-group profile-form-group">
                   <label>First Name</label>
                   <input type="text" class="form-control"
-                    value="<%= user.firstName %>" id='firstName'>
+                    value="<%= user.firstname %>" id='firstName'>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Last Name</label>
-                  <input type="text" class="form-control"
-                    value="<%= user.lastName %>" id="lastName">
+                  <input type="text" class="form-control" value=""
+                    id="lastName">
                 </div>
               </div>
               <div class="col-md-6">
@@ -195,7 +195,7 @@
                 <div class="form-group profile-form-group">
                   <label>Email Address</label>
                   <input id="email" type="email" class="form-control"
-                    value="kiran.acharya@example.com">
+                    value="<%= user.email %>">
                 </div>
               </div>
               <div class="col-md-6">
@@ -209,7 +209,8 @@
                 <div class="form-group profile-form-group">
                   <label>Preferred Method of Communication</label>
                   <select name="preferred-method" id="preferred-method"
-                    class="form-control">
+                    class="form-control"
+                    value="<%= user.preferredCommunication %>">
                     <option value="email">Email</option>
                     <option value="phone">Phone</option>
                     <option value="social-media">Social Media</option>
@@ -221,14 +222,14 @@
                 <div class="form-group profile-form-group">
                   <label>Social Media & Connected Accounts</label>
                   <input id='social-media' type="text" class="form-control "
-                    value="@kiran_acharya">
+                    value=<%=user.socialMedia %>>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Time Availability</label>
                   <input id='time-availability' type="text" class="form-control"
-                    value="Weekdays after 6pm, weekends anytime">
+                    value=<%=user.timeAvailability %>>
                 </div>
               </div>
             </div>
@@ -246,21 +247,22 @@
                 <div class="form-group profile-form-group">
                   <label>Current Occupation</label>
                   <input id="current-occupation" type="text"
-                    class="form-control" value="Software Engineer">
+                    class="form-control" value=<%=user.currentOccupation %>>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Professional Background</label>
                   <input id="professional-background" type="text"
-                    class="form-control" value="Computer Science">
+                    class="form-control" value=<%=user.professionalBackground
+                    %>>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group profile-form-group">
                   <label>Career Goals</label>
-                  <textarea class="form-control" id="career-goals"
-                    rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea>
+                  <textarea class="form-control" id="career-goals" rows="4"><%=user.careerGoals
+                    %></textarea>
                 </div>
               </div>
             </div>
@@ -277,29 +279,29 @@
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Interests and Hobbies</label>
-                  <textarea id="interests" class="form-control"
-                    rows="4">Reading, hiking, cooking</textarea>
+                  <textarea id="interests" class="form-control" rows="4"><%=user.interests
+                    %></textarea>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Learning Goals</label>
-                  <textarea id="learning-goals" class="form-control"
-                    rows="4">Learn a new programming language, improve public speaking skills</textarea>
+                  <textarea id="learning-goals" class="form-control" rows="4"><%=user.careerGoals
+                    %></textarea>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Soft Skills</label>
-                  <textarea id="soft-skills" class="form-control"
-                    rows="4">Communication, teamwork, time management</textarea>
+                  <textarea id="soft-skills" class="form-control" rows="4"><%=user.softSkills
+                    %></textarea>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group profile-form-group">
                   <label>Hard Skills</label>
-                  <textarea id="hard-skills" class="form-control"
-                    rows="4">JavaScript, Python, HTML/CSS</textarea>
+                  <textarea id="hard-skills" class="form-control" rows="4"><%=user.hardSkills
+                    %></textarea>
                 </div>
               </div>
             </div>
@@ -350,8 +352,8 @@
   <script>
     console.log('hi');
     let personalData = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
+      firstname: document.getElementById('firstName').value,
+      lastname: document.getElementById('lastName').value,
       dob: document.getElementById('birthday').value,
       gender: document.getElementById('gender').value,
       language: document.getElementById('languages').value,
@@ -367,8 +369,8 @@
     var updateBtn = document.getElementById('update-btn-personal');
     updateBtn.addEventListener('click', async () => {
       personalData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
+        firstname: document.getElementById('firstName').value,
+        lastname: document.getElementById('lastName').value,
         dob: document.getElementById('birthday').value,
         gender: document.getElementById('gender').value,
         language: document.getElementById('languages').value,
@@ -408,7 +410,7 @@
         });
     })
     var communicationData = {
-      emailAddress: document.getElementById('email').value,
+      email: document.getElementById('email').value,
       phoneNumber: document.getElementById('phone').value,
       preferredCommunication: document.getElementById('preferred-method').value,
       socialMedia: document.getElementById('social-media').value,
@@ -417,7 +419,7 @@
     var updateBtnCommunication = document.getElementById('update-btn-communication');
     updateBtnCommunication.addEventListener('click', async () => {
       communicationData = {
-        emailAddress: document.getElementById('email').value,
+        email: document.getElementById('email').value,
         phoneNumber: document.getElementById('phone').value,
         preferredCommunication: document.getElementById('preferred-method').value,
         socialMedia: document.getElementById('social-media').value,

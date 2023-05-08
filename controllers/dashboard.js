@@ -1,11 +1,9 @@
 //const {getLearners} = require("./learner.test") Commented until collection is filled
 const { getPopularCourses } = require('./course')
 const {getNoCreatedCourses} = require("./course")
-const { get_session_loggedIn } = require("../middleware/sessionMiddleWare");
 
 const getDashboard = async (req, res) => {
   // * temporary context object
-
 var staticData = [{
   name: 'Yaser Jom3a',
   email: 'Yaser@Jom3a.com',
