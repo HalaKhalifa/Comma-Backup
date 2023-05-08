@@ -4,6 +4,9 @@
      justify-content: space-evenly;
      margin-bottom: 15px;
  }
+ .courses-container{
+    overflow-x: hidden;
+ }
  .course-4cards-row{
    margin-top: 50px;
  }
