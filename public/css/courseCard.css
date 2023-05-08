@@ -82,21 +82,11 @@
  }
 
  .course-p {
-     font-size: 14px;
      text-align: center;
-     overflow: hidden;
-     background-size: cover;
-     background-position: center;
-     background: #fff;
      color: rgb(26, 26, 60);
-     transform: translateY(100%);
-     transition: all 0.35s ease;
-     visibility: hidden;
- }
-
- .CourseCard:hover .course-p {
-     transform: translateY(0);
-     visibility: visible;
+     font:-webkit-control;
+     margin-top: 15px;
+     font-weight: normal;
  }
 
  .courses-page-pagination {
