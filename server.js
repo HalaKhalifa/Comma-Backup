@@ -1,10 +1,9 @@
-const path = require('path')
 const express = require('express')
+const app = express()
+const path = require('path')
 const dashboardRouter = require('./routes/dashboard')
 const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
 const registrationRoutes = require('./routes/registrationRoutes')
-const outline=require('./routes/outline.js');
-const app = express()
 const authRoutes = require("./routes/authRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const session = require("express-session");
@@ -64,7 +63,6 @@ app.post('/search', async (req, res) => {
   const searchResults = await searchController(searchQuery); 
   console.log(searchResults);
 }});
-
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`server running on port ${process.env.SERVER_PORT}`)
   console.log(`http://localhost:${process.env.SERVER_PORT}`)

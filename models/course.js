@@ -48,6 +48,15 @@ view:{
     type:Number,
     required:true
 },
+assessments:{
+    type:String,
+    required:true,
+    default:'After each topic',
+},
+tags:{
+    type:String,
+    required:false,
+},
 },{timestamps:true});
 
 module.exports = mongoose.model("Course", courseSchema);
