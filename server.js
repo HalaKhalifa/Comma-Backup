@@ -62,6 +62,7 @@ app.post('/search', async (req, res) => {
   if(searchQuery && searchQuery.trim().length > 0){
   const searchResults = await searchController(searchQuery); 
   console.log(searchResults);
+  res.render('paginationController.js',{searchResults:searchResults});
 }});
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`server running on port ${process.env.SERVER_PORT}`)
