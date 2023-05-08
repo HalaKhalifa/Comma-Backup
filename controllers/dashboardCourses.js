@@ -1,6 +1,6 @@
 const Course = require('../models/course.test')
 const { getCourses } = require('../controllers/course')
-const { numbersArr } = require('../utils/dashboard')
+const { numbersArr } = require('../helpers/dashboard')
 /**
  * Returns Number of courses created each month for the previous year
  *

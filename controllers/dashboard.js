@@ -13,7 +13,7 @@ const {
   getTotalEnrolledUserCount,
   NoOfMonthlyRegistration
 } = require('./learner.test')
-const { usersData } = require('../utils/dashboard')
+const { usersData } = require('../helpers/dashboard')
 
 const getDashboard = async (req, res) => {
   // * temporary context object
@@ -42,6 +42,30 @@ const getDashboard = async (req, res) => {
   res.render('pages/dashboard/index.ejs', context)
 }
 
+const getDashboardCourses = async (req, res) => {
+  const context = {
+    title: 'All courses'
+  }
+
+  res.render('pages/dashboard/courses.ejs', context)
+}
+
+const getDashboardAdmins = async (req, res) => {
+  const context = {
+    title: 'All admins'
+  }
+
+  res.render('pages/dashboard/admins.ejs', context)
+}
+
+const getDashboardLearners = async (req, res) => {
+  const context = {
+    title: 'All learners'
+  }
+
+  res.render('pages/dashboard/learners.ejs', context)
+}
+
 const getContentfulDashboard = async (req, res) => {
   // * temporary context object
   const context = {
@@ -53,4 +77,10 @@ const getContentfulDashboard = async (req, res) => {
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
 
-module.exports = { getDashboard, getContentfulDashboard }
+module.exports = {
+  getDashboard,
+  getContentfulDashboard,
+  getDashboardCourses,
+  getDashboardAdmins,
+  getDashboardLearners
+}
