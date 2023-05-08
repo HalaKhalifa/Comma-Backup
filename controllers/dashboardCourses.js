@@ -7,31 +7,37 @@ const { numbersArr } = require('../utils/dashboard')
  * Send a JSON response wtih "coursesCounts" as a LIST
  */
 const NumberOfCoursesInYear = async () => {
-  // ! looping a query is not a good idea, need to find a better way. it takes 2200ms!
   try {
-    const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // 30 days ago
-    const interval = -(30 * 24 * 60 * 60 * 1000) // 30 days in milliseconds
-
-    let courseCounts = []
-
-    for (let i = 0; i < 11; i++) {
-      const startDate = new Date(monthAgo.getTime() + interval * i)
-      const endDate = new Date(startDate.getTime() + interval)
-      const startDateString = startDate.toISOString().substring(0, 10)
-      const endDateString = endDate.toISOString().substring(0, 10)
-      const count = await Course.countDocuments({
-        createdAt: {
-          $gte: endDateString,
-          $lt: startDateString
+    const pipeline = [
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(Date.now() - 12 * 30 * 24 * 60 * 60 * 1000) // Date since 12 months ago until now.
+          }
         }
-      })
-      courseCounts.push(count)
-    }
-    courseCounts = [...numbersArr] // DUMMY DATA UNTIL THERE IS DATABASE
-    return courseCounts.reverse()
+      },
+      {
+        $group: {
+          _id: { $month: '$createdAt' },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: {
+          _id: 1
+        }
+      }
+    ]
+    const courseCounts = await Course.aggregate(pipeline)
+    const currentMonth = new Date().getMonth()
+    const array = Array.from({ length: 12 }, (_, i) => {
+      const month = (currentMonth - i + 11) % 12
+      const count = courseCounts.find(({ _id }) => _id === month + 1)?.count || 0
+      return count
+    }).reverse()
+    return array
   } catch (error) {
     console.error("error : couldn't get Courses", error)
-    return null
   }
 }
 
