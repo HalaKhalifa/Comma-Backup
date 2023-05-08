@@ -2,96 +2,96 @@ const mongoose = require('mongoose');
 const testLearnerSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true
+    required: false
   },
   lastName: {
     type: String,
-    required: true
+    required: false
   },
   dob: {
     type: Date,
-    required: true
+    required: false
   },
   gender: {
     type: String,
-    required: true
+    required: false
   },
   language: {
     type: String,
-    required: true
+    required: false
   },
   bio: {
     type: String,
-    required: true
+    required: false
   },
   educationLevel: {
     type: String,
-    required: true
+    required: false
   },
   major: {
     type: String,
-    required: true
+    required: false
   },
   finishedCourses: {
     type: Number,
-    required: true
+    required: false
   },
   graduationYear: {
     type: Number,
-    required: true
+    required: false
   },
   emailAddress: {
     type: String,
-    required: true
+    required: false
   },
   phoneNumber: {
     type: String,
-    required: true
+    required: false
   },
   preferredCommunication: {
     type: String,
-    required: true
+    required: false
   },
   socialMedia: {
     type: String,
-    required: true
+    required: false
   },
   timeAvailability: {
     type: String,
-    required: true
+    required: false
   },
   currentOccupation: {
     type: String,
-    required: true
+    required: false
   },
   professionalBackground: {
     type: String,
-    required: true
+    required: false
   },
   careerGoals: {
     type: String,
-    required: true
+    required: false
   },
   interests: {
     type: String,
-    required: true
+    required: false
   },
   learningGoals: {
     type: String,
-    required: true
+    required: false
   },
   softSkills: {
     type: String,
-    required: true
+    required: false
   },
   hardSkills: {
     type: String,
-    required: true
+    required: false
   },
   img: {
     type: String,
-    required: true
+    required: false
   }
 });
 
-module.exports = mongoose.model('profileleaner', testLearnerSchema);
+module.exports = mongoose.model('Profileleaner', testLearnerSchema);

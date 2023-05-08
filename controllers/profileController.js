@@ -1,4 +1,4 @@
-    //import model
+    const profileSchema=require('../models/profilelearner.test');
     const profileController=(req,res) => {
             const user = {
             firstName: 'Kiran',
@@ -27,9 +27,24 @@
           };
           res.render("profile", {title:'profile' , user});
     }
-    const profileControllerPost=(req,res) => {
-      console.log(req.body);
-    }
+    const profileControllerPost = (req, res) => {
+      const userData = req.body;
+      profileSchema.findOneAndUpdate(
+        { emailAddress: 'jane.smith@example.com'},
+        { $set: userData 
+        },
+        { new: true },
+        (err, updatedUser) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).send('Error updating user data');
+          }
+          console.log('User data updated:', updatedUser);
+          return res.status(200).send('User data updated successfully');
+        }
+      );
+    };
+
     module.exports={profileController,profileControllerPost}
 
     
