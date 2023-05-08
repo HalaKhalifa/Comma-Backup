@@ -4,27 +4,24 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="login-box bg-light rounded p-4 shadow">
-
-
           <div class="text-center mb-4">
             <h2>Log In</h2>
           </div>
           <% if (error) { %>
-            <div class="alert alert-danger" role="alert">Invalid username or password'</div>
-            <% } %>
+            <div class="alert alert-danger" role="alert" id="signup-error">
+              <%= error %>
+            </div>
+          <% } %>
               <form action="/login" method="POST">
-
                 <div class="form-floating mb-3">
-
-                  <input type="email" type="text" class="form-control" id="username" name="username"
-                    placeholder="Enter your username" required pattern="/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/" />
-                  <label for="password">Email</label>
+                  <input type="text" class="form-control" id="email" name="email"
+                    placeholder="Enter your username"  />
+                  <label for="email">Email</label> 
                 </div>
-
                 <div class="form-floating mb-3">
                   <input type="password" class="form-control form-control-lg" id="password" name="password"
                     placeholder="Enter your password" required
-                    pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/" />
+                    />
                   <label for="password">Password</label>
                   <i onclick="togglePassword()" class="fa fa-eye"></i>
                 </div>
@@ -40,7 +37,7 @@
       </div>
     </div>
   </div>
-  <script>
+  <script >
     function togglePassword() {
       const passwordInput = document.getElementById("password");
       const toggleButton = document.querySelector("i");

@@ -9,10 +9,12 @@ function capitalizefLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 const nameRegex = /^[a-z]+$/
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
 
 const post_signup = async (req, res) => {
+  console.log(req.body)
   const { firstname, lastname, email, password, confirmPassword } = req.body
   let error = ''
 
@@ -68,17 +70,18 @@ const post_signup = async (req, res) => {
     email,
     password: hashedPassword
   })
-
+  console.log(learner)
   try {
     await learner.save()
     //   res.status(201).json({ message: 'Learner created successfully' });
     return res.redirect('/login')
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Server error' })
   }
 }
 
-module.exports ={
-    get_signup,
-    post_signup
+module.exports = {
+  get_signup,
+  post_signup
 }
