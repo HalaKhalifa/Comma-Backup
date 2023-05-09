@@ -1,0 +1,113 @@
+
+  <!-- Modal -->
+  <div class="modal fade" id="admin-accounts-edit-modal" tabindex="-1" aria-labelledby="AdminCccountsEditModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-white">
+        <div class="modal-header bg-white">
+          <h1 class="modal-title fs-5" id="admin-accounts-edit-modal-label">Edit Admin Account</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <ul class="nav nav-tabs bg-white" id="admineditmodaltab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active bg-white" id="basic-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Basic</button>
+                </li>
+              </ul>
+              <div class="tab-content bg-white" id="myTabContent">
+                <form>
+                    <div class="mb-3">
+                      <label for="adminAccountsEditModalFirstName" class="form-label">First Name</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-text rounded-5">
+                          <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="" >
+                        </div>
+                        <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="First Name">
+                      </div>
+                      <div id="adminAccountsEditModalFirstName" class="form-text">Check The Box to Edit First Name</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="adminAccountsEditModalLastName" class="form-label">Last Name</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-text rounded-5">
+                              <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="" >
+                            </div>
+                            <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Last Name">
+                          </div>
+                        <div id="adminAccountsEditModalLastName" class="form-text">Check The Box to Edit Last Name</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="adminAccountsEditModalEmail" class="form-label">Email address</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-text rounded-5">
+                              <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="">
+                            </div>
+                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address">
+                          </div>
+                        <div id="adminAccountsEditModalEmail" class="form-text">Check The Box to Edit Email</div>
+                      </div>
+                    <div class="mb-3">
+                        <label for="adminAccountsEditModalPassword" class="form-label">Password</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-text rounded-5">
+                          <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="" onclick="editPasswordToggleVisible()">
+                        </div>
+                        <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Password">
+                      </div>
+                      <div id="adminAccountsEditModalPassword" class="form-text">Check The Box to Edit Password</div>
+                    </div>
+                  </form>
+              </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="edit-button-datatable text-nowrap">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .admin-edit-input-disable-input:disabled{
+    background-color: #14141aa9;
+    color: white;
+    }
+    #admineditmodaltab > li > button{
+    background-color: #5e5df0 !important;
+    color:white;
+    border-radius: 5px;
+    }
+    .input-group-text{
+    background-color: #5d5df000; 
+    border: none;
+    padding-left: 0px;
+    }
+    .modal-body{
+    padding-left: 0.8rem; 
+    }
+  </style>
+  <script>
+// ------------ Checkbox Edit Password --------------------------------------
+// Get all the checkboxes with class 'password-checkbox'
+const checkboxes = document.querySelectorAll('.admin-edit-input-disable');
+
+// Loop through all the checkboxes
+checkboxes.forEach(function(checkbox) {
+  // Add a click event listener to each checkbox
+  checkbox.addEventListener('click', function() {
+    // Get the corresponding password input
+    const input = this.parentNode.parentNode.querySelector('.admin-edit-input-disable-input');
+    // Enable or disable the input based on whether the checkbox is checked or not
+    input.disabled = !this.checked;
+  });
+});
+// ------------ Checkbox Edit Password --------------------------------------
+// ------------ Password Visibility -----------------------------------------
+function editPasswordToggleVisible() {
+  var x = document.getElementById("adminAccountsEditModalPassword");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+// ------------ Password Visibility -----------------------------------------
+  </script>

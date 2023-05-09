@@ -77,7 +77,7 @@ const datatable_learners_grid = new gridjs.Grid({
       name: 'Change Email',
       formatter: (_, row) =>
         gridjs.html(
-          `<button type="button" class="edit-button-datatable text-nowrap" data-email="${row.cells[1].data}">Edit</button>`
+          `<button type="button" class="edit-button-datatable text-nowrap" data-bs-target="#admin-accounts-edit-modal" data-bs-toggle="modal" data-email="${row.cells[1].data}">Edit</button>`
         )
     }
   ],
@@ -110,7 +110,7 @@ const datatable_learners_grid = new gridjs.Grid({
 }).render(document.getElementById('datatable-users-table'))
 
 document.addEventListener('click', (e) => {
-  if (e.target && e.target.classList.contains('edit-button-datatable')) {
+  if (e.target && e.target.classList.contains('edit-button-datatable-disabled')) {
     const email = e.target.getAttribute('data-email')
     temp_email = email
     showEditModal(email)
