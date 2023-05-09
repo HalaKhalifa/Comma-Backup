@@ -79,10 +79,17 @@
                   <label>Date of birth</label>
                   <% var maxDate=new Date(); %>
                     <% maxDate.setFullYear(maxDate.getFullYear() - 10); %>
-                      <input type="date" id="birthday" class='form-control'
+                      <input type="date" id="birthday" class="form-control"
                         name="birthday" min="1950-01-01"
-                        max="<%= maxDate.toISOString().slice(0,10) %>"
-                        value="<%= user.dob %>" id="birthday">
+                        max="<%= maxDate.toISOString().slice(0,10) %>" <% if
+                        (user.dob===null) { %>
+                      <% %>
+                        <% } else { %>
+                          value="<%= new
+                            Date(user.dob).toISOString().slice(0,10) %>"
+                            <% } %>
+                              />
+
 
                 </div>
               </div>
@@ -104,17 +111,28 @@
                 <div class="form-group profile-form-group">
                   <label>Language</label>
                   <select class="form-select" id="languages" name="languages">
-                    <option value="zh">Chinese - 中文</option>
-                    <option value="es">Spanish - español</option>
-                    <option value="en">English</option>
-                    <option value="hi">Hindi - हिन्दी</option>
-                    <option value="ar">Arabic - العربية</option>
-                    <option value="pt">Portuguese - português</option>
-                    <option value="bn">Bengali - বাংলা</option>
-                    <option value="ru">Russian - русский</option>
-                    <option value="ja">Japanese - 日本語</option>
-                    <option value="pa">Punjabi - ਪੰਜਾਬੀ</option>
+                    <option value="zh" <%=user.language==='zh' ? 'selected' : ''
+                      %>>Chinese - 中文</option>
+                    <option value="es" <%=user.language==='es' ? 'selected' : ''
+                      %>>Spanish - español</option>
+                    <option value="en" <%=user.language==='en' ? 'selected' : ''
+                      %>>English</option>
+                    <option value="hi" <%=user.language==='hi' ? 'selected' : ''
+                      %>>Hindi - हिन्दी</option>
+                    <option value="ar" <%=user.language==='ar' ? 'selected' : ''
+                      %>>Arabic - العربية</option>
+                    <option value="pt" <%=user.language==='pt' ? 'selected' : ''
+                      %>>Portuguese - português</option>
+                    <option value="bn" <%=user.language==='bn' ? 'selected' : ''
+                      %>>Bengali - বাংলা</option>
+                    <option value="ru" <%=user.language==='ru' ? 'selected' : ''
+                      %>>Russian - русский</option>
+                    <option value="ja" <%=user.language==='ja' ? 'selected' : ''
+                      %>>Japanese - 日本語</option>
+                    <option value="pa" <%=user.language==='pa' ? 'selected' : ''
+                      %>>Punjabi - ਪੰਜਾਬੀ</option>
                   </select>
+
                 </div>
               </div>
               <div class="col-md-12">
@@ -140,12 +158,19 @@
                   <label>Level of Education</label>
                   <select name="education-level" id="education-level"
                     class="form-control">
-                    <option value="school">Highschool</option>
-                    <option value="diploma">Diploma</option>
-                    <option value="bachelors">Bachelors</option>
-                    <option value="master">Masters</option>
-                    <option value="phd">Doctorate</option>
+                    <option value="school" <%=user.educationLevel==='school'
+                      ? 'selected' : '' %>>Highschool</option>
+                    <option value="diploma" <%=user.educationLevel==='diploma'
+                      ? 'selected' : '' %>>Diploma</option>
+                    <option value="bachelors"
+                      <%=user.educationLevel==='bachelors' ? 'selected' : '' %>
+                      >Bachelors</option>
+                    <option value="masters" <%=user.educationLevel==='masters'
+                      ? 'selected' : '' %>>Masters</option>
+                    <option value="phd" <%=user.educationLevel==='phd'
+                      ? 'selected' : '' %>>Doctorate</option>
                   </select>
+
                 </div>
               </div>
               <div class="col-md-4">
@@ -165,20 +190,29 @@
               <div class="col-md-4">
                 <div class="form-group profile-form-group">
                   <label>Expected graduation year</label>
-                  <select name="graudation-year" id="graudation-year"
-                    class="form-control" value="<%= user.graduationYear %>">
-                    <option id="graduation-year" value="Graduated">Graduated
-                    </option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-
+                  <select name="graduation-year" id="graduation-year"
+                    class="form-control">
+                    <option value="Graduated"
+                      <%=user.graduationYear==='Graduated' ? 'selected' : '' %>
+                      >Graduated</option>
+                    <option value="2023" <%=user.graduationYear==='2023'
+                      ? 'selected' : '' %>>2023</option>
+                    <option value="2024" <%=user.graduationYear==='2024'
+                      ? 'selected' : '' %>>2024</option>
+                    <option value="2025" <%=user.graduationYear==='2025'
+                      ? 'selected' : '' %>>2025</option>
+                    <option value="2026" <%=user.graduationYear==='2026'
+                      ? 'selected' : '' %>>2026</option>
+                    <option value="2027" <%=user.graduationYear==='2027'
+                      ? 'selected' : '' %>>2027</option>
+                    <option value="2028" <%=user.graduationYear==='2028'
+                      ? 'selected' : '' %>>2028</option>
+                    <option value="2029" <%=user.graduationYear==='2029'
+                      ? 'selected' : '' %>>2029</option>
+                    <option value="2030" <%=user.graduationYear==='2030'
+                      ? 'selected' : '' %>>2030</option>
                   </select>
+
                 </div>
               </div>
             </div>
@@ -394,6 +428,7 @@
         .catch(error => {
           console.error('Error:', error);
         });
+      window.location.reload();
     })
     /*Education Update Button*/
     var updateBtnEducation = document.getElementById('update-btn-education');
@@ -415,6 +450,8 @@
         .catch(error => {
           console.error('Error:', error);
         });
+      window.location.reload();
+
     })
     var communicationData = {
       email: document.getElementById('email').value,
@@ -446,6 +483,7 @@
         },
         body: JSON.stringify(communicationData)
       })
+      window.location.reload();
     })
     var careerData = {
       currentOccupation: document.getElementById('current-occupation').value,
@@ -496,6 +534,8 @@
         .catch(error => {
           console.error('Error:', error);
         });
+      window.location.reload();
+
     })
     // function togglePassword() {
     //   const passwordInput = document.getElementById("password");

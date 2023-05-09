@@ -20,7 +20,8 @@ const learnerSchema = new Schema({
   },
   dob: {
     type: Date,
-    required: false
+    required: false,
+    default:null
   },
   gender: {
     type: String,
@@ -48,7 +49,7 @@ const learnerSchema = new Schema({
     required: false
   },
   graduationYear: {
-    type: Number,
+    type: String,
     required: false
   },
   phoneNumber: {
