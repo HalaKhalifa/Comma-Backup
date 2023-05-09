@@ -7,7 +7,7 @@
       <div class="align-self-center w-100">
         <div class="py-3">
           <div class="pie-chart chart chart-xs">
-            <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesPie %> ></canvas>
+            <canvas id="popular-courses-pie" data-courses=<%= analytics.popularCoursesPie %>></canvas>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
   const pieElement = document.getElementById('popular-courses-pie')
   // const popularCoursesPie = JSON.parse(pieElement.dataset.courses)
   const popularCoursesPie = <%- analytics.popularCoursesPie %>;
-  ;(async () => {
+  (async () => {
     new Chart(pieElement, {
       type: 'pie',
       data: {

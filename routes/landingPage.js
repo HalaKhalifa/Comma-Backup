@@ -3,7 +3,7 @@ const router = express.Router()
 
 // Set up landing page route
 router.get('/', async (req, res) => {
-  res.render('landingPage')
+  res.render('pages/home/index.ejs')
 })
 
 module.exports = router

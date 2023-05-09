@@ -216,7 +216,7 @@ const getLearnerProfile = async (req, res) => {
   console.log(user_id)
   console.log('im in profile')
   console.log('user data:', user)
-  res.render('profile', { title: 'profile', user })
+  res.render('pages/learner/profile', { title: 'profile', user })
 }
 const postLearnerProfile = async (req, res) => {
   const user_id = get_session_loggedIn(req)
@@ -225,7 +225,7 @@ const postLearnerProfile = async (req, res) => {
   if (!emailRegex.test(userData.email)) {
     let error = 'Invalid email address'
     const user = await learner.findOne({ _id: user_id })
-    res.render('profile', { title: 'profile', user, error })
+    res.render('pages/learner/profile', { title: 'profile', user, error })
     return
   }
   console.log(user_id.body)
