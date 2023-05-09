@@ -6,7 +6,12 @@ const {
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardLearners,
-  getDashboardAdmins
+  getDashboardAdmins,
+  getContentfulForms,
+  getContentfulButtons,
+  getContentfulCards,
+  getContentfulTypography,
+  getContentfulIcons
 } = require('../controllers/dashboard')
 const { updateLearner, getLearners } = require('../controllers/learner')
 
@@ -32,6 +37,26 @@ router.post('/update-learners-data', async (req, res) => {
 })
 router.post('/getLearnersData', async (req, res) => {
   await getLearners(req, res)
+})
+
+router.get('/dashboard2/ui-forms', (req, res) => {
+  getContentfulForms(req, res)
+})
+
+router.get('/dashboard2/ui-buttons', (req, res) => {
+  getContentfulButtons(req, res)
+})
+
+router.get('/dashboard2/ui-cards', (req, res) => {
+  getContentfulCards(req, res)
+})
+
+router.get('/dashboard2/ui-typography', (req, res) => {
+  getContentfulTypography(req, res)
+})
+
+router.get('/dashboard2/icons-feather', (req, res) => {
+  getContentfulIcons(req, res)
 })
 
 module.exports = router
