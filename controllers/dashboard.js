@@ -81,10 +81,55 @@ const getContentfulDashboard = async (req, res) => {
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
 
+const getContentfulForms = async (req, res) => {
+  const context = {
+    title: 'Contentful Forms'
+  }
+
+  res.render('pages/dashboard_contentful/ui-forms.ejs', context)
+}
+
+const getContentfulButtons = async (req, res) => {
+  const context = {
+    title: 'Contentful buttons'
+  }
+
+  res.render('pages/dashboard_contentful/ui-buttons.ejs', context)
+}
+
+const getContentfulCards = async (req, res) => {
+  const context = {
+    title: 'Contentful cards'
+  }
+
+  res.render('pages/dashboard_contentful/ui-cards.ejs', context)
+}
+
+const getContentfulTypography = async (req, res) => {
+  const context = {
+    title: 'Typo. cards'
+  }
+
+  res.render('pages/dashboard_contentful/ui-typography.ejs', context)
+}
+
+const getContentfulIcons = async (req, res) => {
+  const context = {
+    title: 'Icons. cards'
+  }
+
+  res.render('pages/dashboard_contentful/icons-feather.ejs', context)
+}
+
 module.exports = {
   getDashboard,
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardAdmins,
-  getDashboardLearners
+  getDashboardLearners,
+  getContentfulForms,
+  getContentfulButtons,
+  getContentfulCards,
+  getContentfulTypography,
+  getContentfulIcons
 }
