@@ -19,41 +19,61 @@
                       <label for="adminAccountsEditModalFirstName" class="form-label">First Name</label>
                       <div class="input-group mb-3">
                         <div class="input-group-text rounded-5">
-                          <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="" >
+                            <div class="edit-checkbox-disable">
+                                <label class="edit-checkbox-disable-switch">
+                                  <input type="checkbox" class="admin-edit-input-disable form-check-input mt-0" value="">
+                                  <span class="edit-checkbox-slider"></span>
+                                </label>
+                            </div>
                         </div>
                         <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="First Name">
                       </div>
-                      <div id="adminAccountsEditModalFirstName" class="form-text">Check The Box to Edit First Name</div>
+                      <div id="adminAccountsEditModalFirstName" class="form-text">Click to Edit First Name</div>
                     </div>
                     <div class="mb-3">
                         <label for="adminAccountsEditModalLastName" class="form-label">Last Name</label>
                         <div class="input-group mb-3">
                             <div class="input-group-text rounded-5">
-                              <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="" >
+                                <div class="edit-checkbox-disable">
+                                    <label class="edit-checkbox-disable-switch">
+                                      <input type="checkbox" class="admin-edit-input-disable form-check-input mt-0" value="">
+                                      <span class="edit-checkbox-slider"></span>
+                                    </label>
+                                </div>
                             </div>
                             <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Last Name">
                           </div>
-                        <div id="adminAccountsEditModalLastName" class="form-text">Check The Box to Edit Last Name</div>
+                        <div id="adminAccountsEditModalLastName" class="form-text">Click to Edit Last Name</div>
                       </div>
                       <div class="mb-3">
                         <label for="adminAccountsEditModalEmail" class="form-label">Email address</label>
                         <div class="input-group mb-3">
                             <div class="input-group-text rounded-5">
-                              <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="">
+                                <div class="edit-checkbox-disable">
+                                    <label class="edit-checkbox-disable-switch">
+                                      <input type="checkbox" class="admin-edit-input-disable form-check-input mt-0" value="">
+                                      <span class="edit-checkbox-slider"></span>
+                                    </label>
+                                </div>
                             </div>
                             <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address">
                           </div>
-                        <div id="adminAccountsEditModalEmail" class="form-text">Check The Box to Edit Email</div>
+                        <div id="adminAccountsEditModalEmail" class="form-text">Click to Edit Email</div>
                       </div>
                     <div class="mb-3">
                         <label for="adminAccountsEditModalPassword" class="form-label">Password</label>
                       <div class="input-group mb-3">
                         <div class="input-group-text rounded-5">
-                          <input class="form-check-input mt-0 admin-edit-input-disable" type="checkbox" value="" onclick="editPasswordToggleVisible()">
+                            <div class="edit-checkbox-disable">
+                                <label class="edit-checkbox-disable-switch">
+                                  <input type="checkbox" class="admin-edit-input-disable form-check-input mt-0" value="" onclick="editPasswordToggleVisible()">
+                                  <span class="edit-checkbox-slider"></span>
+                                </label>
+                            </div>
                         </div>
                         <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Password">
                       </div>
-                      <div id="adminAccountsEditModalPassword" class="form-text">Check The Box to Edit Password</div>
+                      <div id="adminAccountsEditModalPassword" class="form-text">Click to Edit Password</div>
                     </div>
                   </form>
               </div>
@@ -67,12 +87,14 @@
   </div>
   <style>
     .admin-edit-input-disable-input:disabled{
-    background-color: #222227a9;
-    color: white;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
     border-color: #ffffff;
+    border-color: #000000;
     }
     .admin-edit-input-disable-input{
         border-color: #5e5df0;
+        border-width: 2px;
     }
     .admin-edit-input-disable-input:focus{
         outline: 2px solid #5e5df0;
@@ -92,6 +114,62 @@
     padding-left: 0.8rem; 
     }
   </style>
+  <style>
+    .edit-checkbox-disable input[type="checkbox"] {
+      visibility: hidden;
+      display: none;
+    }
+  
+    .edit-checkbox-disable *,
+    .edit-checkbox-disable ::after,
+    .edit-checkbox-disable ::before {
+      box-sizing: border-box;
+    }
+  
+    /* The switch - the box around the edit-checkbox-slider */
+    .edit-checkbox-disable .edit-checkbox-disable-switch {
+      font-size: 1rem;
+      position: relative;
+      display: inline-block;
+      width: 4em;
+      height: 2em;
+    }
+  
+    /* The edit-checkbox-slider */
+    .edit-checkbox-disable .edit-checkbox-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #eee;
+      transition: 0.4s;
+      border-radius: 0.5em;
+      box-shadow: 0 0.2em #dfd9d9;
+    }
+  
+    .edit-checkbox-disable .edit-checkbox-slider:before {
+      position: absolute;
+      content: "";
+      height: 1.5em;
+      width: 1.4em;
+      border-radius: 0.3em;
+      left: 0.3em;
+      bottom: 0.7em;
+      background-color: lightsalmon;
+      transition: 0.4s;
+      box-shadow: 0 0.4em #bcb4b4;
+    }
+  
+    .edit-checkbox-disable .edit-checkbox-slider:hover::before {
+      box-shadow: 0 0.2em #bcb4b4;
+      bottom: 0.5em;
+    }
+  
+    .edit-checkbox-disable input:checked + .edit-checkbox-slider::before {
+      transform: translateX(2em);
+      background: lightgreen;
+    }
+  </style>
+  
   <script>
 // ------------ Checkbox Edit Password --------------------------------------
 // Get all the checkboxes with class 'password-checkbox'
@@ -102,7 +180,7 @@ checkboxes.forEach(function(checkbox) {
   // Add a click event listener to each checkbox
   checkbox.addEventListener('click', function() {
     // Get the corresponding password input
-    const input = this.parentNode.parentNode.querySelector('.admin-edit-input-disable-input');
+    const input = this.parentNode.parentNode.parentNode.parentNode.querySelector('.admin-edit-input-disable-input');
     // Enable or disable the input based on whether the checkbox is checked or not
     input.disabled = !this.checked;
   });
