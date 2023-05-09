@@ -1,0 +1,200 @@
+#done-button{
+  display: block;
+  margin: 0 auto;
+  font-size: 18px;
+  padding: 12px 30px;
+    }
+    .content-box-type {
+      width: 220px;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+      background-color: #f2f2f2;
+      box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      }
+    
+    .content-box-length {
+    width: 220px;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    background-color: #f2f2f2;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    }
+    .content-box-assesments {
+      width: 220px;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    background-color: #f2f2f2;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    }
+
+
+    .content-box-one {
+        background-color: #f2f2f2;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2); 
+      text-align: center;
+       }
+
+    
+    .content-box-type h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .content-box-length h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .content-box-assesments h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+
+    
+    .content-box-type b {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .content-box-length b {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .content-box-assesments b {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    
+    .content-box-type input[type="radio"] {
+      margin-right: 10px;
+      display:none;
+    }
+    .content-box-length input[type="radio"] {
+      margin-right: 10px;
+      display: none;
+    }
+    .content-box-assesments input[type="radio"] {
+      margin-right: 10px;
+      display: none;
+    }
+
+
+    .content-box-type.selected {
+    background-color: rgb(202, 202, 202);
+    color: black;
+    
+  }
+  .content-box-length.selected {
+    background-color: rgb(202, 202, 202);
+    color: black;
+  }
+  .content-box-assesments.selected {
+    background-color: rgb(202, 202, 202);
+    color: black;
+  }
+
+
+
+    
+    .content-box-type button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .content-box-length button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .content-box-assesments button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    
+    .content-box-type button[type=submit]:hover {
+      background-color: #45a049;
+    }
+    .content-box-length button[type=submit]:hover {
+      background-color: #45a049;
+    }
+    .content-box-assesments button[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+
+    
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    
+    .column {
+      float: left;
+      width: 33.33%;
+      box-sizing: border-box;
+    }
+    
+    @media screen and (max-width: 768px) {
+      .column {
+        width: 100%;
+        display: block;
+        padding: 0;
+      }
+    }
+
+    #secondModalDiv {
+      width: max-content;
+      height: max-content;
+      right: 50%;
+    }
+    
+      
+    #headerColor1
+    {
+      background-color: #f2f2f2;
+      color:black;
+    }
+    #headerColor2
+    {
+      background-color: #f2f2f2;
+      color:black;
+    }
+
