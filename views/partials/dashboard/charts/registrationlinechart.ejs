@@ -11,7 +11,7 @@
       <div class="align-self-center w-100">
         <div class="py-3">
           <div class="chart chart-xs">
-            <canvas id="registrationlinechart"  ></canvas>
+            <canvas id="registrationlinechart"></canvas>
           </div>
         </div>
       </div>
@@ -21,23 +21,21 @@
 
 
 <script>
-const NoOfMonthlyRegistration = <%-JSON.stringify(analytics.NoOfMonthlyRegistration)%>;
-const months = NoOfMonthlyRegistration.map((item) => item._id); 
-const counts = NoOfMonthlyRegistration.map((item) => item.count);
+  const NoOfMonthlyRegistration = <%-JSON.stringify(analytics.NoOfMonthlyRegistration)%>;
+  const months = NoOfMonthlyRegistration.map((item) => item._id);
+  const counts = NoOfMonthlyRegistration.map((item) => item.count);
   const rlc = document.getElementById('registrationlinechart')
   const myregistrationChart = new Chart(rlc, {
     type: 'line',
     data: {
-      labels:months ,
-      datasets: [
-        {
-          label: 'Registered Users',
-          data: counts, 
-          borderColor: '#AFEEEE',
-          backgroundColor: '#87CEEB',
-          borderWidth: 3
-        }
-      ]
+      labels: months,
+      datasets: [{
+        label: 'Registered Users',
+        data: counts,
+        borderColor: '#AFEEEE',
+        backgroundColor: '#87CEEB',
+        borderWidth: 3
+      }]
     },
     options: {
       scales: {

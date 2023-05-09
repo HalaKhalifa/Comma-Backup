@@ -167,7 +167,7 @@ const getSingleCourse = async (req, res) => {
   if (!singleCourse) {
     return res.status(404).json({ error: 'No such course' })
   }
-  res.render('outline_page', { singleCourse: singleCourse })
+  res.render('pages/home/outline_page', { singleCourse: singleCourse })
 }
 
 const coursePagination = async (req, res) => {
@@ -182,7 +182,7 @@ const coursePagination = async (req, res) => {
     .skip((page - 1) * limit)
     .limit(limit)
     .sort({ createdAt: -1 })
-  res.render('coursesPage', {
+  res.render('pages/home/courses_page.ejs', {
     title: 'courses page',
     pageCourses: pageCourses
   })

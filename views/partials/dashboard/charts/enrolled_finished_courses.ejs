@@ -7,7 +7,7 @@
       <div class="align-self-center w-100">
         <div class="py-3">
           <div class="chart chart-xs">
-            <canvas id="enrolled-finished" data-enrolledFinishedCourses=<%= analytics.enrolledFinishedCourses %> ></canvas>
+            <canvas id="enrolled-finished" data-enrolledFinishedCourses=<%= analytics.enrolledFinishedCourses %>></canvas>
             <div class="px-1 py-2 d-flex justify-content-between">
               <h5 class="green">Very Good</h5>
               <h5 class="">Ok</h5>
@@ -24,14 +24,13 @@
 <script>
   const dualLineElement = document.getElementById('enrolled-finished')
   // const dualLineData = JSON.parse(dualLineElement.dataset.enrolledFinishedCourses) // didn't work :(
-  const enrolledFinishedCoursesData = <%- analytics.enrolledFinishedCourses %>;
-  ;(async () => {
+  const enrolledFinishedCoursesData = <%- analytics.enrolledFinishedCourses %>;;
+  (async () => {
     new Chart(dualLineElement, {
       type: 'line',
       data: {
         labels: enrolledFinishedCoursesData.map((course) => course.title),
-        datasets: [
-          {
+        datasets: [{
             label: 'Enrolled',
             data: enrolledFinishedCoursesData.map((course) => course.enrolled),
           },

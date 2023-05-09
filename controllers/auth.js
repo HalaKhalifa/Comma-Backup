@@ -3,7 +3,7 @@ const { set_session, get_session_loggedIn } = require('../middleware/sessionMidd
 const bcrypt = require('bcrypt')
 
 const get_signup = (req, res) => {
-  res.render('signup', { title: 'Sign Up', error: '' })
+  res.render('pages/learner/signup', { title: 'Sign Up', error: '' })
 }
 
 function capitalizefLetter(str) {
@@ -21,44 +21,44 @@ const post_signup = async (req, res) => {
 
   if (!firstname || !lastname || !email || !password || !confirmPassword) {
     error = 'Please fill in all fields'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
 
   if (!nameRegex.test(firstname)) {
     error = 'First name should contain only lowercase letters'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
 
   if (!nameRegex.test(lastname)) {
     error = 'Last name should contain only lowercase letters'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
 
   const learnerExists = await Learner.findOne({ email })
   if (learnerExists) {
     error = 'Email already exists'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
 
   if (!emailRegex.test(email)) {
     error = 'Invalid email address'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
 
   if (password !== confirmPassword) {
     error = 'Passwords do not match'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
   if (!passwordRegex.test(password)) {
     error =
       'Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter'
-    res.render('signup', { title: 'Sign Up', error })
+    res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
   const capitalizedFirstname = capitalizefLetter(firstname)
@@ -83,7 +83,7 @@ const post_signup = async (req, res) => {
 }
 
 const get_login = (req, res) => {
-  res.render('login', { title: 'login', error: '' })
+  res.render('pages/learner/login', { title: 'login', error: '' })
 }
 
 const post_login = async (req, res) => {
@@ -100,13 +100,13 @@ const post_login = async (req, res) => {
 
   if (!emailRegex.test(email)) {
     let error = 'Invalid email address'
-    res.render('login', { title: 'login in', error })
+    res.render('pages/learner/login', { title: 'login in', error })
     return
   }
 
   if (!passwordRegex.test(password)) {
     let error = 'Password and Email did not match'
-    res.render('login', { title: 'login in', error })
+    res.render('pages/learner/login', { title: 'login in', error })
     return
   }
 
@@ -114,7 +114,7 @@ const post_login = async (req, res) => {
 
   if (!user) {
     let error = 'Password and Email did not match'
-    res.render('login', { title: 'login in', error })
+    res.render('pages/learner/login', { title: 'login in', error })
     return
   }
 
@@ -129,7 +129,7 @@ const post_login = async (req, res) => {
     res.redirect('/profile')
   } else {
     let error = 'Password and Email did not match'
-    res.render('login', { title: 'login', error })
+    res.render('pages/learner/login', { title: 'login', error })
   }
 }
 
