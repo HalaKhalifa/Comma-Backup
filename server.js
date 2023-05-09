@@ -3,19 +3,15 @@ const path = require('path')
 const session = require('express-session')
 
 const dashboardRouter = require('./routes/dashboard')
-const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
-const registrationRoutes = require('./routes/registration')
-const profileRoutes = require('./routes/profile')
-const route = require('./routes/outline')
 const authRoutes = require('./routes/auth')
-const coursesPageRoute = require('./routes/pagination')
-const singlePageRoute = require('./routes/singlePage')
 const landingPage = require('./routes/landingPage')
-const searchController = require('./controllers/search')
+const courses = require('./routes/courses')
+const learner = require('./routes/learner')
+const { searchCourses } = require('./controllers/courses')
 
 const app = express()
 require('dotenv').config()
-require('./config/mongoose.config') // database connection
+require('./config/mongoose') // database connection
 
 //-- Express configuration & Middleware
 app.set('view engine', 'ejs') // use EJS
@@ -34,22 +30,16 @@ app.use(
 
 // -- Routes
 app.use('/', landingPage)
-app.use('/signup', registrationRoutes)
 app.use('/', authRoutes)
-// app.use('/courses', isLoggedIn) // todo : work on this
-app.get('/courses', coursesPageRoute)
-app.get('/outline', singlePageRoute)
-app.use('/dashboard', dashboardRouter)
-app.use('/dashboard2', dashboardContentfulRouter) // for reference only
-// app.use('/signup', registrationRoutes)
-app.use('/', route)
-app.use('/', profileRoutes)
+app.use('/', courses)
+app.use('/', learner)
+app.use('/', dashboardRouter)
 
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {
   const searchQuery = req.body.searchText
   if (searchQuery && searchQuery.trim().length > 0) {
-    const searchResults = await searchController(searchQuery)
+    const searchResults = await searchCourses(searchQuery)
     console.log(searchResults)
     res.redirect(`/courses?search=${searchQuery}`)
   } else {

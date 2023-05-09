@@ -27,7 +27,6 @@ const getDashboard = async (req, res) => {
     },
     analytics: {
       popularCoursesPie: JSON.stringify(await getPopularCourses()),
-      allCoursesTable: JSON.stringify(await getAllCoursesTable()),
       NoOfCoursesList: await NumberOfCoursesInYear(),
       NoOfCountryLearners: await getCountryLearners(),
       NoOfCourses: await getNoOfCourses(),
@@ -44,7 +43,10 @@ const getDashboard = async (req, res) => {
 
 const getDashboardCourses = async (req, res) => {
   const context = {
-    title: 'All courses'
+    title: 'All courses',
+    data: {
+      courses: JSON.stringify(await getAllCoursesTable())
+    }
   }
 
   res.render('pages/dashboard/courses.ejs', context)
@@ -52,7 +54,8 @@ const getDashboardCourses = async (req, res) => {
 
 const getDashboardAdmins = async (req, res) => {
   const context = {
-    title: 'All admins'
+    title: 'All admins',
+    admins: []
   }
 
   res.render('pages/dashboard/admins.ejs', context)
@@ -60,7 +63,8 @@ const getDashboardAdmins = async (req, res) => {
 
 const getDashboardLearners = async (req, res) => {
   const context = {
-    title: 'All learners'
+    title: 'All learners',
+    learners: []
   }
 
   res.render('pages/dashboard/learners.ejs', context)

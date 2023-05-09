@@ -131,10 +131,84 @@ async function getCourses(limit = 100, sort = false) {
   }
 }
 
+async function filterCourses(userFilters) {
+  const { topic, tags, date, enrollment, rating } = userFilters
+  const query = {}
+
+  if (topic) {
+    query.topic = topic
+  }
+
+  if (tags && tags.length > 0) {
+    query.tags = { $in: tags }
+  }
+
+  if (date) {
+    const { start, end } = date
+    query.date = { $gte: new Date(start), $lte: new Date(end) }
+  }
+
+  if (enrollment) {
+    query.enrollment = { $gte: enrollment }
+  }
+
+  if (rating) {
+    query.rating = { $gte: rating }
+  }
+
+  const courses = await course.find(query).sort({ date: -1, enrollment: -1, rating: -1 })
+  return courses
+}
+
+const getSingleCourse = async (req, res) => {
+  const courseId = req.query.courseId
+
+  const singleCourse = await Course.findById(courseId)
+  if (!singleCourse) {
+    return res.status(404).json({ error: 'No such course' })
+  }
+  res.render('outline_page', { singleCourse: singleCourse })
+}
+
+const coursePagination = async (req, res) => {
+  let page = parseInt(req.query.page) || 1
+  let limit = 16
+  // const pageCourses = await course.find().skip((page-1)*limit).limit(limit).sort({createdAt: -1});
+  let query = {}
+  if (req.query.search) {
+    query.title = { $regex: req.query.search, $options: 'i' }
+  }
+  const pageCourses = await Course.find(query)
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .sort({ createdAt: -1 })
+  res.render('coursesPage', {
+    title: 'courses page',
+    pageCourses: pageCourses
+  })
+}
+
+async function searchCourses(searchQuery) {
+  console.log('Search query:', searchQuery)
+  try {
+    const regex = new RegExp(searchQuery, 'i')
+    const results = await Course.find({ $or: [{ title: regex }, { description: regex }] })
+    return results
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
 module.exports = {
   getCoursesList,
   getCourse,
   createNewCourse,
   updateCourse,
-  deleteCourse
+  deleteCourse,
+  getCourses,
+  filterCourses,
+  getSingleCourse,
+  coursePagination,
+  searchCourses
 }

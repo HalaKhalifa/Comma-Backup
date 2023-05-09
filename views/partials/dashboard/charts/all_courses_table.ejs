@@ -7,7 +7,7 @@
     <div class="align-self-center w-100">
       <div class="py-3">
         <div class="chart chart-xs">
-          <div id="courses-table" data-courses=<%= analytics.allCoursesTable %> ></div>
+          <div id="courses-table" ></div>
         </div>
       </div>
     </div>
@@ -16,7 +16,7 @@
 <script>
   const coursesTableElement = document.getElementById('courses-table')
   // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
-  let tableCoursesData = <%- analytics.allCoursesTable %>;
+  let tableCoursesData = <%- data.courses %>;
   tableCoursesData = tableCoursesData.map((course) => {
     return {
       ...course,

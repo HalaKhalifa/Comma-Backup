@@ -1,8 +1,12 @@
 const express = require('express')
 const router = express.Router()
-router.use(express.urlencoded({ extended: true }))
 
-const { getLearner, createNewLearner } = require('../controllers/learner')
+const {
+  getLearner,
+  createNewLearner,
+  getLearnerProfile,
+  postLearnerProfile
+} = require('../controllers/learner')
 
 router.post('/', async (req, res) => {
   createNewLearner(req, res)
@@ -11,4 +15,8 @@ router.post('/', async (req, res) => {
 router.get('/', (req, res) => {
   getLearner(req, res)
 })
+
+router.get('/profile', getLearnerProfile)
+router.post('/profile', postLearnerProfile)
+
 module.exports = router
