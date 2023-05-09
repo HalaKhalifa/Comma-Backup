@@ -57,7 +57,8 @@ const learnerSchema = new Schema({
   },
   preferredCommunication: {
     type: String,
-    required: false
+    required: false,
+    enum: ['email', 'phone', 'social media', 'other']
   },
   socialMedia: {
     type: String,
@@ -105,4 +106,4 @@ const learnerSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('LearnerSchema', learnerSchema)
+module.exports = mongoose.model('Learner', learnerSchema)

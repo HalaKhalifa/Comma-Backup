@@ -7,7 +7,7 @@ const {
   getDashboardLearners,
   getDashboardAdmins
 } = require('../controllers/dashboard')
-const { updateLearner, getLearners } = require('../controllers/learner.test')
+const { updateLearner, getLearners } = require('../controllers/learner')
 router.get('/', (req, res) => {
   getDashboard(req, res)
 })

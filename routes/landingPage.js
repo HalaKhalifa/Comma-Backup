@@ -1,10 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
 // Set up landing page route
-router.get('/', async (req,res)=>{
+router.get('/', async (req, res) => {
+  res.render('landingPage')
+})
 
-    res.render('landingPage');
-  });
-
-  module.exports= router;
+module.exports = router

@@ -1,17 +1,14 @@
-const express = require("express");
-const router = express.Router();
-router.use(express.urlencoded({ extended: true }));
+const express = require('express')
+const router = express.Router()
+router.use(express.urlencoded({ extended: true }))
 
-const {
-    getLearner,
-    createNewLearner
-  } = require("../controllers/learnersController");
-  
-  router.post("/", async (req, res) => {
-    createNewLearner(req, res);
-  });
+const { getLearner, createNewLearner } = require('../controllers/learner')
 
-  router.get("/", (req, res) => {
-    getLearner(req, res);
-  });
-  module.exports = router;
+router.post('/', async (req, res) => {
+  createNewLearner(req, res)
+})
+
+router.get('/', (req, res) => {
+  getLearner(req, res)
+})
+module.exports = router

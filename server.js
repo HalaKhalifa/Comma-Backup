@@ -4,14 +4,14 @@ const session = require('express-session')
 
 const dashboardRouter = require('./routes/dashboard')
 const dashboardContentfulRouter = require('./routes/dashboardContentful') // for reference only
-const registrationRoutes = require('./routes/registrationRoutes')
-const profileRoutes = require('./routes/profileRoute')
-const route = require('./routes/outline.js')
-const authRoutes = require('./routes/authRoutes')
-const coursesPageRoute = require('./routes/paginationRoute')
-const singlePageRoute = require('./routes/singlePageRoute.js')
+const registrationRoutes = require('./routes/registration')
+const profileRoutes = require('./routes/profile')
+const route = require('./routes/outline')
+const authRoutes = require('./routes/auth')
+const coursesPageRoute = require('./routes/pagination')
+const singlePageRoute = require('./routes/singlePage')
 const landingPage = require('./routes/landingPage')
-const searchController = require('./controllers/searchController')
+const searchController = require('./controllers/search')
 
 const app = express()
 require('dotenv').config()
@@ -24,7 +24,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, '/public'))) // set path for assets folder
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
 app.use(
   session({
     secret: 'your-secret-key',
@@ -36,13 +35,13 @@ app.use(
 // -- Routes
 app.use('/', landingPage)
 app.use('/signup', registrationRoutes)
-app.get('/login', authRoutes)
+app.use('/', authRoutes)
 // app.use('/courses', isLoggedIn) // todo : work on this
 app.get('/courses', coursesPageRoute)
 app.get('/outline', singlePageRoute)
 app.use('/dashboard', dashboardRouter)
 app.use('/dashboard2', dashboardContentfulRouter) // for reference only
-app.use('/signup', registrationRoutes)
+// app.use('/signup', registrationRoutes)
 app.use('/', route)
 app.use('/', profileRoutes)
 

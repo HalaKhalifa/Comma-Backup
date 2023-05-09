@@ -1,14 +1,15 @@
 # Training Module Project
+
 NNU CAP Team 1 Project for Team Project 2 course
 
-
 ## After Clone
+
 - Rename the '.env.example' file to '.env'
 - run npm install
 - Open '.env' file and change the MONGO_URI to your database link
 
-
 ## Installed Packages
+
 - DotENV => for reading .env file
 - Nodemon => monitor js file changes
 - Axios => make api requests
@@ -17,6 +18,7 @@ NNU CAP Team 1 Project for Team Project 2 course
 - EJS => template engine
 
 ## Directory Structure
+
 - controllers/ => has the controllers
 - models/ => has the DB schema files
 - views/ => has the ejs template
@@ -26,9 +28,11 @@ NNU CAP Team 1 Project for Team Project 2 course
 - middleware/ => custom middleware
 
 ## Branching
-- Each collaborator must create a branch for each feature following the name patter: {collaborator_name-feature}
-Ex. samer-login
 
-## Dashboard Template 
+- Each collaborator must create a branch for each feature following the name patter: {collaborator_name-feature}
+  Ex. samer-login
+
+## Dashboard Template
+
 - https://adminkit.gumroad.com/
   The Free Version

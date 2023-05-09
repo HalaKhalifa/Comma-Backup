@@ -6,13 +6,13 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear
-} = require('./dashboardCourses')
+} = require('./dashboardAnalytics')
 const {
   getCountryLearners,
   getNoOflearner,
   getTotalEnrolledUserCount,
   NoOfMonthlyRegistration
-} = require('./learner.test')
+} = require('./learner')
 const { usersData } = require('../helpers/dashboard')
 
 const getDashboard = async (req, res) => {

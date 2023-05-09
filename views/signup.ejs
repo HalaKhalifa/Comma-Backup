@@ -1,5 +1,15 @@
-<%- include('partials/header', { title: 'Sign Up' }); %>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title><%= title %></title> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+</head>
+<body>
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -30,9 +40,10 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" />
           </div>
           <div class="form-floating mb-3">
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" />
+             <label for="confirmPassword">Confirm Password</label>
+             <input type="password" class="form-control " id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" />
           </div>
+
           <button type="submit" class="btn btn-primary btn-block">
             Sign Up
           </button>
@@ -44,5 +55,33 @@
     </div>
   </div>
 </div>
+
+<script >
+  function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    const toggleButton = document.querySelector("i");
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      toggleButton.classList.remove("fa-eye");
+      toggleButton.classList.add("fa-eye-slash");
+    } else {
+      passwordInput.type = "password";
+      toggleButton.classList.remove("fa-eye-slash");
+      toggleButton.classList.add("fa-eye");
+    }
+  }
+</script>
+
+<style>
+  .form-floating i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+</style>
+
 
 <%- include('partials/footer'); %>

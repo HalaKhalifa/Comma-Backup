@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 // const homeController = require("../controllers/homeController");
 
 // // Set up landing page route
@@ -12,14 +12,14 @@ const router = express.Router();
 //   });
 // });
 
-
-const searchController = require('../controllers/searchController.js');
+const searchController = require('../controllers/searchController.js')
 // Set up search route using searchController
 router.post('/search', async (req, res) => {
-  const searchQuery = req.body.searchText;
-  if(searchQuery && searchQuery.trim().length > 0){
-  const searchResults = await searchController(searchQuery); 
-  console.log(searchResults);
-}});
+  const searchQuery = req.body.searchText
+  if (searchQuery && searchQuery.trim().length > 0) {
+    const searchResults = await searchController(searchQuery)
+    console.log(searchResults)
+  }
+})
 
-  module.exports= router;
+module.exports = router
