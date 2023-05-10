@@ -35,7 +35,7 @@ app.use('/', authRoutes)
 app.use('/', courses)
 app.use('/', learner)
 app.use('/', dashboardRouter)
-app.post('/outline',Preferences)
+app.use('/',Preferences)
 
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {
