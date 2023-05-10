@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth')
 const landingPage = require('./routes/landingPage')
 const courses = require('./routes/courses')
 const learner = require('./routes/learner')
+const AdminLearner = require('./routes/adminToLearner')
 const { searchCourses } = require('./controllers/courses')
 
 const app = express()
@@ -29,6 +30,7 @@ app.use(
 )
 
 // -- Routes
+app.use('/', AdminLearner)
 app.use('/', landingPage)
 app.use('/', authRoutes)
 app.use('/', courses)
