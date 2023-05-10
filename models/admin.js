@@ -17,6 +17,11 @@ const adminSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  isDeleted: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 })
 
