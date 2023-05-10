@@ -221,18 +221,11 @@ const getLearnerProfile = async (req, res) => {
 const postLearnerProfile = async (req, res) => {
   const user_id = get_session_loggedIn(req)
   const userData = req.body
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-  if (!emailRegex.test(userData.email)) {
-    let error = 'Invalid email address'
-    const user = await learner.findOne({ _id: user_id })
-    res.render('pages/learner/profile', { title: 'profile', user, error })
-    return
-  }
   console.log(user_id.body)
   console.log('profile data')
   learner.findOneAndUpdate(
     { _id: user_id },
-    { $set: userData },
+    { $set: { ...userData, updatedAt: new Date() } },
     { new: true },
     (err, updatedUser) => {
       if (err) {
@@ -242,7 +235,7 @@ const postLearnerProfile = async (req, res) => {
       console.log('User data updated:', updatedUser)
       return res.status(200).send('User data updated successfully')
     }
-  )
+  )  
 }
 module.exports = {
   getLearnerProfile,

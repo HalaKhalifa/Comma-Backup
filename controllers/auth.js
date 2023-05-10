@@ -69,7 +69,9 @@ const post_signup = async (req, res) => {
     firstname: capitalizedFirstname,
     lastname: capitalizedLastname,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    createdAt:new Date(),
+    status:true
   })
   console.log(learner)
   try {

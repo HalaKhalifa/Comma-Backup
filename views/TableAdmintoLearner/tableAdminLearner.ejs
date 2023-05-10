@@ -1,79 +1,80 @@
 <%- include('../partials/home/header'); %>
 
-<link rel="stylesheet" href="/path/to/gridjs-style.css">
+  <link rel="stylesheet" href="/path/to/gridjs-style.css">
 
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="table-responsive gridjs-wrapper" id="grid"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="table-responsive gridjs-wrapper" id="grid"></div>
+      </div>
     </div>
   </div>
-</div>
 
+  <script
+    src="https://cdn.jsdelivr.net/npm/gridjs@latest/dist/gridjs.production.min.js"></script>
+  
+  <%- include('../partials/admin/learnereditmodal'); %>
 
-<script src="https://cdn.jsdelivr.net/npm/gridjs@latest/dist/gridjs.production.min.js"></script>
-<script>
-
-
-
-//function to update the Ids column after delete a row or any action the affected rows 
-function updateIds(startIndex = 0) {
-  const rows = document.querySelectorAll('#grid tbody tr');
-  for (let i = startIndex; i < rows.length; i++) {
-    const cells = rows[i].querySelectorAll('td');
-    cells[0].innerHTML = i + 1;
-  }
-}
-
-// get data from controller
-let data = <%- JSON.stringify(learnerArray) %>; 
-let data2 = data.map((arr, index) => {
-  return [index + 1, ...arr];
-});
-
-new gridjs.Grid({
-  columns: [
-    { name: "ID", width: "10%" },
-    { name: "First Name", width: "10%" },
-    { name: "Email", width: "10%" },
-    {
-      name: "Password",
-      width: "15%",
-      header: (cell) => {
-        cell.style.whiteSpace = "normal";
-        return gridjs.html(`<div>${cell}</div>`);
+  <script>
+    //function to update the Ids column after delete a row or any action the affected rows 
+    function updateIds(startIndex = 0) {
+      const rows = document.querySelectorAll('#grid tbody tr');
+      for (let i = startIndex; i < rows.length; i++) {
+        const cells = rows[i].querySelectorAll('td');
+        cells[0].innerHTML = i + 1;
       }
-    },
-    { name: "Status", width: "5%", formatter: (cell) => gridjs.html(`<div>${cell == 0 ? "Blocked" : "Active"}</div>`) },
-    {
-      name: "Actions",
-      width: "50%",
-      formatter: (_, row) => gridjs.html(`
-        <div class="btn-toolbar justify-content-center flex-wrap d-flex">
-          <div class="btn-group mx-2" role="group" style="width: 33.33%">
-            <button type="button" class="btn btn-danger">Delete</button>
-          </div>
-          <div class="btn-group mx-2" role="group" style="width: 33.33%">
-            <button type="button" class="btn btn-primary">Edit</button>
-          </div>
-          <div class="btn-group mx-2" role="group" style="width: 33.33%">
-            <button type="button" class="btn btn-success">Save</button>
-          </div>
-        </div>
-      `)
     }
-  ],
-  data: data2,
-  sort: true,
-  style: {
-    table: {
-      borderCollapse: "collapse",
-      width: "100%",
-      border: "1px solid #dee2e6"
-    },
-    th: {
-      backgroundColor: "#e9ecef",
-      color: "#212529",
+
+    // get data from controller
+    let data = <%-JSON.stringify(learnerArray) %>;
+    let data2 = data.map((arr, index) => {
+      return [index + 1, ...arr];
+    });
+
+    new gridjs.Grid({
+      columns: [
+        { name: "ID", width: "10%" },
+        { name: "First Name", width: "10%" },
+        { name: "Email", width: "10%" },
+        {
+          name: "Password",
+          width: "15%",
+          header: (cell) => {
+            cell.style.whiteSpace = "normal";
+            return gridjs.html(`<div>${cell}</div>`);
+          }
+        },
+        { name: "Status", width: "5%", formatter: (cell) => gridjs.html(`<div>${cell == 0 ? "Blocked" : "Active"}</div>`) },
+        {
+          name: "Actions",
+          width: "50%",
+          formatter: (_, row) => gridjs.html(`
+    <div class="btn-toolbar justify-content-center flex-wrap d-flex">
+        <div class="btn-group mx-2" role="group" style="width: 33.33%">
+            <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+        <div class="btn-group mx-2" role="group" style="width: 33.33%">
+            <button id='edit-button' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"   onclick="document.getElementById('save-update').dataset.email = '${row.cells[2].data}'" >Edit</button>
+        </div>
+        <div class="btn-group mx-2" role="group" style="width: 33.33%">
+            <button type="button" class="btn btn-success">Save</button>
+        </div>
+    </div>
+`)
+
+        }
+      ],
+      data: data2,
+      sort: true,
+      style: {
+        table: {
+          borderCollapse: "collapse",
+          width: "100%",
+          border: "1px solid #dee2e6"
+        },
+        th: {
+          backgroundColor: "#e9ecef",
+          color:      "#212529",
       fontWeight: "bold",
       textTransform: "uppercase",
       fontSize: "15px",
@@ -87,12 +88,53 @@ new gridjs.Grid({
       textAlign: "center"
     }
   },
-  
+
 }).render(document.getElementById("grid"));
 
- 
+let save=document.getElementById('save-update');
+let firstName = document.getElementById('first-name');
+let lastName = document.getElementById('last-name');
+let email = document.getElementById('email');
+function editProfile(){
+  const email1 = document.getElementById('save-update').dataset.email;
+  email.value=email1;
+}
+function updateProfile() {
+  const email1 = document.getElementById('save-update').dataset.email;
+  console.log(email1);
+}
+function clearInputs() {
+  const firstName = document.getElementById('first-name');
+  const lastName = document.getElementById('last-name');
+  const email = document.getElementById('email');
+  const firstNameLabel = firstName.previousElementSibling;
+  const lastNameLabel = lastName.previousElementSibling;
+  const emailLabel = email.previousElementSibling;
+  const firstNamePencil = document.getElementById('pencil-first-name');
+  const lastNamePencil = document.getElementById('pencil-last-name');
+  const emailPencil = document.getElementById('pencil-email');
+  firstName.classList.add('d-none');
+  lastName.classList.add('d-none');
+  email.classList.add('d-none');
+  firstNameLabel.classList.remove('d-none');
+  lastNameLabel.classList.remove('d-none');
+  emailLabel.classList.remove('d-none');
+  firstNamePencil.classList.remove('d-none');
+  lastNamePencil.classList.remove('d-none');
+  emailPencil.classList.remove('d-none');
+}
+function editField(id) {
+  const fieldSpan = document.getElementById(id).previousElementSibling;
+  fieldSpan.classList.add('d-none');
+  const input = document.getElementById(id);
+  input.classList.remove('d-none');
+  input.focus();
+  input.select();
+  const pencil = document.getElementById(`pencil-${id}`);
+  pencil.classList.add('d-none');
+}
 
 
-</script>
+  </script>
+<%- include('../partials/home/footer'); %>
 
-<%- include('../partials/home/footer'); %> 

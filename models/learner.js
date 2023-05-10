@@ -107,6 +107,16 @@ const learnerSchema = new Schema({
   img: {
     type: String,
     required: false
+  },updatedAt: {
+    type: Date,
+    default: Date.now,
+  },createdAt: {
+    type: Date,
+    default: Date.now,
+  },status:{
+    type:Boolean,
+    default:true,
+    required:true
   }
 })
 
