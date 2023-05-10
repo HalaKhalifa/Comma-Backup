@@ -8,7 +8,8 @@ const {
   getDashboardLearners,
   getDashboardAdmins
 } = require('../controllers/dashboard')
-const { updateLearner, getLearners } = require('../controllers/learner')
+const { getLearners } = require('../controllers/learner')
+const { updateLearner } = require('../controllers/admin')
 
 router.get('/dashboard', (req, res) => {
   getDashboard(req, res)
@@ -29,9 +30,10 @@ router.get('/dashboard/admins', (req, res) => {
 })
 router.post('/dashboard/update-learners-data', async (req, res) => {
   console.log(req.body)
-  console.log('updaing data ... ')
+  await updateLearner(req, res)
 })
 router.post('/dashboard/getlearnersdata', async (req, res) => {
+  console.log(req.query)
   await getLearners(req, res)
 })
 

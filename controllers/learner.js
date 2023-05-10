@@ -32,11 +32,14 @@ const getLearners = async (req, res) => {
       search = search.substring(0, index)
     }
     let learners = await learner
-      .find({ name: { $regex: search, $options: 'i' } })
+      .find({ email: { $regex: search, $options: 'i' } })
       .skip(skip)
       .limit(limit)
       .exec()
-    const data = { learners: learners, count: await learner.estimatedDocumentCount() }
+    const data = {
+      learners: learners,
+      count: await learner.countDocuments({ email: { $regex: search, $options: 'i' } })
+    }
     res.status(200).json(data)
   } catch (error) {
     console.error("error : couldn't get Learners", error)

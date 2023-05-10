@@ -56,7 +56,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address" name="email">
+                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address" name="email" >
                           </div>
                         <div id="adminAccountsEditModalEmailLabel" class="form-text">Click to Edit Email</div>
                       </div>
@@ -75,6 +75,7 @@
                       </div>
                       <div id="adminAccountsEditModalPasswordLabel" class="form-text">Click to Edit Password</div>
                     </div>
+                    <input type="hidden" id="old-email-holder-admins" name="targetEmail" >
                   </form>
               </div>
         </div>
@@ -197,6 +198,13 @@ function editPasswordToggleVisible() {
 }
 // ------------ Password Visibility -----------------------------------------
 // ------------ Send Data to Server -----------------------------------------
-
+document.addEventListener('click', (e) => {
+  
+  if (e.target && e.target.classList.contains('edit-button-modal-opener')) {
+    const email = e.target.getAttribute('data-email')
+    const oldEmailElement = document.getElementById("old-email-holder-admins")
+    oldEmailElement.value = email
+  }
+})
 // ------------ Send Data to Server -----------------------------------------
   </script>
