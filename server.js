@@ -9,6 +9,7 @@ const courses = require('./routes/courses')
 const learner = require('./routes/learner')
 const { searchCourses } = require('./controllers/courses')
 
+
 const app = express()
 require('dotenv').config()
 require('./config/mongoose') // database connection
@@ -34,6 +35,7 @@ app.use('/', authRoutes)
 app.use('/', courses)
 app.use('/', learner)
 app.use('/', dashboardRouter)
+
 
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {

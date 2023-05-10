@@ -21,31 +21,15 @@ const getCourse = async (req, res) => {
 const createNewCourse = async (req, res) => {
   const {
     title,
-    image,
     description,
     outline,
-    totalHours,
-    enrolledUsers,
-    rating,
-    stars,
-    topicID,
-    publishedAt,
-    view
   } = req.body
 
   try {
     const newCourse = await Course.create({
       title: title,
-      image: image,
       description: description,
       outline: outline,
-      totalHours: totalHours,
-      enrolledUsers: enrolledUsers,
-      rating: rating,
-      stars: stars,
-      topicID: topicID,
-      publishedAt: publishedAt,
-      view: view
     })
 
     res.status(200).json(newCourse)
@@ -103,7 +87,7 @@ const deleteCourse = async (req, res) => {
   const { id } = req.params
 
   const singleCourse = await Course.findOneAndDelete({ _id: id })
-
+  
   if (!singleCourse) {
     return res.status(404).json({ error: 'No such course.' })
   }

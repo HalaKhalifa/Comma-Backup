@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { coursePagination, getSingleCourse, searchCourses } = require('../controllers/courses')
+const { coursePagination, getSingleCourse, searchCourses, } = require('../controllers/courses')
+const formController=require('../controllers/courses')
 
+router.post("/dashboard/courses",formController.createNewCourse);
 router.get('/courses', coursePagination)
 router.get('/outline', getSingleCourse)
 
