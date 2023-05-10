@@ -5,7 +5,7 @@ const post_preferences = async (req, res) => {
   let learnerId = get_session_loggedIn(req)
   let error = ''
   if (learnerId == null) {
-    error = 'you must login'
+    error = 'Please  Login'
     res.render('pages/learner/login', { title: 'login in', error })
     return
   }
