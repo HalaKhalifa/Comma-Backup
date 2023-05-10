@@ -14,7 +14,7 @@
                 </li>
               </ul>
               <div class="tab-content bg-white" id="myTabContent">
-                <form>
+                <form id="admin-accounts-edit-form" method="POST" action="update-learners-data">
                     <div class="mb-3">
                       <label for="adminAccountsEditModalFirstName" class="form-label">First Name</label>
                       <div class="input-group mb-3">
@@ -26,9 +26,9 @@
                                 </label>
                             </div>
                         </div>
-                        <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="First Name">
+                        <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="First Name" name="firstname">
                       </div>
-                      <div id="adminAccountsEditModalFirstName" class="form-text">Click to Edit First Name</div>
+                      <div id="adminAccountsEditModalFirstNameLabel" class="form-text">Click to Edit First Name</div>
                     </div>
                     <div class="mb-3">
                         <label for="adminAccountsEditModalLastName" class="form-label">Last Name</label>
@@ -41,9 +41,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Last Name">
+                            <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Last Name" name="lastname">
                           </div>
-                        <div id="adminAccountsEditModalLastName" class="form-text">Click to Edit Last Name</div>
+                        <div id="adminAccountsEditModalLastNameLabel" class="form-text">Click to Edit Last Name</div>
                       </div>
                       <div class="mb-3">
                         <label for="adminAccountsEditModalEmail" class="form-label">Email address</label>
@@ -56,9 +56,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address">
+                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address" name="email">
                           </div>
-                        <div id="adminAccountsEditModalEmail" class="form-text">Click to Edit Email</div>
+                        <div id="adminAccountsEditModalEmailLabel" class="form-text">Click to Edit Email</div>
                       </div>
                     <div class="mb-3">
                         <label for="adminAccountsEditModalPassword" class="form-label">Password</label>
@@ -71,16 +71,16 @@
                                 </label>
                             </div>
                         </div>
-                        <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Password">
+                        <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Password" name="password">
                       </div>
-                      <div id="adminAccountsEditModalPassword" class="form-text">Click to Edit Password</div>
+                      <div id="adminAccountsEditModalPasswordLabel" class="form-text">Click to Edit Password</div>
                     </div>
                   </form>
               </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="edit-button-datatable text-nowrap">Save Changes</button>
+            <input type="submit" id="edit-account-save-button" form="admin-accounts-edit-form" value="Save Changes"class="edit-button-datatable text-nowrap"/>
         </div>
       </div>
     </div>
@@ -196,4 +196,7 @@ function editPasswordToggleVisible() {
   }
 }
 // ------------ Password Visibility -----------------------------------------
+// ------------ Send Data to Server -----------------------------------------
+
+// ------------ Send Data to Server -----------------------------------------
   </script>

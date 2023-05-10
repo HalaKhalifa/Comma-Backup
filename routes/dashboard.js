@@ -28,7 +28,8 @@ router.get('/dashboard/admins', (req, res) => {
   getDashboardAdmins(req, res)
 })
 router.post('/dashboard/update-learners-data', async (req, res) => {
-  await updateLearner(req, res)
+  console.log(req.body)
+  console.log('updaing data ... ')
 })
 router.post('/dashboard/getlearnersdata', async (req, res) => {
   await getLearners(req, res)
