@@ -18,6 +18,10 @@ const learnerSchema = new Schema({
     type: String,
     required: true
   },
+  status: {
+    type: Number, // Or whatever type is appropriate for your use case
+    required: false
+  },
   dob: {
     type: Date,
     required: false,
