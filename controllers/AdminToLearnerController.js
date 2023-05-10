@@ -8,11 +8,10 @@ const get_admin_learner_data = async (req, res) => {
       learner.email,
       learner.password,
       learner.status,
-      
-      
+      // learner.updatedAt,
+      // learner.createdAt
     ]) // Modify the properties as needed
 
-    console.log(learnerArray, 'from get')
     res.render('TableAdmintoLearner/tableAdminLearner', {
       learnerArray
     })

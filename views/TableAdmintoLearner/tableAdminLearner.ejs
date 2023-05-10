@@ -27,40 +27,59 @@ function updateIds(startIndex = 0) {
 
 // get data from controller
 let data = <%- JSON.stringify(learnerArray) %>; 
+
 let data2 = data.map((arr, index) => {
   return [index + 1, ...arr];
 });
 
+
+console.log(data2)
+
+
+for (let i = 0; i < data2.length; i++) {
+  const status = data2[i][data2[i].length - 1];
+  if (status) {
+    data2[i][data2[i].length - 1] = 'Active';
+  } else {
+    data2[i][data2[i].length - 1] = 'Blocked';
+  }
+}
+
+console.log(data2)
+
+
+
+
 new gridjs.Grid({
   columns: [
     { name: "ID", width: "10%" },
-    { name: "First Name", width: "10%" },
-    { name: "Email", width: "10%" },
+    { name: "First Name", width: "15%" },
+    { name: "Email", width: "15%" },
     {
       name: "Password",
-      width: "15%",
-      header: (cell) => {
-        cell.style.whiteSpace = "normal";
-        return gridjs.html(`<div>${cell}</div>`);
-      }
-    },
-    { name: "Status", width: "5%", formatter: (cell) => gridjs.html(`<div>${cell == 0 ? "Blocked" : "Active"}</div>`) },
+      width: "10%",},
+ 
+{ name: "Status",  width: "10%"},
+  
+
     {
       name: "Actions",
-      width: "50%",
-      formatter: (_, row) => gridjs.html(`
-        <div class="btn-toolbar justify-content-center flex-wrap d-flex">
-          <div class="btn-group mx-2" role="group" style="width: 33.33%">
-            <button type="button" class="btn btn-danger">Delete</button>
+      width: "100%",
+      formatter: (_, row) => {
+        const status = row.cells[4].data;
+        return gridjs.html(`
+          <div class="btn-toolbar justify-content-center flex-wrap d-flex">
+            <div class="btn-group mx-2" role="group" style="width: 33.33%">
+              <button type="button" class="btn ${status == "Blocked" ? 'btn-success' : 'btn-danger'}">
+                ${status == "Blocked" ? 'Activate' : 'Delete'}
+              </button>
+            </div>
+            <div class="btn-group mx-2" role="group" style="width: 33.33%">
+              <button type="button" class="btn btn-primary edit-button">Edit</button>
+            </div>
           </div>
-          <div class="btn-group mx-2" role="group" style="width: 33.33%">
-            <button type="button" class="btn btn-primary">Edit</button>
-          </div>
-          <div class="btn-group mx-2" role="group" style="width: 33.33%">
-            <button type="button" class="btn btn-success">Save</button>
-          </div>
-        </div>
-      `)
+        `)
+      }
     }
   ],
   data: data2,
@@ -78,20 +97,16 @@ new gridjs.Grid({
       textTransform: "uppercase",
       fontSize: "15px",
       borderBottom: "2px solid #dee2e6",
-      padding: "5px",
+      padding: "1px",
       textAlign: "center"
     },
     td: {
       borderBottom: "1px solid #dee2e6",
-      padding: "10px",
+      padding: "1px",
       textAlign: "center"
     }
   },
-  
 }).render(document.getElementById("grid"));
-
- 
-
 
 </script>
 
