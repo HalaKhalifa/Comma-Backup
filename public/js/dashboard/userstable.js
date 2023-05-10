@@ -95,7 +95,7 @@ const datatable_learners_grid = new gridjs.Grid({
     }
   },
   server: {
-    url: 'dashboard/getLearnersData',
+    url: 'getlearnersdata',
     method: 'POST',
     then: (data) => data.learners.map((learner) => [learner.name, learner.email, learner.active]),
     total: (data) => data.count
