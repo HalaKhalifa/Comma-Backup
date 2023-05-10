@@ -48,7 +48,6 @@ const getDashboardCourses = async (req, res) => {
       courses: JSON.stringify(await getAllCoursesTable())
     }
   }
-
   res.render('pages/dashboard/courses.ejs', context)
 }
 

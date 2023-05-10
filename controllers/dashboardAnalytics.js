@@ -133,7 +133,7 @@ async function getEnrolledFinished(limit = 10) {
  * @param {Boolean} sort - defines the sorting of the records. `'ASC'` | `'DESC'` | `false`. Default = `false`.
  * @returns {Array} An array of course objects.
  */
-async function getAllCoursesTable(limit = 20) {
+async function getAllCoursesTable(limit = 20) { //10000 -> 13.37 s
   // todo: fucntionality should be changed to return a range of courses
   try {
     let courses = await getCourses(limit)

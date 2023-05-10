@@ -12,21 +12,21 @@ const courseSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true
+      required: false
     },
     outline: {
       type: String,
-      required: true
+      required: false
     },
     totalHours: {
       type: Number,
       default: 0,
-      required: true
+      required: false
     },
     enrolledUsers: {
       type: Number,
       default: 0,
-      required: true
+      required: false
     },
     rating: {
       type: Number,
@@ -34,7 +34,7 @@ const courseSchema = new mongoose.Schema(
     },
     stars: {
       type: Number,
-      required: true
+      required: false
     },
     topicID: {
       type: mongoose.Schema.Types.ObjectId,
@@ -42,11 +42,11 @@ const courseSchema = new mongoose.Schema(
     },
     publishedAt: {
       type: Number,
-      required: true
+      required: false
     },
     view: {
       type: Number,
-      required: true
+      required: false
     },
     assessments: {
       type: String,

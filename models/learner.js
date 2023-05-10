@@ -20,7 +20,8 @@ const learnerSchema = new Schema({
   },
   dob: {
     type: Date,
-    required: false
+    required: false,
+    default:null
   },
   gender: {
     type: String,
@@ -103,7 +104,24 @@ const learnerSchema = new Schema({
   img: {
     type: String,
     required: false
-  }
+  },
+  preferences:{
+    length:{
+        type:String,
+        required:true,
+        default:'Average',
+   },
+    type:{
+      type:String,
+      required:true,
+      default:'video',
+   },
+   assessment:{
+    type:String,
+    required:true,
+    default:'After each chapter'
+   }
+},
 })
 
 module.exports = mongoose.model('Learner', learnerSchema)
