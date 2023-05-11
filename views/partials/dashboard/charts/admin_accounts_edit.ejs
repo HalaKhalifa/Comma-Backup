@@ -16,7 +16,7 @@
               <div class="tab-content bg-white" id="myTabContent">
                 <form id="admin-accounts-edit-form" method="POST" action="update-admins-data">
                     <div class="mb-3">
-                      <label for="adminAccountsEditModalFirstName" class="form-label">First Name</label>
+                      <label for="adminAccountsEditModalFirstName" class="form-label" id="firstname-validator">First Name</label>
                       <div class="input-group mb-3">
                         <div class="input-group-text rounded-5">
                             <div class="edit-checkbox-disable">
@@ -26,12 +26,12 @@
                                 </label>
                             </div>
                         </div>
-                        <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="First Name" name="firstname">
+                        <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input firstname-validator rounded-5" disabled value="First Name" name="firstname" required>
                       </div>
                       <div id="adminAccountsEditModalFirstNameLabel" class="form-text">Click to Edit First Name</div>
                     </div>
                     <div class="mb-3">
-                        <label for="adminAccountsEditModalLastName" class="form-label">Last Name</label>
+                        <label for="adminAccountsEditModalLastName" class="form-label" id="lastname-validator">Last Name</label>
                         <div class="input-group mb-3">
                             <div class="input-group-text rounded-5">
                                 <div class="edit-checkbox-disable">
@@ -41,12 +41,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Last Name" name="lastname">
+                            <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input lastname-validator rounded-5" disabled value="Last Name" name="lastname" required>
                           </div>
                         <div id="adminAccountsEditModalLastNameLabel" class="form-text">Click to Edit Last Name</div>
                       </div>
                       <div class="mb-3">
-                        <label for="adminAccountsEditModalEmail" class="form-label">Email address</label>
+                        <label for="adminAccountsEditModalEmail" class="form-label" id="email-validator">Email address</label>
                         <div class="input-group mb-3">
                             <div class="input-group-text rounded-5">
                                 <div class="edit-checkbox-disable">
@@ -56,12 +56,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Email address" name="email" >
+                            <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input email-validator rounded-5" disabled value="Email address" name="email" required>
                           </div>
                         <div id="adminAccountsEditModalEmailLabel" class="form-text">Click to Edit Email</div>
                       </div>
                     <div class="mb-3">
-                        <label for="adminAccountsEditModalPassword" class="form-label">Password</label>
+                        <label for="adminAccountsEditModalPassword" class="form-label" id="password-validator">Password</label>
                       <div class="input-group mb-3">
                         <div class="input-group-text rounded-5">
                             <div class="edit-checkbox-disable">
@@ -71,7 +71,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input rounded-5" disabled value="Password" name="password">
+                        <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input password-validator rounded-5" disabled value="Password" name="password" required>
                       </div>
                       <div id="adminAccountsEditModalPasswordLabel" class="form-text">Click to Edit Password</div>
                     </div>
@@ -207,8 +207,8 @@ document.addEventListener('click', (e) => {
 })
 
 const formElement = document.querySelector("#admin-accounts-edit-form")
-
-formElement.addEventListener('submit',event => {
+let responseData = {}
+formElement.addEventListener('submit',async event => {
   event.preventDefault();
 
   const formData = new FormData(formElement);
@@ -217,17 +217,34 @@ const jsonObject = {};
 Array.from(formData.entries()).forEach(([key, value]) => {
   jsonObject[key] = value;
 });
-
+responseData = await updateAdminsFetch(jsonObject)
+})
+async function updateAdminsFetch(jsonObject){
 const data = JSON.stringify(jsonObject);
-  fetch('/dashboard/update-admins-data',{
+ const responseData = await fetch('/dashboard/update-admins-data',{
     method:"POST",
     headers:{
       'Content-Type':'application/json'
     },
     body:data
   }).then(res => res.json())
-    .then(data => console.log(data))
     .catch(error =>console.log(error))
-})
+    return  responseData
+}
+
 // ------------ Send Data to Server -----------------------------------------
+// ------------ Validation --------------------------------------------------
+// NOT DONE YET NEEDS EDITING 
+  document.getElementById("edit-account-save-button").addEventListener('click', ()=> {
+    console.log(responseData)
+if(responseData.status == 'Fail'){
+    const classNamePick = responseData.msg.keys[0] + "-validator"
+    document.getElementsByClassName(classNamePick)[0].style.borderColor = '#ff0000';
+}
+})
+// document.getElementsByClassName('firstname-validator')[0].style.borderColor = '#ff0000';
+// document.getElementsByClassName('lastname-validator')[0].style.borderColor = '#ff0000';
+// document.getElementsByClassName('email-validator')[0].style.borderColor = '#ff0000';
+// document.getElementsByClassName('password-validator')[0].style.borderColor = '#ff0000';
+// ------------ Validation --------------------------------------------------
   </script>

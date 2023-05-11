@@ -9,10 +9,12 @@ const updateAdmin = async (req, res) => {
   try {
     const doc = await learner.findOne({ email: req.body.targetEmail }).exec()
     const storage = { data: req.body }
-    msg = {}
+    let msg = {}
+    let keys = []
     let errorFlag = false
     const errorSet = (key) => {
-      msg.key = key
+      keys.push(key)
+      msg.keys = keys
       msg.error = ' is invalid'
       errorFlag = true
     }
@@ -31,9 +33,9 @@ const updateAdmin = async (req, res) => {
       if (key !== 'password' && !errorFlag) {
         doc[key] = value
       }
-      if (errorFlag) {
-        return res.status(400).json({ storage, msg: msg, status: 'Fail' })
-      }
+    }
+    if (errorFlag) {
+      return res.status(400).json({ storage, msg: msg, status: 'Fail' })
     }
     if (!errorFlag) {
       await doc.save()
