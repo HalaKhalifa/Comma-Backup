@@ -15,7 +15,16 @@
 </div>
 <script>
   const coursesTableElement = document.getElementById('learner-table')
-  // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
+
+  //get context array
+  let newContext = <%- JSON.stringify(context)%>;
+
+  // get data from context to display it in the table
+  let data = newContext.learners[0]
+
+  
+  console.log("data : ")
+  console.log(data)
   ;
   (async () => {
   const grid = new gridjs.Grid({
@@ -54,14 +63,7 @@
         }
       }
     ],
-    data: [
-      { firstname: 'Sadasd', email: 'asd1@gmail.com', status: true },
-      { firstname: 'Ahmad', email: 'ahmad@ahmad.com', status: true },
-      { firstname: 'imnoww', email: 'asd121@gmail.com', status: false },
-      { firstname: 'Test', email: 'test@test.testttt', status: true },
-      { firstname: 'Test', email: 'test@gmail.test', status: false },
-      { firstname: 'Muhammad', email: 'mamo.gzih@hotmail.com', status: true }
-    ]
+    data: data
   });
 
   grid.render(coursesTableElement);

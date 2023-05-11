@@ -196,30 +196,27 @@ const User = require('../models/learner')
 //   }
 // }
 
-
 const getAllLearnersTable = async (pageNumber, pageSize) => {
   try {
     const query = { status: { $in: [0, 1] } }
     const offset = (pageNumber - 1) * pageSize
     const learners = await User.find(query).skip(offset).limit(pageSize)
 
-    const learnerArray = learners.map((learner) => ([
+    const learnerArray = learners.map((learner) => [
       learner.firstname,
-     learner.email,
-    learner.status
-    ]))
+      learner.email,
+      learner.status
+    ])
+
+    console.log(learnerArray, 'from get All')
 
     const count = await User.countDocuments(query)
 
-    return {
-      data: learnerArray,
-      count: count
-    }
+    return [learnerArray, count]
   } catch (error) {
     console.log(error)
   }
 }
-
 
 module.exports = {
   getPopularCourses,

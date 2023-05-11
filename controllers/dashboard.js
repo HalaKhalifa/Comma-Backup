@@ -78,7 +78,8 @@ const getDashboardLearners = async (req, res) => {
       currentPage: pageNumber,
       pageSize: pageSize
     }
-    console.log(context.learners)
+
+    console.log(context.learners[0])
     res.render('pages/dashboard/learners.ejs', { title: 'All Courses', context })
   } catch (error) {
     console.log(error)
