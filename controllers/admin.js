@@ -46,4 +46,17 @@ const updateAdmin = async (req, res) => {
     res.status(500)
   }
 }
-module.exports = { updateAdmin }
+const deleteAdmin = async (req, res) => {
+  try {
+    email = req.body.email
+    const doc = await learner.findOne({ email: email }).exec()
+    doc['isDeleted'] = true
+    console.log('deleted ' + doc['email'])
+    await doc.save()
+    return res.status(200).json({ msg: 'Deleted Successfully', status: 'Success' })
+  } catch (error) {
+    console.error("error : couldn't delete admin", error)
+    res.status(500)
+  }
+}
+module.exports = { updateAdmin, deleteAdmin }

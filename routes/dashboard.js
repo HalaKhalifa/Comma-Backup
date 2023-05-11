@@ -9,7 +9,7 @@ const {
   getDashboardAdmins
 } = require('../controllers/dashboard')
 const { getLearners } = require('../controllers/learner')
-const { updateAdmin } = require('../controllers/admin')
+const { updateAdmin, deleteAdmin } = require('../controllers/admin')
 
 router.get('/dashboard', (req, res) => {
   getDashboard(req, res)
@@ -36,6 +36,9 @@ router.post('/dashboard/getlearnersdata', async (req, res) => {
 })
 router.post('/dashboard/update-admins-data', async (req, res) => {
   await updateAdmin(req, res)
+})
+router.post('/dashboard/delete-admin', async (req, res) => {
+  await deleteAdmin(req, res)
 })
 
 module.exports = router

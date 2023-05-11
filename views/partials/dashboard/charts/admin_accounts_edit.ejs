@@ -80,6 +80,7 @@
               </div>
         </div>
         <div class="modal-footer">
+            <button type="button" class="edit-button-datatable red-button-delete text-nowrap me-auto" id="edit-account-delete-button">Delete</button>
             <button type="button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Cancel</button>
             <input type="submit" id="edit-account-save-button" form="admin-accounts-edit-form" value="Save Changes"class="edit-button-datatable text-nowrap"/>
         </div>
@@ -169,6 +170,10 @@
       transform: translateX(2em);
       background: lightgreen;
     }
+    .red-button-delete{
+      background: #ff0000;
+      box-shadow: #ff0000 0 10px 20px -10px;
+    }
   </style>
   
   <script>
@@ -198,13 +203,27 @@ function editPasswordToggleVisible() {
 }
 // ------------ Password Visibility -----------------------------------------
 // ------------ Send Data to Server -----------------------------------------
+var oldEmailData ;
 document.addEventListener('click', (e) => {
   if (e.target && e.target.classList.contains('edit-button-modal-opener')) {
     const email = e.target.getAttribute('data-email')
     const oldEmailElement = document.getElementById("old-email-holder-admins")
     oldEmailElement.value = email
+    oldEmailData = email
   }
 })
+document.getElementById("edit-account-delete-button").addEventListener('click',deleteAdmin)
+function deleteAdmin(){
+  const bodyData = {email:oldEmailData}
+ const responseData = fetch('/dashboard/delete-admin',{
+    method:"POST",
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify(bodyData),
+  })
+    .catch(error =>console.log(error))
+}
 
 const formElement = document.querySelector("#admin-accounts-edit-form")
 let responseData = {}
