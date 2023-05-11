@@ -199,12 +199,35 @@ function editPasswordToggleVisible() {
 // ------------ Password Visibility -----------------------------------------
 // ------------ Send Data to Server -----------------------------------------
 document.addEventListener('click', (e) => {
-  
   if (e.target && e.target.classList.contains('edit-button-modal-opener')) {
     const email = e.target.getAttribute('data-email')
     const oldEmailElement = document.getElementById("old-email-holder-admins")
     oldEmailElement.value = email
   }
+})
+
+const formElement = document.querySelector("#admin-accounts-edit-form")
+
+formElement.addEventListener('submit',event => {
+  event.preventDefault();
+
+  const formData = new FormData(formElement);
+const jsonObject = {};
+
+Array.from(formData.entries()).forEach(([key, value]) => {
+  jsonObject[key] = value;
+});
+
+const data = JSON.stringify(jsonObject);
+  fetch('/dashboard/update-admins-data',{
+    method:"POST",
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:data
+  }).then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error =>console.log(error))
 })
 // ------------ Send Data to Server -----------------------------------------
   </script>
