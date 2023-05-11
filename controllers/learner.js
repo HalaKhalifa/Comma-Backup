@@ -21,7 +21,6 @@ const getCountryLearners = async () => {
 }
 
 const getLearners = async (req, res) => {
-  console.log(req.query)
   try {
     let query = req.query
     let skip = query.offset || 0

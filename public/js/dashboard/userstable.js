@@ -7,7 +7,7 @@ const datatable_learners_grid = new gridjs.Grid({
       name: 'Action',
       formatter: (_, row) =>
         gridjs.html(
-          `<button type="button" class="edit-button-datatable edit-button-modal-opener text-nowrap" data-bs-target="#admin-accounts-edit-modal" data-bs-toggle="modal" data-email="${row.cells[1].data}">Edit</button>`
+          `<button type="button" class="edit-button-datatable edit-button-modal-opener text-nowrap" data-bs-target="#admin-accounts-edit-modal" data-bs-toggle="modal" data-email="${row.cells[2].data}">Edit</button>`
         )
     }
   ],

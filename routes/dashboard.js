@@ -9,7 +9,7 @@ const {
   getDashboardAdmins
 } = require('../controllers/dashboard')
 const { getLearners } = require('../controllers/learner')
-const { updateLearner } = require('../controllers/admin')
+const { updateAdmin } = require('../controllers/admin')
 
 router.get('/dashboard', (req, res) => {
   getDashboard(req, res)
@@ -29,12 +29,13 @@ router.get('/dashboard/admins', (req, res) => {
   getDashboardAdmins(req, res)
 })
 router.post('/dashboard/update-learners-data', async (req, res) => {
-  console.log(req.body)
   await updateLearner(req, res)
 })
 router.post('/dashboard/getlearnersdata', async (req, res) => {
-  console.log(req.query)
   await getLearners(req, res)
+})
+router.post('/dashboard/update-admins-data', async (req, res) => {
+  await updateAdmin(req, res)
 })
 
 module.exports = router
