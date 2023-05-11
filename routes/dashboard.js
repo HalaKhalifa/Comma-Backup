@@ -11,7 +11,8 @@ const {
   getContentfulButtons,
   getContentfulCards,
   getContentfulTypography,
-  getContentfulIcons
+  getContentfulIcons,
+  adminUpdateLearner
 } = require('../controllers/dashboard')
 const { updateLearner, getLearners } = require('../controllers/learner')
 
@@ -58,5 +59,7 @@ router.get('/dashboard2/ui-typography', (req, res) => {
 router.get('/dashboard2/icons-feather', (req, res) => {
   getContentfulIcons(req, res)
 })
-
+router.post('/dashboard/learners',(req,res)=>{
+  adminUpdateLearner(req,res)
+})
 module.exports = router

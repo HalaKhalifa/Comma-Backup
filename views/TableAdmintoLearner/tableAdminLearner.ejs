@@ -22,7 +22,6 @@
   <script
     src="https://cdn.jsdelivr.net/npm/gridjs@latest/dist/gridjs.production.min.js"></script>
   
-  <%- include('../partials/admin/learnereditmodal'); %>
 
 <script src="https://cdn.jsdelivr.net/npm/gridjs@latest/dist/gridjs.production.min.js"></script>
 <script>
@@ -58,9 +57,50 @@ new gridjs.Grid({
 ],
   storage: false // explicitly disable the storage
 }).render(document.getElementById('wrapper'));
+let save=document.getElementById('save-update');
+let firstName = document.getElementById('first-name');
+let lastName = document.getElementById('last-name');
+let email = document.getElementById('email');
+function editProfile(){
+  const email1 = document.getElementById('save-update').dataset.email;
+  email.value=email1;
+}
+function updateProfile() {
+  const email1 = document.getElementById('save-update').dataset.email;
+  console.log(email1);
+}
+function clearInputs() {
+  const firstName = document.getElementById('first-name');
+  const lastName = document.getElementById('last-name');
+  const email = document.getElementById('email');
+  const firstNameLabel = firstName.previousElementSibling;
+  const lastNameLabel = lastName.previousElementSibling;
+  const emailLabel = email.previousElementSibling;
+  const firstNamePencil = document.getElementById('pencil-first-name');
+  const lastNamePencil = document.getElementById('pencil-last-name');
+  const emailPencil = document.getElementById('pencil-email');
+  firstName.classList.add('d-none');
+  lastName.classList.add('d-none');
+  email.classList.add('d-none');
+  firstNameLabel.classList.remove('d-none');
+  lastNameLabel.classList.remove('d-none');
+  emailLabel.classList.remove('d-none');
+  firstNamePencil.classList.remove('d-none');
+  lastNamePencil.classList.remove('d-none');
+  emailPencil.classList.remove('d-none');
+}
+function editField(id) {
+  const fieldSpan = document.getElementById(id).previousElementSibling;
+  fieldSpan.classList.add('d-none');
+  const input = document.getElementById(id);
+  input.classList.remove('d-none');
+  input.focus();
+  input.select();
+  const pencil = document.getElementById(`pencil-${id}`);
+  pencil.classList.add('d-none');
+}
 
 
   </script>
 <%- include('../partials/home/footer'); %>
 
-<%- include('../partials/home/footer'); %>

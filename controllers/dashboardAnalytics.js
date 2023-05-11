@@ -203,13 +203,12 @@ const getAllLearnersTable = async (pageNumber, pageSize) => {
     const learners = await User.find(query).skip(offset).limit(pageSize)
 
     const learnerArray = learners.map((learner) => [
-      learner.firstname,
+      learner._id,learner.firstname,learner.lastname,
       learner.email,
       learner.status
     ])
 
     console.log(learnerArray, 'from get All')
-
     const count = await User.countDocuments(query)
 
     return [learnerArray, count]
@@ -224,5 +223,6 @@ module.exports = {
   getAllCoursesTable,
   getNoOfCourses,
   NumberOfCoursesInYear,
-  getAllLearnersTable
+  getAllLearnersTable,
+ 
 }
