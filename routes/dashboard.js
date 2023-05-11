@@ -34,7 +34,7 @@ router.get('/dashboard/learners', (req, res) => {
 })
 
 router.post('/dashboard/data', async (req, res) => {
-  console.log(req.query)
+  // console.log(req.query)
   await getLearner(req, res)
 })
 

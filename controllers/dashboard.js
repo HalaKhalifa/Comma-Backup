@@ -1,5 +1,6 @@
 //const {getLearners} = require("./learner.test") Commented until collection is filled
 const bcrypt = require('bcrypt')
+const User = require('../models/learner')
 const {
   capitalizefLetter,
   validateLastName
