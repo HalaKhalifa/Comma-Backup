@@ -43,6 +43,7 @@ const createNewCourse = async (req, res) => {
       enrolledUsers: enrolledUsers,
       rating: rating,
       stars: stars,
+      isdeleted,isdeleted,
       topicID: topicID,
       publishedAt: publishedAt,
       view: view
@@ -62,6 +63,7 @@ const updateCourse = async (req, res) => {
       title,
       image,
       description,
+      isDeleted,
       outline,
       totalHours,
       enrolledUsers,
@@ -75,17 +77,18 @@ const updateCourse = async (req, res) => {
     const singleCourse = await Course.findOneAndUpdate(
       { _id: id },
       {
-        title: title,
-        image: image,
-        description: description,
-        outline: outline,
-        totalHours: totalHours,
-        enrolledUsers: enrolledUsers,
-        rating: rating,
-        stars: stars,
-        topicID: topicID,
-        publishedAt: publishedAt,
-        view: view
+        title: title|Course.title,
+        image: image|Course.image,
+        description: description|Course.description,
+        isDeleted: isDeleted|Course.isDeleted,
+        outline: outline|Course.outline,
+        totalHours: totalHours|Course.totalHours,
+        enrolledUsers: enrolledUsers|Course.enrolledUsers,
+        rating: rating|Course.rating,
+        stars: stars|Course.stars,
+        topicID: topicID|Course.topicID,
+        publishedAt: publishedAt|Course.publishedAt,
+        view: view|Course.view
       }
     )
 
@@ -200,6 +203,24 @@ async function searchCourses(searchQuery) {
   }
 }
 
+const softDelete= async (req,res)=>{
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).send('Course not found');
+    }
+
+    course.isDeleted = true;
+    await course.save();
+
+    res.redirect('/dashboard/courses'); // Redirect to the courses list page
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
+
 module.exports = {
   getCoursesList,
   getCourse,
@@ -210,5 +231,6 @@ module.exports = {
   filterCourses,
   getSingleCourse,
   coursePagination,
-  searchCourses
+  searchCourses,
+  softDelete,
 }

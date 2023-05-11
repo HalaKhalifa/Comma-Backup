@@ -116,7 +116,7 @@ const getNoOflearner = async (req, res) => {
   }
 }
 
-const getTotalEnrolledUserCount = async () => {
+const getTotalEnrolledUserCount = async (req, res) => {
   try {
     // ! this query is really slow, need to optimize took 33000ms
     const courses = await Course.find() // retrive all doc as a array

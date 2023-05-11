@@ -6,8 +6,13 @@ const {
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardLearners,
-  getDashboardAdmins
+  getDashboardAdmins,
 } = require('../controllers/dashboard')
+const {
+  softDeleted,
+  softDeletedCourses
+} = require('../controllers/courses')
+
 const { updateLearner, getLearners } = require('../controllers/learner')
 
 router.get('/dashboard', (req, res) => {
@@ -21,6 +26,7 @@ router.get('/dashboard2', (req, res) => {
 router.get('/dashboard/courses', (req, res) => {
   getDashboardCourses(req, res)
 })
+
 router.get('/dashboard/learners', (req, res) => {
   getDashboardLearners(req, res)
 })
