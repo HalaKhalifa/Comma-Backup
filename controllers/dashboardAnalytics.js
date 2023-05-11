@@ -97,7 +97,7 @@ async function getPopularCourses(limit = 5, others = false) {
 
 const getNoOfCourses = async () => {
   try {
-    const NoOfCourses = await Course.countDocuments()
+    const NoOfCourses = await Course.estimatedDocumentCount()
     return NoOfCourses
   } catch (err) {
     console.error(err)
@@ -176,6 +176,23 @@ async function getCoursesEnrolls() {
     return null
   }
 }
+<<<<<<< Updated upstream
+=======
+const getTop10EnrolledCourses = async () => {
+  try {
+    // Retrieve the top 10 enrolled courses based on the 'enrolledUsers' field in descending order
+    const top10Courses = await Course.find()
+      .sort({ enrolledUsers: -1 })
+      .limit(10)
+      .select({ title: 1, enrolledUsers: 1 })
+
+    return top10Courses
+  } catch (error) {
+    console.error('An error occurred while fetching the top enrolled courses:', error)
+    throw error
+  }
+}
+>>>>>>> Stashed changes
 
 module.exports = {
   getPopularCourses,

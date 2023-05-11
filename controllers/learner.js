@@ -107,7 +107,7 @@ const updateLearner = async (req, res) => {
 
 const getNoOflearner = async (req, res) => {
   try {
-    const NoOflearner = await learner.countDocuments()
+    const NoOflearner = await learner.estimatedDocumentCount();
     return NoOflearner
   } catch (err) {
     // error
@@ -118,12 +118,20 @@ const getNoOflearner = async (req, res) => {
 
 const getTotalEnrolledUserCount = async () => {
   try {
+<<<<<<< Updated upstream
     // ! this query is really slow, need to optimize took 33000ms
     const courses = await Course.find() // retrive all doc as a array
     let totalEnrolledUserCount = 0
 
     courses.forEach((course) => {
       totalEnrolledUserCount += course.enrolledUsers.length
+=======
+    const courses = await Course.find().distinct('enrolledUsers')
+    let totalEnrolledUserCount = 0
+
+    courses.forEach((course) => {
+      totalEnrolledUserCount += course
+>>>>>>> Stashed changes
     })
     /* enrolledUsers: [
     {
@@ -134,6 +142,7 @@ const getTotalEnrolledUserCount = async () => {
     return totalEnrolledUserCount
   } catch (error) {
     console.error(error)
+<<<<<<< Updated upstream
     res.status(500).send('Internal server error')
   }
 }
@@ -149,8 +158,13 @@ getTotalEnrolledUserCount()
     console.error(error)
   })
 
+=======
+    throw new Error('Failed to retrieve Total Enrolled User Count')
+  }
+}
+>>>>>>> Stashed changes
 // NoofRegistrationPerMonth
-const NoOfMonthlyRegistration = async () => {
+const getNoOfMonthlyRegistration = async () => {
   try {
     const registrationCountByMonth = await learner.aggregate([
       {
@@ -167,11 +181,24 @@ const NoOfMonthlyRegistration = async () => {
     throw new Error('Failed to retrieve monthly registration count')
   }
 }
+<<<<<<< Updated upstream
 NoOfMonthlyRegistration()
   .then((registrationCountByMonth) => {
     return registrationCountByMonth
   })
   .catch((error) => {
+=======
+//Number OF viewers 
+const getNoOfviewers = async () => {
+  try {
+    const courses = await Course.find().distinct('view')
+    let totalviewres = 0
+   courses.forEach((courses) => {
+      totalviewres += courses
+    })
+    return totalviewres 
+  } catch (error) {
+>>>>>>> Stashed changes
     console.error(error)
   })
 
@@ -255,6 +282,12 @@ module.exports = {
   getOneLearner,
   getNoOflearner,
   getTotalEnrolledUserCount,
+<<<<<<< Updated upstream
   NoOfMonthlyRegistration,
   getCountryLearners
+=======
+  getNoOfMonthlyRegistration,
+  getCountryLearners ,
+  getNoOfviewers
+>>>>>>> Stashed changes
 }

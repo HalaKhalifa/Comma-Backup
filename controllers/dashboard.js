@@ -5,16 +5,25 @@ const {
   getNoOfCourses,
   getEnrolledFinished,
   getAllCoursesTable,
+<<<<<<< Updated upstream
   NumberOfCoursesInYear
+=======
+  NumberOfCoursesInYear,
+  getTop10EnrolledCourses
+>>>>>>> Stashed changes
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
   getNoOflearner,
   getTotalEnrolledUserCount,
+<<<<<<< Updated upstream
   NoOfMonthlyRegistration
+=======
+  getNoOfMonthlyRegistration,
+  getNoOfviewers
+>>>>>>> Stashed changes
 } = require('./learner')
 const { usersData } = require('../helpers/dashboard')
-
 const getDashboard = async (req, res) => {
   // * temporary context object
   const staticData = usersData
@@ -32,9 +41,17 @@ const getDashboard = async (req, res) => {
       NoOfCourses: await getNoOfCourses(),
       NoOflearner: await getNoOflearner(),
       // TotalEnrolledUserCount: await getTotalEnrolledUserCount(), // TODO: fix this function
+<<<<<<< Updated upstream
       TotalEnrolledUserCount: [],
       NoOfMonthlyRegistration: await NoOfMonthlyRegistration(),
       enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished())
+=======
+      NoOfMonthlyRegistration: await getNoOfMonthlyRegistration(),
+      enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished()),
+      TotalEnrolledUserCount: await getTotalEnrolledUserCount(),
+      Noofviewers: await getNoOfviewers(),
+      Top10Enrolledcourses: await getTop10EnrolledCourses()
+>>>>>>> Stashed changes
     }
   }
 

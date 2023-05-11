@@ -6,9 +6,17 @@ const {
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardLearners,
+<<<<<<< Updated upstream
   getDashboardAdmins
+=======
+  getDashboardAdmins,
+>>>>>>> Stashed changes
 } = require('../controllers/dashboard')
 const { updateLearner, getLearners } = require('../controllers/learner')
+
+
+const {getNewAdminspage} = require ('../controllers/auth') 
+const {post_Newadmin} =  require ('../controllers/auth') 
 
 router.get('/dashboard', (req, res) => {
   getDashboard(req, res)
@@ -34,4 +42,14 @@ router.post('/getLearnersData', async (req, res) => {
   await getLearners(req, res)
 })
 
+<<<<<<< Updated upstream
+=======
+router.get('/dashboard/admins/Newadmin', (req, res) => {
+  getNewAdminspage(req, res)
+})
+
+router.post('/dashboard/admins/Newadmin' , post_Newadmin)
+
+
+>>>>>>> Stashed changes
 module.exports = router
