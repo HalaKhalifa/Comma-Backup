@@ -139,6 +139,8 @@ const post_login = async (req, res) => {
 }
 
 module.exports = {
+  capitalizefLetter,
+  validateLastName,
   get_login,
   post_login,
   get_signup,

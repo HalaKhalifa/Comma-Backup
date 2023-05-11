@@ -11,7 +11,8 @@ const {
   getContentfulButtons,
   getContentfulCards,
   getContentfulTypography,
-  getContentfulIcons
+  getContentfulIcons,
+  addNewLearner
 } = require('../controllers/dashboard')
 const { updateLearner, getLearners } = require('../controllers/learner')
 
@@ -28,6 +29,12 @@ router.get('/dashboard/courses', (req, res) => {
 })
 router.get('/dashboard/learners', (req, res) => {
   getDashboardLearners(req, res)
+})
+router.get('/dashboard/learners/new_learner', (req, res) => {
+  getAddNewLearner(req, res)
+})
+router.post('/dashboard/learners/new_learner', (req, res) => {
+  postAddNewLearner(req, res)
 })
 router.get('/dashboard/admins', (req, res) => {
   getDashboardAdmins(req, res)

@@ -177,10 +177,52 @@ async function getCoursesEnrolls() {
   }
 }
 
+const User = require('../models/learner')
+// async function getAllLearnersTable() {
+//   try {
+//     const query = { status: { $in: [0, 1] } }
+//     // const offset = (pageNumber - 1) * pageSize
+//     const learners = await User.find(query).skip(1).limit(2)
+
+//     const learnerArray = learners.map((learner) => ({
+//       firstname: learner.firstname,
+//       email: learner.email,
+//       status: learner.status
+//     }))
+
+//     return learnerArray
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+const getAllLearnersTable = async (pageNumber, pageSize) => {
+  try {
+    const query = { status: { $in: [0, 1] } }
+    const offset = (pageNumber - 1) * pageSize
+    const learners = await User.find(query).skip(offset).limit(pageSize)
+
+    const learnerArray = learners.map((learner) => [
+      learner.firstname,
+      learner.email,
+      learner.status
+    ])
+
+    console.log(learnerArray, 'from get All')
+
+    const count = await User.countDocuments(query)
+
+    return [learnerArray, count]
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   getPopularCourses,
   getEnrolledFinished,
   getAllCoursesTable,
   getNoOfCourses,
-  NumberOfCoursesInYear
+  NumberOfCoursesInYear,
+  getAllLearnersTable
 }
