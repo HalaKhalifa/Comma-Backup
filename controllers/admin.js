@@ -1,4 +1,4 @@
-const learner = require('../models/learner')
+const learner = require('../models/learner') // SHOULD BE ADMIN SCHEMA BUT SINCE WE DON"T HAVE THAT YET USING LEARNER SCHEMA FOR NOW !!!
 const validator = require('validator')
 const bcrypt = require('bcrypt')
 
