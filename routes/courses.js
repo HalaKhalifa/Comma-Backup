@@ -1,11 +1,44 @@
 const express = require('express')
 const router = express.Router()
 const { coursePagination, getSingleCourse, searchCourses } = require('../controllers/courses')
-// const requireAuth= require('../middleware/requireAuth.js')
 const formController =require("../controllers/courses")
+const { get_session_loggedIn } = require('../middleware/sessionMiddleWare')
 
-router.get('/courses', coursePagination)
-router.get('/outline',  getSingleCourse)
+
+router.get('/courses', async (req, res) => {
+    try {
+      const isLoggedIn = get_session_loggedIn(req);
+      console.log(isLoggedIn);
+      const pageCourses = await coursePagination(req, res);
+      res.render('pages/home/courses_page.ejs', {
+        isLoggedIn: isLoggedIn,
+          title: 'courses page',
+          pageCourses: pageCourses
+        })
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+//   router.get('/courses',coursePagination); //The render is included inside the controller 
+router.get('/outline', async (req, res) => {
+  try {
+    const isLoggedIn = get_session_loggedIn(req);
+    console.log(isLoggedIn);
+    const singleCoursePage = await getSingleCourse(req, res);
+    res.render('pages/home/outline_page', {
+      isLoggedIn: isLoggedIn,
+        title: 'courses page',
+        singleCoursePage: singleCoursePage
+      })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// router.get('/outline',  getSingleCourse)
 router.post("/dashboard/courses",formController.createNewCourse);
 // router.post('/search', async (req, res) => {
 //   const searchQuery = req.body.searchText

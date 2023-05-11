@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <%- include('../../partials/home/header'); %>
 
 <head>
   <meta charset="UTF-8">
@@ -8,7 +9,7 @@
   <!-- <title><%= title %></title> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-
+<%- include('../../partials/home/nav'); %>
 <body>
   <div class="container mt-5">
     <div class="row justify-content-center">
@@ -55,7 +56,8 @@
       </div>
     </div>
   </div>
-
+</body>
+</html>
   <script>
     function togglePassword() {
       const passwordInput = document.getElementById("password");
@@ -80,6 +82,9 @@
       right: 10px;
       transform: translateY(-50%);
       cursor: pointer;
+    }
+    body{
+      background-color: #cccccc;
     }
   </style>
 

@@ -1,10 +1,10 @@
 const Course = require('../models/course')
 
-const getCoursesList = async (req, res) => {
-  const courses = await Course.find().sort({ createdAt: -1 }) // -1 mean desc
+// const getCoursesList = async (req, res) => {
+//   const courses = await Course.find().sort({ createdAt: -1 }) // -1 mean desc
 
-  res.status(200).json(courses)
-}
+//   res.status(200).json(courses)
+// }
 
 const getCourse = async (req, res) => {
   const { id } = req.params
@@ -167,11 +167,11 @@ const getSingleCourse = async (req, res) => {
   if (!singleCourse) {
     return res.status(404).json({ error: 'No such course' })
   }
-  res.render('pages/home/outline_page', { singleCourse: singleCourse })
+ return singleCourse
 }
 
-const coursePagination = async (req, res) => {
-  let page = parseInt(req.query.page) || 1
+const coursePagination = async (req,res) => {
+  let page = parseInt(req.query.page) || 1 
   let limit = 16
   // const pageCourses = await course.find().skip((page-1)*limit).limit(limit).sort({createdAt: -1});
   let query = {}
@@ -182,10 +182,11 @@ const coursePagination = async (req, res) => {
     .skip((page - 1) * limit)
     .limit(limit)
     .sort({ createdAt: -1 })
-  res.render('pages/home/courses_page.ejs', {
-    title: 'courses page',
-    pageCourses: pageCourses
-  })
+  // res.render('pages/home/courses_page.ejs', {
+  //   title: 'courses page',
+  //   pageCourses: pageCourses
+  // })
+  return pageCourses;
 }
 
 async function searchCourses(searchQuery) {
@@ -201,7 +202,6 @@ async function searchCourses(searchQuery) {
 }
 
 module.exports = {
-  getCoursesList,
   getCourse,
   createNewCourse,
   updateCourse,

@@ -213,10 +213,9 @@ const getLearnerProfile = async (req, res) => {
   const user_id = get_session_loggedIn(req)
   const userQuery = learner.findOne({ _id: user_id })
   const user = await userQuery.exec()
-  console.log(user_id)
-  console.log('im in profile')
-  console.log('user data:', user)
-  res.render('pages/learner/profile', { title: 'profile', user })
+  if(user_id ){
+  res.render('pages/learner/profile', { title: 'profile', user, isLoggedIn:user_id })}
+  res.render('./pages/something_went_wrong',{error: 'You must login'});
 }
 const postLearnerProfile = async (req, res) => {
   const user_id = get_session_loggedIn(req)

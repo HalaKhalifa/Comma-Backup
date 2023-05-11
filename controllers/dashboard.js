@@ -14,6 +14,7 @@ const {
   NoOfMonthlyRegistration
 } = require('./learner')
 const { usersData } = require('../helpers/dashboard')
+const { getCourses } = require('./courses')
 
 const getDashboard = async (req, res) => {
   // * temporary context object
@@ -41,15 +42,16 @@ const getDashboard = async (req, res) => {
   res.render('pages/dashboard/index.ejs', context)
 }
 
-const getDashboardCourses = async (req, res) => {
-  const context = {
-    title: 'All courses',
-    data: {
-      courses: JSON.stringify(await getAllCoursesTable())
-    }
-  }
-  res.render('pages/dashboard/courses.ejs', context)
-}
+// const getDashboardCourses = async (req, res) => {
+//   const context = {
+//     title: 'All courses',
+//     data: {
+//       courses: JSON.stringify(await getAllCoursesTable())
+//     }
+//   }
+// console.log(context)
+//   res.render('pages/dashboard/courses.ejs', context)
+// }
 
 const getDashboardAdmins = async (req, res) => {
   const context = {
@@ -83,7 +85,6 @@ const getContentfulDashboard = async (req, res) => {
 module.exports = {
   getDashboard,
   getContentfulDashboard,
-  getDashboardCourses,
   getDashboardAdmins,
   getDashboardLearners
 }

@@ -55,77 +55,95 @@
 </div>
 <script>
   const { h } = gridjs;
-  const coursesTableElement = document.getElementById('courses-table')
-  // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
-  let tableCoursesData = <%- data.courses %>;
-  tableCoursesData = tableCoursesData.map((course) => {
-    return {
-      ...course,
-      percentage: course.percentage + ' %'
-    }
-  })
+  // const coursesTableElement = document.getElementById('courses-table')
+  // // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
+  // let tableCoursesData = <%- JSON.stringify(data) %>;
+  // alert(tableCoursesData);
+  // tableCoursesData = tableCoursesData.map((course) => {
+  //   return {
+  //     ...course,
+  //     percentage: course.percentage + ' %'
+  //   }
+  // });
+//   const coursesData = <%= JSON.stringify(courses) %>;
+// alert(coursesData);
+//   (async () => {
+//     new gridjs.Grid({
+//       fixedHeader: true,
+//       pagination: {
+//         server: {
+//           url: '/dashboard/courses',
+//           then: (response) => ({
+//             data: response.data.map((course) => [
+//               course.title,
+//               course.description,
+//               course.createdAt,
+//             ]),
+//             total: response.totalPages * 16, // Assuming the limit is always 16
+//           }),
+//         },
+//       },
+//       sort: {
+//         server: {
+//           url: '/dashboard/courses',
+//           query: (prev, column) => `sort=${column.id}&order=${prev.direction}`,
+//           then: (response) => response.data,
+//         },
+//       },
+//       columns: [
+//         {
+//           name: 'Title',
+//           width: '180px'
+//         },
+//         {
+//           name: 'enrolled',
+//           width: '130px'
+//         },
+//         {
+//           name: 'rating',
+//           width: '130px'
+//         },
+//         {
+//           name: 'stars',
+//           width: '130px'
+//         },
+//         {
+//           name: 'totalHours',
+//           width: '130px'
+//         },
+//         {
+//         name: 'Actions',
+//         sort: false,
+//       search: false,
+//         resizable: true,
+//         formatter: (cell, row) => {
+//           const editBtn = h('button', 
+//             {
+//              style: 'padding: 0.5rem 1rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;',
+//               onClick: () => {
+//               const modalElement = document.getElementById('staticBackdrop');
+//       const modalInstance = new bootstrap.Modal(modalElement);
+//       modalInstance.show();
+//               // alert(`Editing "${row.cells[0].data}" "${row.cells[1].data}"`)
+//         }},  h('i', {className: 'fas fa-edit mr-2'}));
 
-  ;
-  (async () => {
-    new gridjs.Grid({
-      sort: true,
-      resizable: true,
-      search: true,
-      fixedHeader: true,
-      pagination: {
-        limit: 10
-      },
-      columns: [
-        {
-          name: 'Title',
-          width: '180px'
-        },
-        {
-          name: 'enrolled',
-          width: '130px'
-        },
-        {
-          name: 'rating',
-          width: '130px'
-        },
-        {
-          name: 'stars',
-          width: '130px'
-        },
-        {
-          name: 'totalHours',
-          width: '130px'
-        },
-        {
-        name: 'Actions',
-        sort: false,
-      search: false,
-        resizable: true,
-        formatter: (cell, row) => {
-          const editBtn = h('button', 
-            {
-             style: 'padding: 0.5rem 1rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;',
-              onClick: () => 
-              alert(`Editing "${row.cells[0].data}" "${row.cells[1].data}"`)
-            },  h('i', {className: 'fas fa-edit mr-2'}));
-
-          const deleteBtn = h('button', 
-            {
-              style: 'padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500',
+//           const deleteBtn = h('button', 
+//             {
+//               style: 'padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500',
               
-              onClick: () => 
-              alert(`Deleting "${row.cells[0].data}" "${row.cells[1].data}"`)
-            },h('i', {class: 'fas fa-trash mr-2'}));
+//               onClick: () => 
+//               alert(`Deleting "${row.cells[0].data}" "${row.cells[1].data}"`)
+//             },h('i', {class: 'fas fa-trash mr-2'}));
 
-          return h('div', {}, editBtn, deleteBtn);
-        }
-      },
+//           return h('div', {}, editBtn, deleteBtn);
+//         }
+//       },
 
-        // * not implemented yet
-        // { name: 'Finished', width: '140px' }
-      ],
+//         // * not implemented yet
+//         // { name: 'Finished', width: '140px' }
+//       ],
       
-      data: tableCoursesData
-    }).render(coursesTableElement)
-  })()
+//       data: coursesData,
+//     }).render(coursesTableElement)
+//   })()
 </script>

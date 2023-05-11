@@ -41,7 +41,15 @@ app.post('/search', async (req, res) => {
   if (searchQuery && searchQuery.trim().length > 0) {
     const searchResults = await searchCourses(searchQuery)
     console.log(searchResults)
-    res.redirect(`/courses?search=${searchQuery}`)
+    if(searchResults.length){
+      // console.log(searchResults.length)
+      res.redirect(`/courses?search=${searchQuery}`)
+    }
+    const message = "No matching.";
+    res.send(`<script>alert("${message}");</script>`);
+//no results
+// let noResults=true;
+// res.render('/courses', { noResults:noResults, message: "Sorry, No results ☹️" })
   } else {
     res.redirect('/courses')
   }

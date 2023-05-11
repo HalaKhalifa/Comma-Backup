@@ -152,11 +152,7 @@ div#card-enroll {
 .li-outline + .li-outline {
   margin-top: 1rem;
 }
-::marker {
-  font-weight: 600;
-  color: #b3ccff;
-  font-size: 1.8rem;
-}
+
 #outline {
   color: #343232;
   margin-top: 40px;

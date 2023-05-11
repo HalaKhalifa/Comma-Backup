@@ -3,7 +3,7 @@ const { set_session, get_session_loggedIn } = require('../middleware/sessionMidd
 const bcrypt = require('bcrypt')
 
 const get_signup = (req, res) => {
-  res.render('pages/learner/signup', { title: 'Sign Up', error: '' })
+  res.render('pages/learner/signup', { title: 'Sign Up', error: '' , isLoggedIn:null})
 }
 
 function capitalizefLetter(str) {
@@ -83,12 +83,12 @@ const post_signup = async (req, res) => {
 }
 
 const get_login = (req, res) => {
-  res.render('pages/learner/login', { title: 'login', error: '' })
+  res.render('pages/learner/login', { title: 'login', error: '',isLoggedIn:null })
 }
 
 const post_login = async (req, res) => {
   if (get_session_loggedIn(req)) {
-    return res.redirect('home')
+    return res.redirect('/courses')
   }
   let email = req.body.email
   let password = req.body.password
@@ -126,12 +126,14 @@ const post_login = async (req, res) => {
   if (user.email === email && passwordsMatch) {
     await set_session(req, user._id)
     console.log(user._id)
-    res.redirect('/profile')
+    res.redirect('/courses')
   } else {
     let error = 'Password and Email did not match'
     res.render('pages/learner/login', { title: 'login', error })
   }
 }
+
+
 
 module.exports = {
   get_login,
