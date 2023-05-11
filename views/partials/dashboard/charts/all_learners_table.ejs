@@ -60,13 +60,16 @@ const datatable_learners_grid = new gridjs.Grid({
       url: getServerUrlWithSearch
     }
   },
- 
+  
   server: {
     url: SERVER_URL,
     method: 'POST',
     then: data => data.learners.map(learner => [learner.firstname, learner.lastname, learner.email,"Active", learner.createdAt,learner.updatedAt]),
     total: data => data.count
   }
+  
+  
+  //,sort: true, its make a problem for searching
 }).render(coursesTableElement);
  })();
 
