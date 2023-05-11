@@ -13,6 +13,23 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this learner?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="deleteButton" type="button" class="btn btn-primary">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 
 
@@ -42,8 +59,22 @@ const getServerUrlWithSort = (prev, columns) => {
   return `${prev}${sign}order=${colName}&dir=${dir}`;
 };
 
+function showDeleteModal(learnerId) {
+  const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+  const deleteButton = document.getElementById('deleteButton');
 
+  deleteButton.onclick = function () {
+    // Perform the delete operation by changing the status to 0
 
+    datatable_learners_grid.update((rows) => {
+      return rows.filter((row) => row.cells[2].data !== learnerId);
+    });
+
+    modal.hide();
+  };
+
+  modal.show();
+}
 (async () => {
 const datatable_learners_grid = new gridjs.Grid({
   columns: [
@@ -54,7 +85,7 @@ const datatable_learners_grid = new gridjs.Grid({
         `<button style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;">
             Edit
           </button>
-          <button style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
+          <button onclick="showDeleteModal('${row.cells[2].data}')" style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
             Delete
           </button>
           <button style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: .8rem; font-weight: 500;">
