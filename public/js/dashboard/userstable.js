@@ -1,8 +1,8 @@
 const datatable_learners_grid = new gridjs.Grid({
   columns: [
-    'Name',
+    'First Name',
+    'Last Name',
     'Email',
-    'Activity',
     {
       name: 'Action',
       formatter: (_, row) =>
@@ -45,9 +45,7 @@ const datatable_learners_grid = new gridjs.Grid({
         }
         const col = columns[0]
         const dir = col.direction === 1 ? 'asc' : 'desc'
-        let colName = ['name', 'email'][col.index]
-        prev = prev.replace(`${sign}order=${colName}&dir=${dir}`, '')
-        prev = prev.replace(`${sign}order=${colName}&dir=${dir}`, '')
+        let colName = ['First Name', 'Last Name', 'Email'][col.index]
         return `${prev}${sign}order=${colName}&dir=${dir}`
       }
     }
@@ -55,7 +53,8 @@ const datatable_learners_grid = new gridjs.Grid({
   server: {
     url: 'getlearnersdata',
     method: 'POST',
-    then: (data) => data.learners.map((learner) => [learner.name, learner.email, learner.active]),
+    then: (data) =>
+      data.learners.map((learner) => [learner.firstname, learner.lastname, learner.email]),
     total: (data) => data.count
   },
   className: {

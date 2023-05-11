@@ -21,16 +21,12 @@ const getCountryLearners = async () => {
 }
 
 const getLearners = async (req, res) => {
+  console.log(req.query)
   try {
     let query = req.query
     let skip = query.offset || 0
     let limit = query.limit || 0
     let search = query.search || ''
-    const subtext = '?limit'
-    let index = search.indexOf(subtext)
-    if (index !== -1) {
-      search = search.substring(0, index)
-    }
     let learners = await learner
       .find({ email: { $regex: search, $options: 'i' } })
       .skip(skip)
