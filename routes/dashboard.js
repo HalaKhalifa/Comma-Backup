@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const {
+  getLearner,
   getDashboard,
   getContentfulDashboard,
   getDashboardCourses,
@@ -27,9 +28,16 @@ router.get('/dashboard2', (req, res) => {
 router.get('/dashboard/courses', (req, res) => {
   getDashboardCourses(req, res)
 })
+
 router.get('/dashboard/learners', (req, res) => {
   getDashboardLearners(req, res)
 })
+
+router.post('/dashboard/data', async (req, res) => {
+  console.log(req.query)
+  await getLearner(req, res)
+})
+
 router.get('/dashboard/learners/new_learner', (req, res) => {
   getAddNewLearner(req, res)
 })

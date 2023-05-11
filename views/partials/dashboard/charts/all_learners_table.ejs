@@ -14,59 +14,77 @@
   </div>
 </div>
 <script>
-  const learnersTableElement = document.getElementById('learner-table')
 
-  //get context array
-  let newContext = <%- JSON.stringify(context)%>;
 
-  // get data from context to display it in the table
-  let data = newContext.learners[0]
+const coursesTableElement = document.getElementById('learner-table')
 
-  
-  console.log("data : ")
-  console.log(data)
-  ;
-  (async () => {
-  const grid = new gridjs.Grid({
-    sort: true,
-      resizable: true,
-      search: true,
-      fixedHeader: true,
-      pagination: {
-        limit: 3
-      },
-    // ...
-    columns: [
-      { name: 'firstname', width: '180px' },
-      { name: 'email', width: '140px' },
-      { 
-        name: 'status', 
-        width: '140px',
-        formatter: (cell) => {
-          return cell === true ? 'Active' : 'Blocked';
-        }
-      },
-      {
-        name: 'Actions',
-        with:"120px",
-        formatter: (_, row) => {
-          return gridjs.html(`
-          <button style="padding: 0.5rem 1rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;">
+const COLUMN_NAMES = ['First Name', 'Last Name', 'Email',"Status","CreatedAt","UpdatedAt"];
+
+const SERVER_URL = 'data';
+
+const getServerUrlWithPagination = (prev, page, limit) => {
+  const queryParams = `limit=${limit}&offset=${page * limit}`;
+  return prev === SERVER_URL 
+    ? `${prev}?${queryParams}` 
+    : `${prev}&${queryParams}`;
+};
+
+const getServerUrlWithSearch = (prev, keyword) => `${prev}?search=${keyword}`;
+
+const getServerUrlWithSort = (prev, columns) => {
+  if (!columns.length) {
+    return prev;
+  }
+  const sign = prev === SERVER_URL ? '?' : '&';
+  const col = columns[0];
+  const dir = col.direction === 1 ? 'asc' : 'desc';
+  const colName = COLUMN_NAMES[col.index];
+  return `${prev}${sign}order=${colName}&dir=${dir}`;
+};
+
+
+
+(async () => {
+const datatable_learners_grid = new gridjs.Grid({
+  columns: [
+    ...COLUMN_NAMES,
+    {
+      name: 'Action',
+      formatter: (_, row) => gridjs.html(
+        `<button style="padding: 0.5rem 1rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;">
             Edit
           </button>
           <button style="padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
             Delete
-          </button>
-        `)
-
-
-        }
-      }
-    ],
-    data: data
-  });
-
-  grid.render(learnersTableElement);
-})();
+          </button>`
+      )
+    }
+  ],
+  fixedHeader: true,
+  pagination: {
+    limit: 3,
+    server: {
+      url: getServerUrlWithPagination
+    }
+  },
+  search: {
+    server: {
+      url: getServerUrlWithSearch
+    }
+  },
+  sort: {
+    multiColumn: false,
+    server: {
+      url: getServerUrlWithSort
+    }
+  },
+  server: {
+    url: SERVER_URL,
+    method: 'POST',
+    then: data => data.learners.map(learner => [learner.firstname, learner.lastname, learner.email,"Active", learner.createdAt,learner.updatedAt]),
+    total: data => data.count
+  }
+}).render(coursesTableElement);
+ })();
 
 </script>
