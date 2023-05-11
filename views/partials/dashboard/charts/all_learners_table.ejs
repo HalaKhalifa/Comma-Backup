@@ -59,10 +59,10 @@ src="https://cdn.jsdelivr.net/npm/gridjs@latest/dist/gridjs.production.min.js"><
         formatter: (_, row) => {
           return gridjs.html(`
           <button style="padding: 0.5rem 1rem; margin-bottom: 0.3rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;" 
-  id="edit-button" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"
-  onclick="setModalData('${row.cells[1].data}', '${row.cells[2].data}' ,'${row.cells[3].data}','${row.cells[0].data}')">
-  Edit
-</button>
+          id="edit-button" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+          onclick="setModalData('${row.cells[1].data}', '${row.cells[2].data}' ,'${row.cells[3].data}','${row.cells[0].data}')">
+          Edit
+        </button>
 
 
           <button style="padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
@@ -79,130 +79,5 @@ src="https://cdn.jsdelivr.net/npm/gridjs@latest/dist/gridjs.production.min.js"><
 
   grid.render(coursesTableElement);
 })();
-function setModalData(firstName, lastName, email,id) {
-  const saveUpdateButton = document.getElementById('save-update');
-  const firstNameLabel = document.getElementById('first-name-label1');
-  const lastNameLabel = document.getElementById('last-name-label1');
-  const emailLabel = document.getElementById('email-label1');
-  saveUpdateButton.dataset.id = id;
-  const firstNameInput = document.getElementById('first-name');
-  const lastNameInput = document.getElementById('last-name');
-  const emailInput = document.getElementById('email');
-  firstNameLabel.textContent = firstName;
-  lastNameLabel.textContent = lastName;
-  emailLabel.textContent = email;
-  firstNameInput.value = firstName;
-  lastNameInput.value = lastName;
-  emailInput.value = email;
-}
-function validateEmail(email) {
-  // Regular expression pattern for email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(email);
-}
-
-function displayErrorMessage(inputElement, errorMessage) {
-  const errorElementId = inputElement.id + '-error';
-  const errorElement = document.getElementById(errorElementId);
-  errorElement.textContent = errorMessage;
-}
-function clearErrorMessage(inputElement) {
-  const errorElementId = inputElement.id + '-error';
-  const errorElement = document.getElementById(errorElementId);
-  errorElement.textContent = ''; // Clear the error message
-}
-function updateProfile() {
-  const emailInput = document.getElementById('email');
-  const emailValue = emailInput.value.trim();
-  if (!validateEmail(emailValue)) {
-    displayErrorMessage(emailInput, 'Invalid email format. Please enter a valid email address.');
-     return;
-  }
-  var email = document.getElementById("mail");
-  const saveUpdateButton = document.getElementById('save-update');
-  saveUpdateButton.dataset.email = emailValue;
-  emailInput.value = emailValue;
-  const email1 = document.getElementById('save-update').dataset.email;
-  const id = saveUpdateButton.dataset.id;
-  console.log(id);
-  console.log(email1);
-  var emailInput1 = document.getElementById('email').value;
-  const firstNameLabel = document.getElementById('first-name-label').textContent.trim();
-  const lastNameLabel = document.getElementById('last-name-label').textContent.trim();
-  const emailLabel = document.getElementById('email-label').textContent.trim();
-  const firstNameInput = document.getElementById('first-name');
-  const firstNameValue = firstNameInput.value.trim();
-  const lastNameInput = document.getElementById('last-name');
-  const lastNameValue = lastNameInput.value.trim();
-  var learnerData = {
-    id: saveUpdateButton.dataset.id,
-  };
-  if (firstNameValue !== '' && firstNameValue !== data.firstNameInput) {
-    learnerData.firstNameInput = firstNameValue;
-  }
-  if (lastNameValue !== '' && lastNameValue !== data.lastNameInput) {
-    learnerData.lastNameInput = lastNameValue;
-  }
-  if (emailValue !== '' && emailValue !== data.emailInput) {
-    learnerData.emailInput = emailValue;
-  }
-  if (!validateEmail(emailValue)) {
-    displayErrorMessage(emailInput, 'Invalid email format. Please enter a valid email address.');
-    return;
-  }
-  if (firstNameValue === '') {
-    displayErrorMessage(firstNameInput, 'First name is required.');
-    return;
-  }
-  if (lastNameInput === '' ) {
-    displayErrorMessage(lastNameInput, 'Last name is required.');
-    return;
-  }
-  console.log(learnerData);
-  clearErrorMessage(emailInput);
-  clearErrorMessage(firstNameInput);
-  clearErrorMessage(lastNameInput);
-  fetch('/dashboard/learners', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(learnerData)
-      })
-        .then(response => response.json())
-        .catch(error => {
-          console.error('Error:', error);
-        });
-}
-function clearInputs() {
-  const firstName = document.getElementById('first-name');
-  const lastName = document.getElementById('last-name');
-  const email = document.getElementById('email');
-  const firstNameLabel = firstName.previousElementSibling;
-  const lastNameLabel = lastName.previousElementSibling;
-  const emailLabel = email.previousElementSibling;
-  const firstNamePencil = document.getElementById('pencil-first-name');
-  const lastNamePencil = document.getElementById('pencil-last-name');
-  const emailPencil = document.getElementById('pencil-email');
-  firstName.classList.add('d-none');
-  lastName.classList.add('d-none');
-  email.classList.add('d-none');
-  firstNameLabel.classList.remove('d-none');
-  lastNameLabel.classList.remove('d-none');
-  emailLabel.classList.remove('d-none');
-  firstNamePencil.classList.remove('d-none');
-  lastNamePencil.classList.remove('d-none');
-  emailPencil.classList.remove('d-none');
-}
-function editField(id) {
-  const fieldSpan = document.getElementById(id).previousElementSibling;
-  fieldSpan.classList.add('d-none');
-  const input = document.getElementById(id);
-  input.classList.remove('d-none');
-  input.focus();
-  input.select();
-  const pencil = document.getElementById(`pencil-${id}`);
-  pencil.classList.add('d-none');
-}
 
 </script>

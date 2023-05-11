@@ -1,11 +1,13 @@
 const Course = require('../models/course')
 const { getCourses } = require('./courses')
 const { numbersArr } = require('../helpers/dashboard')
+const learner = require('../models/learner')
 /**
  * Returns Number of courses created each month for the previous year
  *
  * Send a JSON response wtih "coursesCounts" as a LIST
  */
+
 const NumberOfCoursesInYear = async () => {
   try {
     const pipeline = [
@@ -216,6 +218,38 @@ const getAllLearnersTable = async (pageNumber, pageSize) => {
     console.log(error)
   }
 }
+const adminUpdateLearner = async (req, res) => {
+  try {
+    const user_id = req.body.id;
+    const userData = {
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      updatedAt: new Date() 
+    };  
+    const existingUser = await learner.findOne({ email: userData.email });
+    if (existingUser && existingUser._id.toString() !== user_id) {
+      return res.status(400).json({ error: 'This email is already used by another user.' });
+    }
+    learner.findOneAndUpdate(
+      { _id: user_id },
+      { $set: userData },
+      { new: true, fields: { email: 1, firstname: 1, lastname: 1 } },
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('Error updating user data');
+        }
+        console.log('User data updated:', updatedUser);
+        res.status(200).json({ message: 'User data updated successfully' });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating user data');
+  }
+};
+
 
 module.exports = {
   getPopularCourses,
@@ -224,5 +258,5 @@ module.exports = {
   getNoOfCourses,
   NumberOfCoursesInYear,
   getAllLearnersTable,
- 
+  adminUpdateLearner
 }

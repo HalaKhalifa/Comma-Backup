@@ -1,5 +1,4 @@
 //const {getLearners} = require("./learner.test") Commented until collection is filled
-const learner = require('../models/learner')
 const {
   getPopularCourses,
   getNoCreatedCourses,
@@ -7,7 +6,7 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear,
-  getAllLearnersTable
+  getAllLearnersTable,adminUpdateLearner
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
@@ -138,30 +137,7 @@ const getContentfulIcons = async (req, res) => {
 
   res.render('pages/dashboard_contentful/icons-feather.ejs', context)
 }
-const adminUpdateLearner=async(req,res)=>{
-  const user_id = req.body.id
-  const userData = req.body
-  const existingUser = await learner.findOne({ email: userEmail });
-  if (userEmail !== existingUser.email) {
-    const userWithSameEmail = await learner.findOne({ email: userEmail });
-    if (userWithSameEmail) {
-      return res.status(400).send('This email is already used in the database. Please enter a different email.');
-    }
-  }  
-  learner.findOneAndUpdate(
-  { _id: user_id },
-  { $set: userData },
-  { new: true },
-  (err, updatedUser) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Error updating user data');
-    }
-    console.log('User data updated:', updatedUser);
-    return res.status(200).send('User data updated successfully');
-  }
-  );
-}
+
 module.exports = {
   getDashboard,
   getContentfulDashboard,
