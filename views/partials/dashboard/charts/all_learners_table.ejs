@@ -1,0 +1,70 @@
+<div class="col-md-6 col-xxl-4 d-flex order-2 order-xxl-4"></div>
+<div class="card flex-fill w-100">
+  <div class="px-4 pt-3">
+    <h5 class="card-title mb-0">All learners</h5>
+  </div>
+  <div class="px-4 pb-4 d-flex">
+    <div class="align-self-center w-100">
+      <div class="py-3">
+        <div class="chart chart-xs">
+          <div id="learner-table"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const coursesTableElement = document.getElementById('learner-table')
+  // let tableCoursesData = JSON.parse(coursesTableElement.dataset.courses)
+  ;
+  (async () => {
+  const grid = new gridjs.Grid({
+    sort: true,
+      resizable: true,
+      search: true,
+      fixedHeader: true,
+      pagination: {
+        limit: 3
+      },
+    // ...
+    columns: [
+      { name: 'firstname', width: '180px' },
+      { name: 'email', width: '140px' },
+      { 
+        name: 'status', 
+        width: '140px',
+        formatter: (cell) => {
+          return cell === true ? 'Active' : 'Blocked';
+        }
+      },
+      {
+        name: 'Actions',
+        with:"120px",
+        formatter: (_, row) => {
+          return gridjs.html(`
+          <button style="padding: 0.5rem 1rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;">
+            Edit
+          </button>
+          <button style="padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
+            Delete
+          </button>
+        `)
+
+
+        }
+      }
+    ],
+    data: [
+      { firstname: 'Sadasd', email: 'asd1@gmail.com', status: true },
+      { firstname: 'Ahmad', email: 'ahmad@ahmad.com', status: true },
+      { firstname: 'imnoww', email: 'asd121@gmail.com', status: false },
+      { firstname: 'Test', email: 'test@test.testttt', status: true },
+      { firstname: 'Test', email: 'test@gmail.test', status: false },
+      { firstname: 'Muhammad', email: 'mamo.gzih@hotmail.com', status: true }
+    ]
+  });
+
+  grid.render(coursesTableElement);
+})();
+
+</script>
