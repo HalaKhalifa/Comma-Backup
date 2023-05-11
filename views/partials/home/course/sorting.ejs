@@ -1,31 +1,67 @@
-   <form>
+   <form action="/courses" method="GET">
      <div class="container sortingContainer">
-       <div class="sortTitle">
-         <h5>Sort by </h5>
-       </div>
-       <div class="dropDownSort">
-         <select class="form-control" name="dropdown">
-           <option value="2020">Topic ▼</option>
-           <option value="Web Dev">Web Dev</option>
-           <option value="Data Science">Data Science</option>
-         </select>
-       </div>
 
-       <div class="dropDownSort">
-         <select class="form-control" name="dropdown">
-           <option value="2020">Date ▼</option>
-           <option value="2020">2020</option>
-           <option value="2022">2022</option>
-           <option value="2023">2023</option>
-         </select>
-       </div>
+         <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary dropdown-toggle sortBy" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort By</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" data-value="tag">Tag</a></li>
+            <li><a class="dropdown-item" href="#" data-value="topic">Topic</a></li>
+            <li><a class="dropdown-item" href="#" data-value="date">Date</a></li>
+            <li><a class="dropdown-item" href="#" data-value="rating">Rating</a></li>
+            <li><a class="dropdown-item" href="#" data-value="enrollment">Enrollment</a></li>
+      
+          </ul>
+          <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search">
+          <div class="dropDownSort form-control" id="search-radio-rating">
+            <label>Rating :</label>
+              <input type="radio" value="ASC">
+              <label>ASC</label>
+              <input type="radio" value="DESC">
+              <label>DESC</label>
+           </div>
 
-       <div class="dropDownSort">
-         <select class="form-control" name="dropdown">
-           <option value="5">Rating ▼</option>
-           <option value="5">5to 4</option>
-           <option value="3to2">3to2</option>
-         </select>
-       </div>
+           <div class="dropDownSort form-control" id="search-radio-enr">
+            <label>Enrollment :</label>
+            <input type="radio" value="ASC">
+            <label>ASC</label>
+            <input type="radio" value="DESC">
+            <label>DESC</label>
+           </div> 
+           
+        </div>
+       <button type="submit" class="form-control submitSort">Submit</button> 
      </div>
    </form>
+
+   <script>
+    // Get the dropdown menu and search input elements
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    const searchInput = document.querySelector('#search-input');
+    const searchRadioRating = document.querySelector('#search-radio-rating');
+    const searchRadioEnr = document.querySelector('#search-radio-enr');
+
+    // Add a click event listener to the dropdown menu
+    dropdownMenu.addEventListener('click', function(event) {
+      // Check if the clicked item is one of the dropdown items
+      if (event.target.classList.contains('dropdown-item')) {
+        // Get the value of the clicked item's data-value attribute
+        const value = event.target.getAttribute('data-value');
+  
+      if (value === 'rating') {
+        searchRadioRating.style.display ='block';
+      searchInput.style.display ='none';
+    } else if (value === 'topic' || value === 'tag'||value === 'date') {
+      searchRadioRating.style.display ='none';
+      searchInput.style.display ='block';
+    }else if (value === 'enrollment') {
+      searchInput.style.display ='none';
+      searchRadioEnr.style.display ='block';
+    } else {
+      searchRadioRating.style.display ='none';
+      searchInput.style.display ='none';
+    }
+        
+
+      }
+    });
+  </script>
