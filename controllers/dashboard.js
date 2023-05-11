@@ -5,7 +5,8 @@ const {
   getNoOfCourses,
   getEnrolledFinished,
   getAllCoursesTable,
-  NumberOfCoursesInYear
+  NumberOfCoursesInYear,
+  getAllLearnersTable
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
@@ -61,13 +62,29 @@ const getDashboardAdmins = async (req, res) => {
   res.render('pages/dashboard/admins.ejs', context)
 }
 
+const User = require('../models/learner')
 const getDashboardLearners = async (req, res) => {
-  const context = {
-    title: 'All learners',
-    learners: []
-  }
+  const pageNumber = parseInt(req.query.pageNumber) || 1
+  const pageSize = parseInt(req.query.pageSize) || 2
 
-  res.render('pages/dashboard/learners.ejs', context)
+  try {
+    const learnersArray = await getAllLearnersTable(pageNumber, pageSize)
+    const count = await User.countDocuments({ status: { $in: [0, 1] } })
+
+    const context = {
+      title: 'All learners',
+      learners: learnersArray,
+      pageCount: Math.ceil(count / pageSize),
+      currentPage: pageNumber,
+      pageSize: pageSize
+    }
+
+    console.log(context.learners[0])
+    res.render('pages/dashboard/learners.ejs', { title: 'All Courses', context })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send('Internal Server Error')
+  }
 }
 
 const getContentfulDashboard = async (req, res) => {
@@ -81,10 +98,55 @@ const getContentfulDashboard = async (req, res) => {
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
 
+const getContentfulForms = async (req, res) => {
+  const context = {
+    title: 'Contentful Forms'
+  }
+
+  res.render('pages/dashboard_contentful/ui-forms.ejs', context)
+}
+
+const getContentfulButtons = async (req, res) => {
+  const context = {
+    title: 'Contentful buttons'
+  }
+
+  res.render('pages/dashboard_contentful/ui-buttons.ejs', context)
+}
+
+const getContentfulCards = async (req, res) => {
+  const context = {
+    title: 'Contentful cards'
+  }
+
+  res.render('pages/dashboard_contentful/ui-cards.ejs', context)
+}
+
+const getContentfulTypography = async (req, res) => {
+  const context = {
+    title: 'Typo. cards'
+  }
+
+  res.render('pages/dashboard_contentful/ui-typography.ejs', context)
+}
+
+const getContentfulIcons = async (req, res) => {
+  const context = {
+    title: 'Icons. cards'
+  }
+
+  res.render('pages/dashboard_contentful/icons-feather.ejs', context)
+}
+
 module.exports = {
   getDashboard,
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardAdmins,
-  getDashboardLearners
+  getDashboardLearners,
+  getContentfulForms,
+  getContentfulButtons,
+  getContentfulCards,
+  getContentfulTypography,
+  getContentfulIcons
 }

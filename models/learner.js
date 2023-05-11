@@ -18,13 +18,23 @@ const learnerSchema = new Schema({
     type: String,
     required: true
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   status: {
-    type: Number, // Or whatever type is appropriate for your use case
-    required: false
+    type: Boolean,
+    default: true,
+    required: true
   },
   dob: {
     type: Date,
-    required: false
+    required: false,
+    default: null
   },
   gender: {
     type: String,
@@ -52,7 +62,7 @@ const learnerSchema = new Schema({
     required: false
   },
   graduationYear: {
-    type: Number,
+    type: String,
     required: false
   },
   phoneNumber: {

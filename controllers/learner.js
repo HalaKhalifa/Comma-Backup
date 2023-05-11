@@ -225,7 +225,7 @@ const postLearnerProfile = async (req, res) => {
   console.log('profile data')
   learner.findOneAndUpdate(
     { _id: user_id },
-    { $set: { ...userData, updatedAt: new Date() } },
+    { $set: userData },
     { new: true },
     (err, updatedUser) => {
       if (err) {
