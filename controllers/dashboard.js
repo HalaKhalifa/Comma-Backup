@@ -73,7 +73,8 @@ const getLearner = async (req, res) => {
 
     if (search) {
       queryData.$or = [
-        { name: { $regex: search, $options: 'i' } },
+        { firstname: { $regex: search, $options: 'i' } },
+        { lastname: { $regex: search, $options: 'i' } },
         { email: { $regex: search, $options: 'i' } }
       ]
     }

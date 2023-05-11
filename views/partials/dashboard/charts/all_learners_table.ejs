@@ -31,18 +31,6 @@ const getServerUrlWithPagination = (prev, page, limit) => {
 
 const getServerUrlWithSearch = (prev, keyword) => `${prev}?search=${keyword}`;
 
-const getServerUrlWithSort = (prev, columns) => {
-  if (!columns.length) {
-    return prev;
-  }
-  const sign = prev === SERVER_URL ? '?' : '&';
-  const col = columns[0];
-  const dir = col.direction === 1 ? 'asc' : 'desc';
-  const colName = COLUMN_NAMES[col.index];
-  return `${prev}${sign}order=${colName}&dir=${dir}`;
-};
-
-
 
 (async () => {
 const datatable_learners_grid = new gridjs.Grid({
@@ -72,12 +60,7 @@ const datatable_learners_grid = new gridjs.Grid({
       url: getServerUrlWithSearch
     }
   },
-  sort: {
-    multiColumn: false,
-    server: {
-      url: getServerUrlWithSort
-    }
-  },
+ 
   server: {
     url: SERVER_URL,
     method: 'POST',
