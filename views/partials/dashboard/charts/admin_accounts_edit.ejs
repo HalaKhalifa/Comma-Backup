@@ -177,17 +177,11 @@
   </style>
   
   <script>
-// ------------ Checkbox Edit Password --------------------------------------
-// Get all the checkboxes with class 'password-checkbox'
+// ------------ Checkbox Edit Password -------------------------------------
 const checkboxes = document.querySelectorAll('.admin-edit-input-disable');
-
-// Loop through all the checkboxes
 checkboxes.forEach(function(checkbox) {
-  // Add a click event listener to each checkbox
   checkbox.addEventListener('click', function() {
-    // Get the corresponding password input
     const input = this.parentNode.parentNode.parentNode.parentNode.querySelector('.admin-edit-input-disable-input');
-    // Enable or disable the input based on whether the checkbox is checked or not
     input.disabled = !this.checked;
   });
 });
@@ -253,7 +247,7 @@ const data = JSON.stringify(jsonObject);
 
 // ------------ Send Data to Server -----------------------------------------
 // ------------ Validation --------------------------------------------------
-// NOT DONE YET NEEDS EDITING 
+// NOT DONE YET NEEDS FURTHER WORK 
   document.getElementById("edit-account-save-button").addEventListener('click', ()=> {
     console.log(responseData)
 if(responseData.status == 'Fail'){
@@ -261,9 +255,5 @@ if(responseData.status == 'Fail'){
     document.getElementsByClassName(classNamePick)[0].style.borderColor = '#ff0000';
 }
 })
-// document.getElementsByClassName('firstname-validator')[0].style.borderColor = '#ff0000';
-// document.getElementsByClassName('lastname-validator')[0].style.borderColor = '#ff0000';
-// document.getElementsByClassName('email-validator')[0].style.borderColor = '#ff0000';
-// document.getElementsByClassName('password-validator')[0].style.borderColor = '#ff0000';
 // ------------ Validation --------------------------------------------------
   </script>
