@@ -173,7 +173,7 @@ const coursePagination = async (req, res) => {
 
 const getSortedCourses = async (req, res) => {
     console.log('hi');
-    const sortCriteria = req.params.sortBy;
+    const sortCriteria = req.params.sortCriteria;
     const sortOrder = req.params.sortOrder;
     const searchQuery = req.params.searchQuery;
     console.log(sortCriteria,sortOrder,searchQuery);

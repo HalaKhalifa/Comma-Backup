@@ -1,67 +1,91 @@
-   <form action="/courses" method="POST">
-     <div class="container sortingContainer">
 
-         <div class="input-group mb-3">
-          <button class="btn btn-outline-secondary dropdown-toggle sortBy" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort By</button>
-          <ul class="dropdown-menu">
-            <li> <option class="dropdown-item"data-value="tag">Tag</option></li>
-            <li> <option class="dropdown-item"data-value="topic">Topic</option></li>
-            <li> <option class="dropdown-item"data-value="date">Date</option></li>
-            <li> <option class="dropdown-item"data-value="stars">Rating</option></li>
-            <li> <option class="dropdown-item" data-value="enrollment">Enrollment</option></li>
-          </ul>
-          <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search" name="searchQuery">
-          <div class="dropDownSort form-control" id="search-radio-rating">
-            <label>Rating :</label>
-              <input type="radio" value="ASC" name="sortOrder">
-              <label>ASC</label>
-              <input type="radio" value="DESC" name="sortOrder">
-              <label>DESC</label>
-           </div>
+  <button id="show-dropdowns-btn" class="filterBTN">Filter</button>
+  <form action="/courses" method="POST">
+  <div class="container FilterContainer" style="display:none;">
+    <div class="row FilerRow">
 
-           
-           <div class="dropDownSort form-control" id="search-radio-enr">
-            <label>Enrollment :</label>
-            <input type="radio" value="ASC" name="sortOrder">
-            <label>ASC</label>
-            <input type="radio" value="DESC" name="sortOrder">
-            <label>DESC</label>
-           </div> 
-           
-        </div>
-       <button type="submit" class="form-control submitSort">Submit</button> 
-     </div>
-   </form>
+      <select class="selectFilter">
+        <option value="stars" name="sortCriteria">Rating</option>
+        <option value="Asc" name="sortOrder">Asc</option>
+        <option value="Desc" name="sortOrder">Desc</option>
+      </select>
 
-   <script>
-    // Get the dropdown menu and search input elements
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    const searchInput = document.querySelector('#search-input');
-    const searchRadioRating = document.querySelector('#search-radio-rating');
-    const searchRadioEnr = document.querySelector('#search-radio-enr');
+       <select class="selectFilter">
+        <option value="enrollment" name="sortCriteria">Enrollment</option>
+        <option value="Asc" name="sortOrder">Asc</option>
+        <option value="Desc" name="sortOrder">Desc</option>
+      </select>
 
-    // Add a click event listener to the dropdown menu
-    dropdownMenu.addEventListener('click', function(event) {
-      // Check if the clicked item is one of the dropdown items
-      if (event.target.classList.contains('dropdown-item')) {
-        // Get the value of the clicked item's data-value attribute
-        const value = event.target.getAttribute('data-value');
+      
+      <div class="selectFilter">
+        <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search by Topic" name="searchQuery">
+      </div>
+
+      <div class="selectFilter">
+        <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search by Tag" name="searchQuery">
+      </div>
+
+      <button type="submit" class="form-control submitSort">Submit</button> 
+    </div>
+  </div>
+</form>
+  <script>
+    var container = document.querySelector('.FilterContainer');
   
-      if (value === 'stars') {
-        searchRadioRating.style.display ='block';
-      searchInput.style.display ='none';
-    } else if (value === 'topic' || value === 'tag'||value === 'date') {
-      searchRadioRating.style.display ='none';
-      searchInput.style.display ='block';
-    }else if (value === 'enrollment') {
-      searchInput.style.display ='none';
-      searchRadioEnr.style.display ='block';
-    } else {
-      searchRadioRating.style.display ='none';
-      searchInput.style.display ='none';
-    }
-        
-
-      }
+    document.getElementById('show-dropdowns-btn').addEventListener('click', function() {
+      container.style.display = container.style.display === 'none' ? 'block' : 'none';
     });
   </script>
+  
+
+<!-- 
+<div class="filterDropDowns">
+  <div id="dropdowns" style="display: none;">
+    <div class="dropdown-container">
+      <label for="dropdown1">Rating:</label>
+      <select id="dropdown1" class="dropdown">
+        <option value="1">Ascending</option>
+        <option value="2">Descending</option>
+      </select>
+    </div>
+    <div class="dropdown-container">
+      <label for="dropdown2">Enrollment:</label>
+      <select id="dropdown2" class="dropdown">
+        <option value="1">Ascending</option>
+        <option value="2">Descending</option>
+      </select>
+    </div>
+    <div class="dropdown-container">
+      <label for="dropdown3">Dropdown 3:</label>
+      <select id="dropdown3" class="dropdown">
+        <option value="">Select an option</option>
+        <option value="7">Option 3.1</option>
+        <option value="8">Option 3.2</option>
+        <option value="9">Option 3.3</option>
+      </select>
+    </div>
+    <div class="dropdown-container">
+      <label for="dropdown4">Dropdown 4:</label>
+      <select id="dropdown4" class="dropdown">
+        <option value="">Select an option</option>
+        <option value="10">Option 4.1</option>
+        <option value="11">Option 4.2</option>
+        <option value="12">Option 4.3</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var dropdowns = document.getElementById('dropdowns');
+
+  // Show/hide the dropdowns when the button is clicked
+  document.getElementById('show-dropdowns-btn').addEventListener('click', function() {
+    if (dropdowns.style.display === 'none') {
+      dropdowns.style.display = 'block';
+    } else {
+      dropdowns.style.display = 'none';
+    }
+  });
+</script> -->
