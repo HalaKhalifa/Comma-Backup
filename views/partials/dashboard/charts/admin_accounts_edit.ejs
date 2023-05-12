@@ -44,7 +44,7 @@
                         </div>
                         <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input firstname-validator rounded-5" disabled  name="firstname" required>
                         <div class="invalid-feedback">
-                          Firstname Must be 2 charcters or longer and numbers or spaces or symbols
+                          Firstname Must be 2 charcters or longer ,can't have numbers or spaces
                         </div>
                         <div class="valid-feedback"></div>
                       </div>
@@ -63,7 +63,7 @@
                             </div>
                             <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input lastname-validator rounded-5" disabled  name="lastname" required>
                             <div class="invalid-feedback">
-                              Lastname Must be 2 charcters or longer and numbers or spaces
+                              Lastname must be 2 charcters or longer ,can't have numbers or spaces
                             </div>
                             <div class="valid-feedback"></div>
                           </div>
@@ -82,7 +82,7 @@
                             </div>
                             <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input email-validator rounded-5" disabled  name="email" required>
                             <div class="invalid-feedback">
-                              Email Must be Valid , Has No Spaces
+                              Email must be valid and no spaces
                             </div>
                             <div class="valid-feedback"></div>
                           </div>
@@ -101,7 +101,7 @@
                         </div>
                         <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input password-validator rounded-5"  name="password" required disabled>
                         <div class="invalid-feedback">
-                          Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter ,No Sapces
+                          Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter ,no sapces
                         </div>
                         <div class="valid-feedback"></div>
                       </div>
@@ -139,10 +139,12 @@
     color: rgb(0, 0, 0);
     border-color: #ffffff;
     border-color: #000000;
+    box-shadow: #11111a1a 0px 1px 0px, #11111a1a 0px 8px 24px, #11111a1a 0px 16px 48px;
     }
     .admin-edit-input-disable-input{
         border-color: #5e5df0;
         border-width: 2px;
+        box-shadow: #00fa0c1a 0px 1px 0px, #00fa0c1a 0px 8px 24px, #00fa0c1a 0px 16px 48px;
     }
     .admin-edit-input-disable-input:focus{
         outline: 2px solid #5e5df0;
@@ -416,5 +418,13 @@ inputElements.forEach((input) => {
 });
   formElement.reset()
 })
+const inputFieldsTar = document.getElementsByClassName('admin-edit-input-disable-input');
+document.addEventListener('click', function() {
+  for (let i = 0; i < inputFieldsTar.length; i++) {
+    if (inputFieldsTar[i].disabled) {
+    inputFieldsTar[i].classList.remove('is-invalid');
+  }
+}
+});
 // ------------ Validation --------------------------------------------------
   </script>
