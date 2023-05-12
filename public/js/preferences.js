@@ -46,12 +46,3 @@ function hide() {
 function unhide() {
   document.getElementById('info-r').style.display = ''
 }
-
-function refresh() {
-  unhide()
-  location.reload()
-}
-
-function formSubmit() {
-  return confirm('Are you sure you want to submit this form?')
-}

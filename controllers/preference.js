@@ -1,7 +1,6 @@
 const learner = require('../models/learner')
 const { get_session_loggedIn } = require('../middleware/sessionMiddleWare')
 const post_preferences = async (req, res) => {
-  req.body
   let learnerId = get_session_loggedIn(req)
   let error = ''
   if (learnerId == null) {
