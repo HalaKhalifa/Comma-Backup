@@ -1,4 +1,20 @@
-
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Delete</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this account ?!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Exit</button>
+        <button type="button" class="btn btn-primary" id="edit-account-delete-button" data-bs-toggle="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Modal -->
   <div class="modal fade" id="admin-accounts-edit-modal" tabindex="-1" aria-labelledby="AdminCccountsEditModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -14,10 +30,10 @@
                 </li>
               </ul>
               <div class="tab-content bg-white" id="myTabContent">
-                <form id="admin-accounts-edit-form" method="POST" action="update-admins-data">
+                <form id="admin-accounts-edit-form" method="POST" action="update-admins-data" class="needs-validation" novalidate>
                     <div class="mb-3">
                       <label for="adminAccountsEditModalFirstName" class="form-label" id="firstname-validator">First Name</label>
-                      <div class="input-group mb-3">
+                      <div class="input-group mb-3 has">
                         <div class="input-group-text rounded-5">
                             <div class="edit-checkbox-disable">
                                 <label class="edit-checkbox-disable-switch">
@@ -27,6 +43,9 @@
                             </div>
                         </div>
                         <input id="adminAccountsEditModalFirstName" type="text" class="form-control admin-edit-input-disable-input firstname-validator rounded-5" disabled  name="firstname" required>
+                        <div class="invalid-feedback">
+                          Invalid Firstname
+                        </div>
                       </div>
                       <div id="adminAccountsEditModalFirstNameLabel" class="form-text">Click to Edit First Name</div>
                     </div>
@@ -42,6 +61,9 @@
                                 </div>
                             </div>
                             <input id="adminAccountsEditModalLastName" type="text" class="form-control admin-edit-input-disable-input lastname-validator rounded-5" disabled  name="lastname" required>
+                            <div class="invalid-feedback">
+                              Invalid Lastname
+                            </div>
                           </div>
                         <div id="adminAccountsEditModalLastNameLabel" class="form-text">Click to Edit Last Name</div>
                       </div>
@@ -57,6 +79,9 @@
                                 </div>
                             </div>
                             <input id="adminAccountsEditModalEmail" type="text" class="form-control admin-edit-input-disable-input email-validator rounded-5" disabled  name="email" required>
+                            <div class="invalid-feedback">
+                              Invalid Email
+                            </div>
                           </div>
                         <div id="adminAccountsEditModalEmailLabel" class="form-text">Click to Edit Email</div>
                       </div>
@@ -72,6 +97,9 @@
                             </div>
                         </div>
                         <input id="adminAccountsEditModalPassword" type="password" class="form-control admin-edit-input-disable-input password-validator rounded-5"  name="password" required disabled>
+                        <div class="invalid-feedback">
+                          Invalid Password
+                        </div>
                       </div>
                       <div id="adminAccountsEditModalPasswordLabel" class="form-text">Click to Edit Password</div>
                     </div>
@@ -80,7 +108,8 @@
               </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="edit-button-datatable red-button-delete text-nowrap me-auto" id="edit-account-delete-button">Delete</button>
+                  <!-- Modal -->
+                  <button type="button" class="edit-button-datatable red-button-delete text-nowrap me-auto" id="edit-account-delete-button" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             <button type="button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Cancel</button>
             <input type="submit" id="edit-account-save-button" form="admin-accounts-edit-form" value="Save Changes"class="edit-button-datatable text-nowrap"/>
         </div>
@@ -224,7 +253,7 @@ let responseData = {}
 formElement.addEventListener('submit',async event => {
   event.preventDefault();
 
-  const formData = new FormData(formElement);
+const formData = new FormData(formElement);
 const jsonObject = {};
 
 Array.from(formData.entries()).forEach(([key, value]) => {
@@ -233,6 +262,16 @@ Array.from(formData.entries()).forEach(([key, value]) => {
 responseData = await updateAdminsFetch(jsonObject)
 })
 async function updateAdminsFetch(jsonObject){
+  if (
+      !formElement.checkValidity() ||
+      !validateEmail() ||
+      !validateFirstName() ||
+      !validateLastName() ||
+      !validatePassword()
+    ) {
+      return false
+    } else {
+      formElement.classList.add('was-validated');
 const data = JSON.stringify(jsonObject);
  const responseData = await fetch('/dashboard/update-admins-data',{
     method:"POST",
@@ -241,19 +280,100 @@ const data = JSON.stringify(jsonObject);
     },
     body:data
   }).then(res => res.json())
+  .then(data => {
+    if(data.status == 'Fail'){
+      for (let i = 0; i < data.msg.keys.length; i++) {
+        const classNamePick = data.msg.keys[i] + "-validator"
+        const inputHolder = document.getElementsByClassName(classNamePick)[0]
+        inputHolder.classList.remove('is-valid');
+        inputHolder.classList.add('is-invalid');
+        oldReserve.labels.push(inputLabel.innerHTML)
+    }
+    }else if (data.status == 'Success') {
+      const inputs = document.getElementsByClassName("admin-edit-input-disable-input")
+      Array.from(inputs).forEach(input => {
+        input.classList.remove('is-invalid');
+    })
+    console.log(data)
+  }})
     .catch(error =>console.log(error))
-    return  responseData
+}
 }
 
 // ------------ Send Data to Server -----------------------------------------
 // ------------ Validation --------------------------------------------------
-// NOT DONE YET NEEDS FURTHER WORK 
-  document.getElementById("edit-account-save-button").addEventListener('click', ()=> {
-    console.log(responseData)
-if(responseData.status == 'Fail'){
-    const classNamePick = responseData.msg.keys[0] + "-validator"
-    document.getElementsByClassName(classNamePick)[0].style.borderColor = '#ff0000';
+document.querySelector('.email-validator').addEventListener('blur', validateEmail);
+document.querySelector('.password-validator').addEventListener('blur', validatePassword);
+document.querySelector('.firstname-validator').addEventListener('blur', validateFirstName);
+document.querySelector('.lastname-validator').addEventListener('blur', validateLastName);
+
+const firstNameRegex = /^[a-zA-Z]{2,50}$/
+const lastNameRegex = /^[a-zA-Z]{2,50}([-'][a-zA-Z]{2,50})?$/
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+-=|\\]).{8,32}$/;
+
+function validateFirstName(e) {
+  const firstname = document.querySelector('.firstname-validator');
+  if(firstname.disabled)
+  return true
+  if (firstNameRegex.test(firstname.value)) {
+    firstname.classList.remove('is-invalid');
+    firstname.classList.add('is-valid');
+    return true;
+  } else {
+    firstname.classList.remove('is-valid');
+    firstname.classList.add('is-invalid');
+    return false;
+  }
 }
-})
+function validateLastName(e) {
+  const lastname = document.querySelector('.lastname-validator');
+  if(lastname.disabled)
+  return true
+  if (lastNameRegex.test(lastname.value)) {
+    lastname.classList.remove('is-invalid');
+    lastname.classList.add('is-valid');
+    return true;
+  } else {
+    lastname.classList.remove('is-valid');
+
+    lastname.classList.add('is-invalid');
+    return false;
+  }
+}
+
+function validateEmail(e) {
+  const email = document.querySelector('.email-validator');
+  if(email.disabled)
+  return true
+  if (emailRegex.test(email.value)) {
+    email.classList.remove('is-invalid');
+    email.classList.add('is-valid');
+
+    return true;
+  } else {
+    email.classList.add('is-invalid');
+    email.classList.remove('is-valid');
+
+    return false;
+  }
+}
+
+function validatePassword() {
+  const password = document.querySelector('.password-validator');
+  if(password.disabled)
+  return true
+  if (passwordRegex.test(password.value)) {
+    password.classList.remove('is-invalid');
+    password.classList.add('is-valid');
+
+    return true;
+  } else {
+    password.classList.add('is-invalid');
+    password.classList.remove('is-valid');
+
+    return false;
+  }
+}
 // ------------ Validation --------------------------------------------------
   </script>
