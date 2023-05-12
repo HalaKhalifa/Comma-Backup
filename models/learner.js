@@ -31,6 +31,11 @@ const learnerSchema = new Schema({
     default: true,
     required: true
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
   dob: {
     type: Date,
     required: false,

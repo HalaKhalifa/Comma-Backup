@@ -1,3 +1,10 @@
+<script>
+  var myModal = document.getElementById('deleteModal')
+  var myInput = document.getElementById('myInput')
+  myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus()
+    })
+</script>
 <div class="col-md-6 col-xxl-4 d-flex order-2 order-xxl-4"></div>
 <div class="card flex-fill w-100">
   <div class="px-4 pt-3">
@@ -59,20 +66,30 @@ const getServerUrlWithSort = (prev, columns) => {
   return `${prev}${sign}order=${colName}&dir=${dir}`;
 };
 
-function showDeleteModal(learnerId) {
+function DeleteModal(Id) {
   const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
   const deleteButton = document.getElementById('deleteButton');
-
-  deleteButton.onclick = function () {
-    // Perform the delete operation by changing the status to 0
-
-    datatable_learners_grid.update((rows) => {
-      return rows.filter((row) => row.cells[2].data !== learnerId);
-    });
-
-    modal.hide();
-  };
-
+  deleteButton.addEventListener('click', function () {
+    const learnerId = Id;
+    const encodedLearnerId = encodeURIComponent(learnerId);
+    const url = `/learners/delete/${encodedLearnerId}`;
+    
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(res => {
+        if (res.ok) {
+          modal.hide();
+          window.location.href = '/dashboard/learners';
+        } else {
+          console.error('Failed to delete learner');
+        }
+      })
+      .catch(error => {
+        console.error('Failed to delete learner:', error);
+      });
+  });
+  
   modal.show();
 }
 (async () => {
@@ -85,7 +102,7 @@ const datatable_learners_grid = new gridjs.Grid({
         `<button style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;">
             Edit
           </button>
-          <button onclick="showDeleteModal('${row.cells[2].data}')" style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
+          <button onclick="DeleteModal('${row.cells[2].data}')" style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
             Delete
           </button>
           <button style="padding: 0.2rem .5rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: .8rem; font-weight: 500;">
