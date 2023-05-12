@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-bottom: 15px;
+  margin-bottom: 40px;
+  align-items: stretch;
 }
 .courses-container {
   overflow-x: hidden;
@@ -45,7 +46,7 @@
   position: relative;
   z-index: 2999;
   padding: 15px;
-  align-items: stretch;
+  height: 355px 
 }
 
 img.course-IMG {
@@ -82,6 +83,7 @@ h2.course-h2 {
 
 .courses-page-pagination {
   margin-left: 35%;
+  margin-bottom: 40px;
 }
 
 .block-27 ul {
@@ -116,7 +118,7 @@ h2.course-h2 {
 .sortingContainer {
   justify-content: center;
   height: 95px;
-  width: 50%;
+  width: 70%;
   display: flex;
   border: 1px solid #929599;
   box-shadow: none;
@@ -153,14 +155,28 @@ h2.course-h2 {
 } */
 
 .sortBy{
-  width: 40%;
+  /* position: absolute; */
+  top:18px;
+  width: 15%;
+  height: 39px;
 }
 #search-radio-enr,
 #search-radio-rating,
 #search-input {
+  margin-top: 20px;
   display: none;
+ 
 }
+/* .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  position: absolute;
+  left: 150px;
+  width: 225px;
+  top: 10px;
+} */
 
 .submitSort{
    width: 11%;
+   position: absolute;
+   right: 20px;
+   top: 16px;
 }

@@ -179,7 +179,7 @@ const getSortedCourses = async (req, res) => {
     console.log(sortCriteria,sortOrder,searchQuery);
     let sortObject = {};
 
-    if ( sortCriteria === 'rating' || sortCriteria === 'enrollment') {
+    if ( sortCriteria === 'stars' || sortCriteria === 'enrollment') {
       sortObject[sortCriteria] = sortOrder === 'desc' ? -1 : 1;
     }
 

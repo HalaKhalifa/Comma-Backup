@@ -7,7 +7,7 @@
             <li> <option class="dropdown-item"data-value="tag">Tag</option></li>
             <li> <option class="dropdown-item"data-value="topic">Topic</option></li>
             <li> <option class="dropdown-item"data-value="date">Date</option></li>
-            <li> <option class="dropdown-item"data-value="rating">Rating</option></li>
+            <li> <option class="dropdown-item"data-value="stars">Rating</option></li>
             <li> <option class="dropdown-item" data-value="enrollment">Enrollment</option></li>
           </ul>
           <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search" name="searchQuery">
@@ -47,7 +47,7 @@
         // Get the value of the clicked item's data-value attribute
         const value = event.target.getAttribute('data-value');
   
-      if (value === 'rating') {
+      if (value === 'stars') {
         searchRadioRating.style.display ='block';
       searchInput.style.display ='none';
     } else if (value === 'topic' || value === 'tag'||value === 'date') {
