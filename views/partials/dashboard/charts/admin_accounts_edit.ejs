@@ -9,8 +9,8 @@
         Are you sure you want to delete this account ?!
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Exit</button>
-        <button type="button" class="btn btn-primary" id="edit-account-delete-button" data-bs-toggle="modal">Yes</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Exit</button>
+        <button type="button" class="btn btn-danger" id="edit-account-delete-button" data-bs-toggle="modal" data-bs-target="#deleteModal">Yes</button>
       </div>
     </div>
   </div>
@@ -114,7 +114,7 @@
         <div class="modal-footer">
                   <!-- Modal -->
                   <button type="button" class="edit-button-datatable red-button-delete text-nowrap me-auto" id="edit-account-delete-button" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-            <button type="button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Back</button>
+            <button type="button" id="edit-account-back-button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Back</button>
             <input type="submit" id="edit-account-save-button" form="admin-accounts-edit-form" value="Save Changes"class="edit-button-datatable text-nowrap"/>
         </div>
       </div>
@@ -243,6 +243,8 @@ function editPasswordToggleVisible() {
 }
 // ------------ Password Visibility -----------------------------------------
 // ------------ Send Data to Server -----------------------------------------
+const editModalAccountsObj = document.getElementById("admin-accounts-edit-modal")
+const originalModal = editModalAccountsObj.cloneNode(true);
 var oldEmailData ;
 document.addEventListener('click', (e) => {
   if (e.target && e.target.classList.contains('edit-button-modal-opener')) {
@@ -286,8 +288,10 @@ async function updateAdminsFetch(jsonObject){
       !validateLastName() ||
       !validatePassword()
     ) {
+      saveButtonObj.style.display = "block";
       return false
     } else {
+      saveButtonObj.style.display = "none";
       formElement.classList.add('was-validated');
 const data = JSON.stringify(jsonObject);
  const responseData = await fetch('/dashboard/update-admins-data',{
@@ -307,14 +311,16 @@ const data = JSON.stringify(jsonObject);
         oldReserve.labels.push(inputLabel.innerHTML)
     }
     }else if (data.status == 'Success') {
+      const formElement = document.querySelector("#admin-accounts-edit-form")
+      formElement.reset()
       const updateSuccessToast = document.getElementById('updateSuccessToast')
       const updateSuccessToastBS = bootstrap.Toast.getOrCreateInstance(updateSuccessToast)
       updateSuccessToastBS.show()
-      toggleSaveButtonVis()
       const inputs = document.getElementsByClassName("admin-edit-input-disable-input")
       Array.from(inputs).forEach(input => {
         input.classList.remove('is-invalid');
     })
+    location.reload();
     console.log(data)
   }})
     .catch(error =>console.log(error))
@@ -323,6 +329,7 @@ const data = JSON.stringify(jsonObject);
 
 // ------------ Send Data to Server -----------------------------------------
 // ------------ Validation --------------------------------------------------
+var saveButtonObj = document.getElementById("edit-account-save-button")
 document.querySelector('.email-validator').addEventListener('blur', validateEmail);
 document.querySelector('.password-validator').addEventListener('blur', validatePassword);
 document.querySelector('.firstname-validator').addEventListener('blur', validateFirstName);
@@ -334,7 +341,7 @@ const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+-=|\\]).{8,32}$/;
 
 function validateFirstName(e) {
-  toggleSaveButtonVis()
+  saveButtonObj.style.display = "block";
   const firstname = document.querySelector('.firstname-validator');
   if(firstname.disabled)
   return true
@@ -349,7 +356,7 @@ function validateFirstName(e) {
   }
 }
 function validateLastName(e) {
-  toggleSaveButtonVis()
+  saveButtonObj.style.display = "block";
   const lastname = document.querySelector('.lastname-validator');
   if(lastname.disabled)
   return true
@@ -366,7 +373,7 @@ function validateLastName(e) {
 }
 
 function validateEmail(e) {
-  toggleSaveButtonVis()
+  saveButtonObj.style.display = "block";
   const email = document.querySelector('.email-validator');
   if(email.disabled)
   return true
@@ -384,7 +391,7 @@ function validateEmail(e) {
 }
 
 function validatePassword() {
-  toggleSaveButtonVis()
+  saveButtonObj.style.display = "block";
   const password = document.querySelector('.password-validator');
   if(password.disabled)
   return true
@@ -400,13 +407,14 @@ function validatePassword() {
     return false;
   }
 }
-function toggleSaveButtonVis(){
-  var saveButtonObj = document.getElementById("edit-account-save-button")
-                if (saveButtonObj.style.display === "none") {
-                  saveButtonObj.style.display = "block";
-                } else {
-                  saveButtonObj.style.display = "none";
-                }
-}
+document.getElementById("edit-account-back-button").addEventListener("click",(event) => {
+  const inputElements = formElement.querySelectorAll('input');
+inputElements.forEach((input) => {
+  if (input.type !== 'checkbox') {
+    input.disabled = true;
+  }
+});
+  formElement.reset()
+})
 // ------------ Validation --------------------------------------------------
   </script>
