@@ -1,30 +1,30 @@
-   <form action="/courses" method="GET">
+   <form action="/courses" method="POST">
      <div class="container sortingContainer">
 
          <div class="input-group mb-3">
           <button class="btn btn-outline-secondary dropdown-toggle sortBy" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort By</button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" data-value="tag">Tag</a></li>
-            <li><a class="dropdown-item" href="#" data-value="topic">Topic</a></li>
-            <li><a class="dropdown-item" href="#" data-value="date">Date</a></li>
-            <li><a class="dropdown-item" href="#" data-value="rating">Rating</a></li>
-            <li><a class="dropdown-item" href="#" data-value="enrollment">Enrollment</a></li>
-      
+            <li> <option class="dropdown-item"data-value="tag">Tag</option></li>
+            <li> <option class="dropdown-item"data-value="topic">Topic</option></li>
+            <li> <option class="dropdown-item"data-value="date">Date</option></li>
+            <li> <option class="dropdown-item"data-value="rating">Rating</option></li>
+            <li> <option class="dropdown-item" data-value="enrollment">Enrollment</option></li>
           </ul>
-          <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search">
+          <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search" name="searchQuery">
           <div class="dropDownSort form-control" id="search-radio-rating">
             <label>Rating :</label>
-              <input type="radio" value="ASC">
+              <input type="radio" value="ASC" name="sortOrder">
               <label>ASC</label>
-              <input type="radio" value="DESC">
+              <input type="radio" value="DESC" name="sortOrder">
               <label>DESC</label>
            </div>
 
+           
            <div class="dropDownSort form-control" id="search-radio-enr">
             <label>Enrollment :</label>
-            <input type="radio" value="ASC">
+            <input type="radio" value="ASC" name="sortOrder">
             <label>ASC</label>
-            <input type="radio" value="DESC">
+            <input type="radio" value="DESC" name="sortOrder">
             <label>DESC</label>
            </div> 
            

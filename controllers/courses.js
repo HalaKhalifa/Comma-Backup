@@ -172,10 +172,10 @@ const coursePagination = async (req, res) => {
 }
 
 const getSortedCourses = async (req, res) => {
-  try {
-    const sortCriteria = req.query.sortBy;
-    const sortOrder = req.query.sortOrder;
-    const searchQuery = req.query.searchQuery;
+    console.log('hi');
+    const sortCriteria = req.params.sortBy;
+    const sortOrder = req.params.sortOrder;
+    const searchQuery = req.params.searchQuery;
     console.log(sortCriteria,sortOrder,searchQuery);
     let sortObject = {};
 
@@ -185,25 +185,22 @@ const getSortedCourses = async (req, res) => {
 
     let page = parseInt(req.query.page) || 1;
     let limit = 16;
-    let courses;
-
+    let  pageCourses
     if (searchQuery) {
-      courses = await Course.find({ $text: { $search: searchQuery } })
+       pageCourses = await Course.find({ $text: { $search: searchQuery } })
                                 .skip((page - 1) * limit)
                                 .limit(limit)
                                 .sort(sortObject);
     } else {
-      courses = await Course.find()
+       pageCourses = await Course.find()
                                 .skip((page - 1) * limit)
                                 .limit(limit)
                                 .sort(sortObject);
     }
 
-    res.json(courses);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
+    // res.json(pageCourses);
+    console.log(pageCourses);
+    return pageCourses;
 };
 
 async function searchCourses(searchQuery) {
