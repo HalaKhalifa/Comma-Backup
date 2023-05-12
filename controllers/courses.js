@@ -31,7 +31,8 @@ const createNewCourse = async (req, res) => {
     stars,
     topicID,
     publishedAt,
-    view
+    view,
+    isDeleted
   } = req.body
 
   try {
@@ -44,13 +45,14 @@ const createNewCourse = async (req, res) => {
       enrolledUsers: enrolledUsers,
       rating: rating,
       stars: stars,
-      isdeleted,isdeleted,
+      isDeleted:isDeleted,
       topicID: topicID,
       publishedAt: publishedAt,
       view: view
     })
 
-    res.status(200).json(newCourse)
+    res.redirect('/dashboard/courses')
+
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
