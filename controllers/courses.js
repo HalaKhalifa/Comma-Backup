@@ -6,6 +6,7 @@ const getCoursesList = async (req, res) => {
   res.status(200).json(courses)
 }
 
+
 const getCourse = async (req, res) => {
   const { id } = req.params
 
@@ -203,22 +204,7 @@ async function searchCourses(searchQuery) {
   }
 }
 
-const softDelete= async (req,res)=>{
-  try {
-    const course = await Course.findById(req.params.id);
-    if (!course) {
-      return res.status(404).send('Course not found');
-    }
 
-    course.isDeleted = true;
-    await course.save();
-
-    res.redirect('/dashboard/courses'); // Redirect to the courses list page
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-}
 
 
 module.exports = {
@@ -231,6 +217,5 @@ module.exports = {
   filterCourses,
   getSingleCourse,
   coursePagination,
-  searchCourses,
-  softDelete,
+  searchCourses
 }

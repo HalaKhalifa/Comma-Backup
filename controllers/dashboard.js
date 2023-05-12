@@ -14,7 +14,7 @@ const {
   NoOfMonthlyRegistration
 } = require('./learner')
 const { usersData } = require('../helpers/dashboard')
-
+const Course =require('../models/course')
 const getDashboard = async (req, res) => {
   // * temporary context object
   const staticData = usersData
@@ -80,11 +80,29 @@ const getContentfulDashboard = async (req, res) => {
   // todo: change to same route in routes => "fix /css path"
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
+const softDeleted = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).send('Course not found');
+    }
+
+    course.isDeleted = true;
+    await course.save();
+
+    res.redirect('/dashboard/courses'); // Redirect to the courses list page
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 
 module.exports = {
   getDashboard,
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardAdmins,
-  getDashboardLearners
+  getDashboardLearners,
+  softDeleted
 }

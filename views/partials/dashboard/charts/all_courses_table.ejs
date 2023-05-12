@@ -133,27 +133,39 @@
               style: 'padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500;margin-left: 10px;',
               id: 'warning-delete-button',
               onClick: () => {
-              // alert(`Deleting "${row.cells[0].data}" "${row.cells[1].data}"`)
-              const courseTitle = row.cells[0].data;
-              
- const newData = row.getAttribute(courseTitle);
-
-  grid.updateConfig({ data: newData });
-  grid.forceRender();
+              //alert(`Deleting "${row.cells[0].id}" "${row.cells[1].data}"`)
+            
 
               // grid.remove(rowIndex);
               // grid.render();
-            //   const modalElement = document.getElementById('warningModal');
-            //    const deleteModalBtn = document.getElementById('deleteCourseBTN');
-            //  const modalInstance = new bootstrap.Modal(modalElement);
-            //     modalInstance.show();
-            //    deleteModalBtn .onclick = function(){
-            //    modalInstance.hide();
-
-              
+              const modalElement = document.getElementById('warningModal');
+               const deleteModalBtn = document.getElementById('deleteCourseBTN');
+               const modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
+               deleteModalBtn .onclick = function(){
+               modalInstance.hide();
+               const courseId =row.cells[0].id
+               const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': '/dashboard/courses' },
+        body: JSON.stringify({ id: courseId })
+      };
+      fetch('/dashboard/courses', requestOptions)
+        .then(response => {
+          if (response.ok) {
+            // Handle success response, e.g., remove the deleted row from the table
+            console.log('Course deleted successfully');
+          } else {
+            // Handle error response
+            console.error('Failed to delete course');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+              }
             }
               // alert(Editing "${row.cells[0].data}" "${row.cells[1].data}")
-
         }
             ,h('i', {class: 'fas fa-trash mr-2'}));
 
