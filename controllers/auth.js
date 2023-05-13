@@ -9,8 +9,18 @@ const get_signup = (req, res) => {
 function capitalizefLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
-const nameRegex = /^[a-z]+$/
+function validateLastName(lastname) {
+  const words = lastname.split(' ')
+  const formattedLastName = words.map((word) => {
+    if (word.length > 0 && !/^[A-Z]/.test(word)) {
+      return capitalizefLetter(word)
+    } else return word
+  })
+  return formattedLastName.join(' ')
+}
 
+const firstNameRegex = /^[A-Za-z][a-z]*$/
+const lastNameRegex = /^[A-Za-z][a-z]*( [A-Za-z][a-z]*)?$/
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z.]+.[a-zA-Z]$/
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 
@@ -25,14 +35,14 @@ const post_signup = async (req, res) => {
     return
   }
 
-  if (!nameRegex.test(firstname)) {
-    error = 'First name should contain only lowercase letters'
+  if (!firstNameRegex.test(firstname)) {
+    error = 'First name should contain only lowercase form except the first letter'
     res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
 
-  if (!nameRegex.test(lastname)) {
-    error = 'Last name should contain only lowercase letters'
+  if (!lastNameRegex.test(lastname)) {
+    error = 'Last name should contain only lowercase form except the first letters of the words'
     res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
@@ -61,11 +71,12 @@ const post_signup = async (req, res) => {
     res.render('pages/learner/signup', { title: 'Sign Up', error })
     return
   }
+  validateLastName(lastname)
   const capitalizedFirstname = capitalizefLetter(firstname)
-  const capitalizedLastname = capitalizefLetter(lastname)
+  const capitalizedLastname = validateLastName(lastname)
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const learner = new User({
+  const user = new User({
     firstname: capitalizedFirstname,
     lastname: capitalizedLastname,
     email,
@@ -73,10 +84,8 @@ const post_signup = async (req, res) => {
     createdAt:new Date(),
     status:true
   })
-  console.log(learner)
   try {
-    await learner.save()
-    //   res.status(201).json({ message: 'Learner created successfully' });
+    await user.save()
     return res.redirect('/login')
   } catch (error) {
     console.log(error)
@@ -94,9 +103,6 @@ const post_login = async (req, res) => {
   }
   let email = req.body.email
   let password = req.body.password
-
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z.]+.[a-zA-Z]$/
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 
   // const salt = await bcrypt.genSalt(10)
 
@@ -120,9 +126,6 @@ const post_login = async (req, res) => {
     return
   }
 
-  console.log('dfg')
-  console.log(user, 'form post')
-
   const passwordsMatch = await bcrypt.compare(password, user.password)
 
   if (user.email === email && passwordsMatch) {
@@ -136,6 +139,8 @@ const post_login = async (req, res) => {
 }
 
 module.exports = {
+  capitalizefLetter,
+  validateLastName,
   get_login,
   post_login,
   get_signup,
