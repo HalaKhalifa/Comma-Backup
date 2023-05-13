@@ -5,7 +5,8 @@ const {
   getNoOfCourses,
   getEnrolledFinished,
   getAllCoursesTable,
-  NumberOfCoursesInYear
+  NumberOfCoursesInYear,
+  getAllLearnerActive
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
@@ -62,12 +63,27 @@ const getDashboardAdmins = async (req, res) => {
 }
 
 const getDashboardLearners = async (req, res) => {
-  const context = {
-    title: 'All learners',
-    learners: []
-  }
+  res.render('pages/dashboard/learners.ejs', { title: 'All Learners' })
+}
 
-  res.render('pages/dashboard/learners.ejs', context)
+const getLearner = async (req, res) => {
+  try {
+    const { offset = 0, limit = 0, search = '' } = req.query
+    const queryData = { status: { $in: [1] } }
+
+    if (search) {
+      queryData.$or = [
+        { firstname: { $regex: search, $options: 'i' } },
+        { lastname: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ]
+    }
+    const { learners, count } = await getAllLearnerActive(queryData, offset, limit)
+    res.status(200).json({ learners, count })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Server error' })
+  }
 }
 
 const getContentfulDashboard = async (req, res) => {
@@ -131,5 +147,6 @@ module.exports = {
   getContentfulButtons,
   getContentfulCards,
   getContentfulTypography,
-  getContentfulIcons
+  getContentfulIcons,
+  getLearner
 }

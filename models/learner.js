@@ -18,6 +18,19 @@ const learnerSchema = new Schema({
     type: String,
     required: true
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  status: {
+    type: Boolean,
+    default: true,
+    required: true
+  },
   dob: {
     type: Date,
     required: false,
