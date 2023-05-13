@@ -14,7 +14,7 @@ router.use(
     saveUninitialized: true,
     resave: false,
     cookie: {
-      maxAge: 1000 * 60 * 15,
+      maxAge: 1000 * 60 * 1,
       secure: false,
       httpOnly: true
     }

@@ -1,11 +1,13 @@
 const Course = require('../models/course')
 const { getCourses } = require('./courses')
-const { numbersArr } = require('../helpers/dashboard')
+const { numbersArr, usersData } = require('../helpers/dashboard')
+const learner = require('../models/learner')
 /**
  * Returns Number of courses created each month for the previous year
  *
  * Send a JSON response wtih "coursesCounts" as a LIST
  */
+
 const NumberOfCoursesInYear = async () => {
   try {
     const pipeline = [
@@ -189,12 +191,41 @@ const getAllLearnerActive = async (queryData, offset = 0, limit = 0) => {
     throw error
   }
 }
-
+const adminUpdateLearner = async (req, res) => {
+  try {
+    const userData = {
+      email: req.body.emailInput,
+      firstname: req.body.firstNameInput,
+      lastname: req.body.lastNameInput,
+      updatedAt: new Date() 
+    };  
+    const user_email = req.body.userEmail;
+    const existingUser = await learner.findOne({ email: userData.email });
+    const user = await learner.findOne({ email: user_email });
+    if (userData.email == user.email && userData.firstname== user.firstname && userData.lastname===user.lastname ){
+      return res.status(600).json({ error: 'Nothing was Updated' });
+    }
+    if (existingUser && existingUser._id.toString() !== user._id.toString()) {
+      return res.status(400).json({ error: 'This email is already used by another user.' });
+    }
+    const updatedUser = await learner.findOneAndUpdate(
+      { email: user_email },
+      { $set: userData },
+      { new: true, projection: { email: 1, firstname: 1, lastname: 1 } }
+    );
+    console.log('User data updated:', updatedUser);
+    res.status(200).json({ redirected: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating user data');
+  }
+};
 module.exports = {
   getPopularCourses,
   getEnrolledFinished,
   getAllCoursesTable,
   getNoOfCourses,
   NumberOfCoursesInYear,
-  getAllLearnerActive
+  getAllLearnerActive,
+  adminUpdateLearner
 }

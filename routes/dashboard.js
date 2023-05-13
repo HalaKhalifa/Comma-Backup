@@ -17,6 +17,7 @@ const {
   addNewLearner,
   getAddNewLearner,
   postAddNewLearner,
+  adminUpdateLearner,
   softDeleted
 } = require('../controllers/dashboard');
 
@@ -113,4 +114,7 @@ router.get('/dashboard2/icons-feather', (req, res) => {
   getContentfulIcons(req, res);
 });
 
-module.exports = router;
+router.post('/dashboard/learners',(req,res)=>{
+  adminUpdateLearner(req,res)
+})
+module.exports = router

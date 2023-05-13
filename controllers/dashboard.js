@@ -11,8 +11,10 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear,
-  getAllLearnerActive
-} = require('./dashboardAnalytics');
+  getAllLearnerActive,
+  adminUpdateLearner
+} = require('./dashboardAnalytics')
+
 const {
   getCountryLearners,
   getNoOflearner,
@@ -265,4 +267,7 @@ module.exports = {
   postAddNewLearner,
   getLearner,
   deleteLearner
+  getLearner,
+  adminUpdateLearner,
+  getLearner
 }
