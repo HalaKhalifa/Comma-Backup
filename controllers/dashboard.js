@@ -6,7 +6,7 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear,
-  getAllLearnersTable,adminUpdateLearner
+  getAllLearnerActive,adminUpdateLearner
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
@@ -15,7 +15,7 @@ const {
   NoOfMonthlyRegistration
 } = require('./learner')
 const { usersData } = require('../helpers/dashboard')
-
+const Course =require('../models/course')
 const getDashboard = async (req, res) => {
   // * temporary context object
   const staticData = usersData
@@ -62,28 +62,27 @@ const getDashboardAdmins = async (req, res) => {
   res.render('pages/dashboard/admins.ejs', context)
 }
 
-const User = require('../models/learner')
 const getDashboardLearners = async (req, res) => {
-  const pageNumber = parseInt(req.query.pageNumber) || 1
-  const pageSize = parseInt(req.query.pageSize) || 2
+  res.render('pages/dashboard/learners.ejs', { title: 'All Learners' })
+}
 
+const getLearner = async (req, res) => {
   try {
-    const learnersArray = await getAllLearnersTable(pageNumber, pageSize)
-    const count = await User.countDocuments({ status: { $in: [0, 1] } })
+    const { offset = 0, limit = 0, search = '' } = req.query
+    const queryData = { status: { $in: [1] } }
 
-    const context = {
-      title: 'All learners',
-      learners: learnersArray,
-      pageCount: Math.ceil(count / pageSize),
-      currentPage: pageNumber,
-      pageSize: pageSize
+    if (search) {
+      queryData.$or = [
+        { firstname: { $regex: search, $options: 'i' } },
+        { lastname: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ]
     }
-
-    console.log(context.learners[0])
-    res.render('pages/dashboard/learners.ejs', { title: 'All Courses', context })
+    const { learners, count } = await getAllLearnerActive(queryData, offset, limit)
+    res.status(200).json({ learners, count })
   } catch (error) {
-    console.log(error)
-    res.status(500).send('Internal Server Error')
+    console.error(error)
+    res.status(500).json({ error: 'Server error' })
   }
 }
 
@@ -97,6 +96,20 @@ const getContentfulDashboard = async (req, res) => {
   // todo: change to same route in routes => "fix /css path"
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
+const softDeleted = async (courseId) => {
+  try {
+    const course = await Course.findOne({title:courseId});
+    console.log(courseId)
+    if (!course) {
+      throw new Error('course not found');
+    }
+    course.isDeleted = true;
+    await course.save();
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 const getContentfulForms = async (req, res) => {
   const context = {
@@ -144,10 +157,12 @@ module.exports = {
   getDashboardCourses,
   getDashboardAdmins,
   getDashboardLearners,
+  softDeleted,
   getContentfulForms,
   getContentfulButtons,
   getContentfulCards,
   getContentfulTypography,
   getContentfulIcons,
-  adminUpdateLearner
+  adminUpdateLearner,
+  getLearner
 }

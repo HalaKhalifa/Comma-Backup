@@ -1,6 +1,6 @@
 const Course = require('../models/course')
 const { getCourses } = require('./courses')
-const { numbersArr } = require('../helpers/dashboard')
+const { numbersArr, usersData } = require('../helpers/dashboard')
 const learner = require('../models/learner')
 /**
  * Returns Number of courses created each month for the previous year
@@ -140,9 +140,9 @@ async function getAllCoursesTable(limit = 20) {
   try {
     let courses = await getCourses(limit)
     courses = courses.reduce((result, course) => {
-      if (course.title)
+      if (course.isDeleted==false)
         result.push({
-          title: course.title?.substring(0, 40),
+          title: course.title,
           enrolled: course.enrolledUsers,
           rating: course.rating,
           stars: course.stars,
@@ -180,83 +180,52 @@ async function getCoursesEnrolls() {
 }
 
 const User = require('../models/learner')
-// async function getAllLearnersTable() {
-//   try {
-//     const query = { status: { $in: [0, 1] } }
-//     // const offset = (pageNumber - 1) * pageSize
-//     const learners = await User.find(query).skip(1).limit(2)
 
-//     const learnerArray = learners.map((learner) => ({
-//       firstname: learner.firstname,
-//       email: learner.email,
-//       status: learner.status
-//     }))
-
-//     return learnerArray
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-const getAllLearnersTable = async (pageNumber, pageSize) => {
+const getAllLearnerActive = async (queryData, offset = 0, limit = 0) => {
   try {
-    const query = { status: { $in: [0, 1] } }
-    const offset = (pageNumber - 1) * pageSize
-    const learners = await User.find(query).skip(offset).limit(pageSize)
-
-    const learnerArray = learners.map((learner) => [
-      learner._id,learner.firstname,learner.lastname,
-      learner.email,
-      learner.status
-    ])
-
-    console.log(learnerArray, 'from get All')
-    const count = await User.countDocuments(query)
-
-    return [learnerArray, count]
+    const learners = await User.find(queryData).skip(Number(offset)).limit(Number(limit)).exec()
+    const count = await User.countDocuments(queryData)
+    return { learners, count }
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    throw error
   }
 }
 const adminUpdateLearner = async (req, res) => {
   try {
-    const user_id = req.body.id;
     const userData = {
-      email: req.body.email,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      email: req.body.emailInput,
+      firstname: req.body.firstNameInput,
+      lastname: req.body.lastNameInput,
       updatedAt: new Date() 
     };  
+    const user_email = req.body.userEmail;
     const existingUser = await learner.findOne({ email: userData.email });
-    if (existingUser && existingUser._id.toString() !== user_id) {
+    const user = await learner.findOne({ email: user_email });
+    if (userData.email == user.email && userData.firstname== user.firstname && userData.lastname===user.lastname ){
+      return res.status(600).json({ error: 'Nothing was Updated' });
+    }
+    if (existingUser && existingUser._id.toString() !== user._id.toString()) {
       return res.status(400).json({ error: 'This email is already used by another user.' });
     }
-    learner.findOneAndUpdate(
-      { _id: user_id },
+    const updatedUser = await learner.findOneAndUpdate(
+      { email: user_email },
       { $set: userData },
-      { new: true, fields: { email: 1, firstname: 1, lastname: 1 } },
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error updating user data');
-        }
-        console.log('User data updated:', updatedUser);
-        res.status(200).json({ message: 'User data updated successfully' });
-      }
+      { new: true, projection: { email: 1, firstname: 1, lastname: 1 } }
     );
+    console.log('User data updated:', updatedUser);
+    res.status(200).json({ redirected: true });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error updating user data');
   }
 };
-
-
 module.exports = {
   getPopularCourses,
   getEnrolledFinished,
   getAllCoursesTable,
   getNoOfCourses,
   NumberOfCoursesInYear,
-  getAllLearnersTable,
+  getAllLearnerActive,
   adminUpdateLearner
 }

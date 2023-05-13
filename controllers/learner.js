@@ -26,17 +26,15 @@ const getLearners = async (req, res) => {
     let skip = query.offset || 0
     let limit = query.limit || 0
     let search = query.search || ''
-    const subtext = '?limit'
-    let index = search.indexOf(subtext)
-    if (index !== -1) {
-      search = search.substring(0, index)
-    }
     let learners = await learner
-      .find({ name: { $regex: search, $options: 'i' } })
+      .find({ email: { $regex: search, $options: 'i' } })
       .skip(skip)
       .limit(limit)
       .exec()
-    const data = { learners: learners, count: await learner.estimatedDocumentCount() }
+    const data = {
+      learners: learners,
+      count: await learner.countDocuments({ email: { $regex: search, $options: 'i' } })
+    }
     res.status(200).json(data)
   } catch (error) {
     console.error("error : couldn't get Learners", error)
@@ -116,7 +114,7 @@ const getNoOflearner = async (req, res) => {
   }
 }
 
-const getTotalEnrolledUserCount = async () => {
+const getTotalEnrolledUserCount = async (req, res) => {
   try {
     // ! this query is really slow, need to optimize took 33000ms
     const courses = await Course.find() // retrive all doc as a array
