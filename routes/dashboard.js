@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const Course = require('../models/course')
 
 const {
   getLearner,
   getDashboard,
   getContentfulDashboard,
-  getDashboardCourses,
   getDashboardLearners,
   getDashboardAdmins,
   getContentfulForms,
@@ -22,10 +22,6 @@ const {
 } = require('../controllers/dashboard')
 
 const { updateLearner, getLearners } = require('../controllers/learner')
-const { updateAdmin, deleteAdmin } = require('../controllers/admin')
-
-const { getNewAdminspage } = require('../controllers/auth')
-const { post_Newadmin } = require('../controllers/auth')
 
 router.get('/dashboard', (req, res) => {
   getDashboard(req, res)
@@ -34,21 +30,10 @@ router.get('/dashboard', (req, res) => {
 router.get('/dashboard2', (req, res) => {
   getContentfulDashboard(req, res)
 })
+
 router.get('/dashboard/courses', (req, res) => {
   getDashboardCourses(req, res)
 })
-router.get('/courses/delete/:courseId', async (req, res) => {
-  const encodedcourseId = req.params.courseId
-  const courseId = decodeURIComponent(encodedcourseId)
-  try {
-    await softDeleted(courseId)
-    res.redirect('/dashboard/courses')
-  } catch (error) {
-    console.error('Failed to delete courses:', error)
-    res.status(500).json({ error: 'Failed to delete courses' })
-  }
-})
-
 router.get('/dashboard/learners', (req, res) => {
   getDashboardLearners(req, res)
 })
@@ -121,7 +106,5 @@ router.post('/dashboard/learners', (req, res) => {
 router.get('/dashboard/admins/Newadmin', (req, res) => {
   getNewAdminspage(req, res)
 })
-
-router.post('/dashboard/admins/Newadmin', post_Newadmin)
 
 module.exports = router

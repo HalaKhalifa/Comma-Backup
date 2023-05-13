@@ -56,7 +56,7 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: 'After each topic'
-    },
+    }
     // tags: {
     //   type: String,
     //   required: false

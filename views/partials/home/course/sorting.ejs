@@ -1,22 +1,21 @@
-
-  <button id="show-dropdowns-btn" class="filterBTN">Filter</button>
-  <form action="/courses" method="POST">
+<button id="show-dropdowns-btn" class="filterBTN">Filter</button>
+<form action="/courses" method="POST">
   <div class="container FilterContainer" style="display:none;">
     <div class="row FilerRow">
 
-      <select class="selectFilter" >
+      <select class="selectFilter">
         <option value="stars" name="sortCriteria">Rating</option>
         <option value="Asc" name="sortOrder">Asc</option>
         <option value="Desc" name="sortOrder">Desc</option>
       </select>
 
-       <select class="selectFilter" >
+      <select class="selectFilter">
         <option value="enrollment" name="sortCriteria">Enrollment</option>
         <option value="Asc" name="sortOrder">Asc</option>
         <option value="Desc" name="sortOrder">Desc</option>
       </select>
 
-      
+
       <div class="selectFilter">
         <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search by Topic" name="searchQuery">
       </div>
@@ -25,18 +24,18 @@
         <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search by Tag" name="searchQuery">
       </div>
 
-      <button type="submit" class="form-control submitSort">Submit</button> 
+      <button type="submit" class="form-control submitSort">Submit</button>
     </div>
   </div>
 </form>
-  <script>
-    var container = document.querySelector('.FilterContainer');
-  
-    document.getElementById('show-dropdowns-btn').addEventListener('click', function() {
-      container.style.display = container.style.display === 'none' ? 'block' : 'none';
-    });
-  </script>
-  
+<script>
+  var container = document.querySelector('.FilterContainer');
+
+  document.getElementById('show-dropdowns-btn').addEventListener('click', function() {
+    container.style.display = container.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+
 
 <!-- 
 <div class="filterDropDowns">
@@ -89,3 +88,27 @@
     }
   });
 </script> -->
+<form>
+  <div class="container sortingContainer">
+    <div class="sortTitle">
+      <h5>Sort by </h5>
+    </div>
+    <div class="dropDownSort">
+      <select class="form-control" name="dropdown">
+        <option value="2020">Topic</option>
+      </select>
+    </div>
+
+    <div class="dropDownSort">
+      <select class="form-control" name="dropdown">
+        <option value="2020">Date </option>
+      </select>
+    </div>
+
+    <div class="dropDownSort">
+      <select class="form-control" name="dropdown">
+        <option value="5">Rating </option>
+      </select>
+    </div>
+  </div>
+</form>

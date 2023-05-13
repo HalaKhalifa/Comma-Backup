@@ -21,6 +21,7 @@ const {
 } = require('./learner')
 
 const { usersData } = require('../helpers/dashboard')
+const { getCourses } = require('./courses')
 
 const Course = require('../models/course')
 
@@ -57,16 +58,16 @@ const getDashboard = async (req, res) => {
   res.render('pages/dashboard/index.ejs', context)
 }
 
-const getDashboardCourses = async (req, res) => {
-  const context = {
-    title: 'All courses',
-    data: {
-      courses: JSON.stringify(await getAllCoursesTable())
-    }
-  }
-
-  res.render('pages/dashboard/courses.ejs', context)
-}
+// const getDashboardCourses = async (req, res) => {
+//   const context = {
+//     title: 'All courses',
+//     data: {
+//       courses: JSON.stringify(await getAllCoursesTable())
+//     }
+//   }
+// console.log(context)
+//   res.render('pages/dashboard/courses.ejs', context)
+// }
 
 const getDashboardAdmins = async (req, res) => {
   const context = {
@@ -253,7 +254,6 @@ const deleteLearner = async (learnerId) => {
 module.exports = {
   getDashboard,
   getContentfulDashboard,
-  getDashboardCourses,
   getDashboardAdmins,
   getDashboardLearners,
   softDeleted,

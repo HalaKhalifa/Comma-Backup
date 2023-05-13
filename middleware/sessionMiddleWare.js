@@ -14,7 +14,7 @@ router.use(
     saveUninitialized: true,
     resave: false,
     cookie: {
-      maxAge: 1000 * 60 * 1,
+      maxAge: 1000 * 30 * 1,
       secure: false,
       httpOnly: true
     }
@@ -29,6 +29,7 @@ const set_session = (req, user_Id) => {
 
 const get_session_loggedIn = (req) => {
   if (req.session && req.session.user_id) {
+    console.log(req.session)
     return req.session.user_id
   } else {
     return null

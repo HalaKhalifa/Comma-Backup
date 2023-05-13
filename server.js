@@ -9,8 +9,8 @@ const courses = require('./routes/courses')
 const learner = require('./routes/learner')
 const Preferences = require('./routes/preference')
 const AdminLearner = require('./routes/adminToLearner')
-const { searchCourses } = require('./controllers/courses')
 const admins = require('./routes/admins')
+const { searchCourses } = require('./controllers/courses')
 
 const app = express()
 require('dotenv').config()
@@ -47,7 +47,15 @@ app.post('/search', async (req, res) => {
   if (searchQuery && searchQuery.trim().length > 0) {
     const searchResults = await searchCourses(searchQuery)
     console.log(searchResults)
-    res.redirect(`/courses?search=${searchQuery}`)
+    if (searchResults.length) {
+      // console.log(searchResults.length)
+      res.redirect(`/courses?search=${searchQuery}`)
+    }
+    const message = 'No matching.'
+    res.send(`<script>alert("${message}");</script>`)
+    //no results
+    // let noResults=true;
+    // res.render('/courses', { noResults:noResults, message: "Sorry, No results ☹️" })
   } else {
     res.redirect('/courses')
   }

@@ -5,7 +5,7 @@ const { set_session, get_session_loggedIn } = require('../middleware/sessionMidd
 const bcrypt = require('bcrypt')
 
 const get_signup = (req, res) => {
-  res.render('pages/learner/signup', { title: 'Sign Up', error: '' })
+  res.render('pages/learner/signup', { title: 'Sign Up', error: '', isLoggedIn: null })
 }
 
 const getNewAdminspage = async (req, res) => {
@@ -83,13 +83,13 @@ const post_signup = async (req, res) => {
   const capitalizedLastname = validateLastName(lastname)
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const user = new User({
+  const learner = new Learner({
     firstname: capitalizedFirstname,
     lastname: capitalizedLastname,
     email,
     password: hashedPassword,
-    createdAt:new Date(),
-    status:true
+    createdAt: new Date(),
+    status: true
   })
   try {
     await user.save()
@@ -101,12 +101,12 @@ const post_signup = async (req, res) => {
 }
 
 const get_login = (req, res) => {
-  res.render('pages/learner/login', { title: 'login', error: '' })
+  res.render('pages/learner/login', { title: 'login', error: '', isLoggedIn: null })
 }
 
 const post_login = async (req, res) => {
   if (get_session_loggedIn(req)) {
-    return res.redirect('home')
+    return res.redirect('/courses')
   }
   let email = req.body.email
   let password = req.body.password
@@ -138,83 +138,10 @@ const post_login = async (req, res) => {
   if (user.email === email && passwordsMatch) {
     await set_session(req, user._id)
     console.log(user._id)
-    res.redirect('/profile')
+    res.redirect('/courses')
   } else {
     let error = 'Password and Email did not match'
     res.render('pages/learner/login', { title: 'login', error })
-  }
-}
-
-//admin auth
-
-const post_Newadmin = async (req, res) => {
-  console.log(req.body)
-  const { firstNameAdmin, lastNameAdmin, adminemail, adminPassword1, confirmadminPassword } =
-    req.body
-  let error = ''
-  if (
-    !firstNameAdmin ||
-    !lastNameAdmin ||
-    !adminemail ||
-    !adminPassword1 ||
-    !confirmadminPassword
-  ) {
-    error = 'Please fill in all fields'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-  if (!nameRegex.test(firstNameAdmin)) {
-    error = 'First name should contain only lowercase letters'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-  if (!nameRegex.test(lastNameAdmin)) {
-    error = 'Last name should contain only lowercase letters'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-  // if statment always excute
-
-  let adminExists = await Admin.countDocuments({ adminemail })
-  //console.log(adminExists.email)
-  if (adminExists == 1) {
-    error = 'Email already exists'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-
-  if (!emailRegex.test(adminemail)) {
-    error = 'Invalid email address'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-  if (adminPassword1 !== confirmadminPassword) {
-    error = 'Passwords do not match'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-  if (!passwordRegex.test(adminPassword1)) {
-    error =
-      'Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter'
-    res.render('pages/dashboard/newadmin.ejs', { title: 'Add New admin', error })
-    return
-  }
-
-  const capitalizedFirstname = capitalizefLetter(firstNameAdmin)
-  const capitalizedLastname = capitalizefLetter(lastNameAdmin)
-  const hashedPassword = await bcrypt.hash(adminPassword1, 10)
-  const admin = new Admin({
-    firstname: capitalizedFirstname,
-    lastname: capitalizedLastname,
-    email: req.body.adminemail,
-    password: hashedPassword
-  })
-  try {
-    await admin.save()
-    res.status(200).json({ message: 'Data saved successfully' })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Server error'  })
   }
 }
 
@@ -225,7 +152,5 @@ module.exports = {
   post_login,
   get_signup,
   post_signup,
-  post_Newadmin,
   getNewAdminspage
 }
-//save it , always apper email

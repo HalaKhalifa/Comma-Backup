@@ -138,6 +138,7 @@ async function getEnrolledFinished(limit = 10) {
  * @returns {Array} An array of course objects.
  */
 async function getAllCoursesTable(limit = 20) {
+  //10000 -> 13.37
   // todo: fucntionality should be changed to return a range of courses
   try {
     let courses = await getCourses(limit)
@@ -149,7 +150,7 @@ async function getAllCoursesTable(limit = 20) {
           rating: course.rating,
           stars: course.stars,
           // todo: change totalHours to real data when ready, this is randomly generated
-          totalHours: course.totalHours | (Math.random() * 100)
+          totalHours: course.totalHours //Done
         })
       return result
     }, [])
