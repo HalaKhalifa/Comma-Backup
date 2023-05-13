@@ -138,9 +138,9 @@ async function getAllCoursesTable(limit = 20) {
   try {
     let courses = await getCourses(limit)
     courses = courses.reduce((result, course) => {
-      if (course.title)
+      if (course.isDeleted==false)
         result.push({
-          title: course.title?.substring(0, 40),
+          title: course.title,
           enrolled: course.enrolledUsers,
           rating: course.rating,
           stars: course.stars,

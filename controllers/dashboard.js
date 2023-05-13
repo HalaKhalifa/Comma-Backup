@@ -96,20 +96,17 @@ const getContentfulDashboard = async (req, res) => {
   // todo: change to same route in routes => "fix /css path"
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
-const softDeleted = async (req, res) => {
+const softDeleted = async (courseId) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findOne({title:courseId});
+    console.log(courseId)
     if (!course) {
-      return res.status(404).send('Course not found');
+      throw new Error('course not found');
     }
-
     course.isDeleted = true;
     await course.save();
-
-    res.redirect('/dashboard/courses'); // Redirect to the courses list page
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    throw error;
   }
 };
 

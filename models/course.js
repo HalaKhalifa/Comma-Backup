@@ -57,10 +57,10 @@ const courseSchema = new mongoose.Schema(
       required: true,
       default: 'After each topic'
     },
-    tags: {
-      type: String,
-      required: false
-    }
+    // tags: {
+    //   type: String,
+    //   required: false
+    // }
   },
   { timestamps: true }
 )
