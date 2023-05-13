@@ -13,6 +13,10 @@ const {
   getContentfulCards,
   getContentfulTypography,
   getContentfulIcons,
+  deleteLearner,
+  addNewLearner,
+  getAddNewLearner,
+  postAddNewLearner,
   adminUpdateLearner,
   softDeleted
 } = require('../controllers/dashboard')
@@ -49,9 +53,29 @@ router.get('/dashboard/learners', (req, res) => {
   getDashboardLearners(req, res)
 })
 
+router.get('/learners/delete/:learnerId', async (req, res) => {
+  const encodedLearnerId = req.params.learnerId
+  const learnerId = decodeURIComponent(encodedLearnerId)
+
+  try {
+    await deleteLearner(learnerId)
+    res.redirect('/dashboard/learners')
+  } catch (error) {
+    console.error('Failed to delete learner:', error)
+    res.status(500).json({ error: 'Failed to delete learner' })
+  }
+})
+
 router.post('/dashboard/data', async (req, res) => {
-  console.log(req.query)
   await getLearner(req, res)
+})
+
+router.get('/dashboard/learners/new_learner', (req, res) => {
+  getAddNewLearner(req, res)
+})
+
+router.post('/dashboard/learners/new_learner', (req, res) => {
+  postAddNewLearner(req, res)
 })
 
 router.get('/dashboard/admins', (req, res) => {
@@ -89,6 +113,7 @@ router.get('/dashboard2/ui-typography', (req, res) => {
 router.get('/dashboard2/icons-feather', (req, res) => {
   getContentfulIcons(req, res)
 })
+
 router.post('/dashboard/learners', (req, res) => {
   adminUpdateLearner(req, res)
 })
