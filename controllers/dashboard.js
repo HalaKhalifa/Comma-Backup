@@ -6,7 +6,7 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear,
-  getAllLearnerActive
+  getAllLearnerActive,adminUpdateLearner
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
@@ -15,7 +15,7 @@ const {
   NoOfMonthlyRegistration
 } = require('./learner')
 const { usersData } = require('../helpers/dashboard')
-
+const Course =require('../models/course')
 const getDashboard = async (req, res) => {
   // * temporary context object
   const staticData = usersData
@@ -96,6 +96,20 @@ const getContentfulDashboard = async (req, res) => {
   // todo: change to same route in routes => "fix /css path"
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
+const softDeleted = async (courseId) => {
+  try {
+    const course = await Course.findOne({title:courseId});
+    console.log(courseId)
+    if (!course) {
+      throw new Error('course not found');
+    }
+    course.isDeleted = true;
+    await course.save();
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 const getContentfulForms = async (req, res) => {
   const context = {
@@ -143,10 +157,13 @@ module.exports = {
   getDashboardCourses,
   getDashboardAdmins,
   getDashboardLearners,
+  softDeleted,
   getContentfulForms,
   getContentfulButtons,
   getContentfulCards,
   getContentfulTypography,
   getContentfulIcons,
+  getLearner,
+  adminUpdateLearner,
   getLearner
 }

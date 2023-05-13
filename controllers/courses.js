@@ -3,8 +3,9 @@ const Course = require('../models/course')
 // const getCoursesList = async (req, res) => {
 //   const courses = await Course.find().sort({ createdAt: -1 }) // -1 mean desc
 
-//   res.status(200).json(courses)
-// }
+ // res.status(200).json(courses)
+//}
+
 
 const getCourse = async (req, res) => {
   const { id } = req.params
@@ -23,6 +24,14 @@ const createNewCourse = async (req, res) => {
     title,
     description,
     outline,
+    totalHours,
+    enrolledUsers,
+    rating,
+    stars,
+    topicID,
+    publishedAt,
+    view,
+    isDeleted
   } = req.body
 
   try {
@@ -30,9 +39,18 @@ const createNewCourse = async (req, res) => {
       title: title,
       description: description,
       outline: outline,
+      totalHours: totalHours,
+      enrolledUsers: enrolledUsers,
+      rating: rating,
+      stars: stars,
+      isDeleted:isDeleted,
+      topicID: topicID,
+      publishedAt: publishedAt,
+      view: view
     })
 
-    res.status(200).json(newCourse)
+    res.redirect('/dashboard/courses')
+
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -71,7 +89,7 @@ const updateCourse = async (req, res) => {
         stars: stars|Course.stars,
         topicID: topicID|Course.topicID,
         publishedAt: publishedAt|Course.publishedAt,
-        view: view|Course.vi
+        view: view|Course.view
       }
     )
 
@@ -214,6 +232,9 @@ async function searchCourses(searchQuery) {
     throw error
   }
 }
+
+
+
 
 module.exports = {
   getCourse,

@@ -12,9 +12,12 @@ const {
   getContentfulButtons,
   getContentfulCards,
   getContentfulTypography,
-  getContentfulIcons
+  getContentfulIcons,
+  adminUpdateLearner,
+  softDeleted
 } = require('../controllers/dashboard')
-const { getLearners } = require('../controllers/learner')
+
+const { updateLearner, getLearners } = require('../controllers/learner')
 const { updateAdmin, deleteAdmin } = require('../controllers/admin')
 
 router.get('/dashboard', (req, res) => {
@@ -24,10 +27,21 @@ router.get('/dashboard', (req, res) => {
 router.get('/dashboard2', (req, res) => {
   getContentfulDashboard(req, res)
 })
-
 router.get('/dashboard/courses', (req, res) => {
   getDashboardCourses(req, res)
 })
+router.get('/courses/delete/:courseId', async (req, res) => {
+  const encodedcourseId = req.params.courseId;
+  const courseId = decodeURIComponent(encodedcourseId);
+  try {
+    await softDeleted(courseId);
+    res.redirect('/dashboard/courses');
+  } catch (error) {
+    console.error('Failed to delete courses:', error);
+    res.status(500).json({ error: 'Failed to delete courses' });
+  }
+});
+
 
 router.get('/dashboard/learners', (req, res) => {
   getDashboardLearners(req, res)
@@ -73,5 +87,7 @@ router.get('/dashboard2/ui-typography', (req, res) => {
 router.get('/dashboard2/icons-feather', (req, res) => {
   getContentfulIcons(req, res)
 })
-
+router.post('/dashboard/learners',(req,res)=>{
+  adminUpdateLearner(req,res)
+})
 module.exports = router

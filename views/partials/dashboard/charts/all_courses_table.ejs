@@ -15,7 +15,7 @@
             <i class="fasF fa-mail-bulkF"></i>
           </div>
           <form action="/dashboard/courses" method="POST">
-            <h1 class="formHF">Contact Us</h1>
+            <h1 class="formHF">Add course</h1>
             <div class="info">
               <input class="modalFormInputF" type="text" name="title" placeholder="Course Title">
               <input type="text" class="modalFormInputF" name="description" placeholder="Description">
@@ -51,7 +51,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" id="deleteCourseBTN">Delete</button>
+        <button type="submit" class="btn btn-danger"   id="deleteCourseBTN">Delete</button>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@
     <div class="align-self-center w-100">
       <div class="py-3">
         <div class="chart chart-xs">
-          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <button type="button" id="add-course" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Add Course
           </button>
           <div id="courses-table"></div>
@@ -136,20 +136,42 @@ console.log(tableCoursesData)
 
           const deleteBtn = h('button', 
             {
-              style: 'padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500',
+              style: 'padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500;margin-left: 10px;',
               id: 'warning-delete-button',
-              onClick: () => {
+             
+              onClick:function softDeleteCourse() {
+                
               const modalElement = document.getElementById('warningModal');
-             const modalInstance = new bootstrap.Modal(modalElement);
-               modalInstance.show();
+               const deleteModalBtn = document.getElementById('deleteCourseBTN');
+               const modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
+               deleteModalBtn .onclick = function( ){
+                const courseId =row.cells[0].data
+                const encodedCourseId = encodeURIComponent(courseId);
+                const url = `/courses/delete/${encodedCourseId}`
+               fetch(url, {
+      method: 'GET',
+    })
+      .then(res => {
+        if (res.ok) {
+          modalInstance.hide();
+          window.location.href = '/dashboard/courses';
+        } else {
+          console.error('Failed to delete courses');
+        }
+      }) .catch(error => {
+        console.error('Failed to delete courses:', error);
+      });
+      modalInstance.show();
+              }
+            }
               // alert(Editing "${row.cells[0].data}" "${row.cells[1].data}")
         }
-            },h('i', {class: 'fas fa-trash mr-2'}));
+            ,h('i', {class: 'fas fa-trash mr-2'}));
 
           return h('div', {}, editBtn, deleteBtn);
         }
       },
-
         // * not implemented yet
         // { name: 'Finished', width: '140px' }
       ],

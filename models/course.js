@@ -14,13 +14,13 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: false
     },
+    isDeleted: {
+      type: Boolean,
+      default: false
+    },
     outline: {
       type: String,
       required: false
-    },
-    isDeleted:{
-      type:Boolean,
-      default:false
     },
     totalHours: {
       type: Number,
@@ -30,7 +30,7 @@ const courseSchema = new mongoose.Schema(
     enrolledUsers: {
       type: Number,
       default: 0,
-      required: true
+      required: false
     },
     rating: {
       type: Number,
@@ -57,10 +57,10 @@ const courseSchema = new mongoose.Schema(
       required: true,
       default: 'After each topic'
     },
-    tags: {
-      type: String,
-      required: false
-    }
+    // tags: {
+    //   type: String,
+    //   required: false
+    // }
   },
   { timestamps: true }
 )
