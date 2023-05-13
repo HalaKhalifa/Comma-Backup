@@ -154,6 +154,33 @@ const learnerSchema = new Schema({
     type:Boolean,
     default:true,
     required:true
+  },
+  preferences: {
+    length: {
+      type: String,
+      required: true,
+      default: 'Average'
+    },
+    type: {
+      type: String,
+      required: true,
+      default: 'video'
+    },
+    assessment: {
+      type: String,
+      required: true,
+      default: 'After each chapter'
+    },
+    collaborative: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    applyForAllCourses: {
+      type: Boolean,
+      required: true,
+      default: true
+    }
   }
 })
 

@@ -163,6 +163,7 @@ module.exports = {
   getContentfulCards,
   getContentfulTypography,
   getContentfulIcons,
+  getLearner,
   adminUpdateLearner,
   getLearner
 }

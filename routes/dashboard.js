@@ -13,8 +13,8 @@ const {
   getContentfulCards,
   getContentfulTypography,
   getContentfulIcons,
-  softDeleted,
-  adminUpdateLearner
+  adminUpdateLearner,
+  softDeleted
 } = require('../controllers/dashboard')
 
 const { updateLearner, getLearners } = require('../controllers/learner')
