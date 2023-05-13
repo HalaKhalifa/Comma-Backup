@@ -13,7 +13,6 @@ const {
   getContentfulCards,
   getContentfulTypography,
   getContentfulIcons,
-  getDashboardAdmins,
   softDeleted
 } = require('../controllers/dashboard')
 

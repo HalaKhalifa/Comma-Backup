@@ -92,9 +92,15 @@
 console.log(tableCoursesData)
   ;
   (async () => {
-  const grid = new gridjs.Grid({
-    // Grid configuration options...
-    columns: [
+    new gridjs.Grid({
+      sort: true,
+      resizable: true,
+      search: true,
+      fixedHeader: true,
+      pagination: {
+        limit: 10
+      },
+      columns: [
         {
           name: 'Title',
           width: '180px'
@@ -169,7 +175,13 @@ console.log(tableCoursesData)
         // * not implemented yet
         // { name: 'Finished', width: '140px' }
       ],
+      
       data: tableCoursesData
     }).render(coursesTableElement)
   })()
+
+  onClick=()=>{
+       const deleteCourse = document.getElementById('deleteCourseBTN');
+       
+  }
 </script>
