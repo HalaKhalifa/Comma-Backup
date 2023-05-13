@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema
-const adminSchema = new Schema({
+const learnerSchema = new mongoose.Schema({
   firstname: {
     type: String,
     required: true
@@ -22,7 +21,11 @@ const adminSchema = new Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  img: {
+    type: String,
+    required: false
   }
 })
 
-module.exports = mongoose.model('Admin', adminSchema)
+module.exports = mongoose.model('Admin', learnerSchema)

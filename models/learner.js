@@ -18,9 +18,23 @@ const learnerSchema = new Schema({
     type: String,
     required: true
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  status: {
+    type: Boolean,
+    default: true,
+    required: true
+  },
   dob: {
     type: Date,
-    required: false
+    required: false,
+    default: null
   },
   gender: {
     type: String,
@@ -48,7 +62,7 @@ const learnerSchema = new Schema({
     required: false
   },
   graduationYear: {
-    type: Number,
+    type: String,
     required: false
   },
   phoneNumber: {
@@ -103,6 +117,33 @@ const learnerSchema = new Schema({
   img: {
     type: String,
     required: false
+  },
+  preferences: {
+    length: {
+      type: String,
+      required: true,
+      default: 'Average'
+    },
+    type: {
+      type: String,
+      required: true,
+      default: 'video'
+    },
+    assessment: {
+      type: String,
+      required: true,
+      default: 'After each chapter'
+    },
+    collaborative: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    applyForAllCourses: {
+      type: Boolean,
+      required: true,
+      default: true
+    }
   }
 })
 

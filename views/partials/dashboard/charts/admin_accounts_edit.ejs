@@ -9,7 +9,7 @@
         Are you sure you want to delete this account ?!
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Exit</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#deleteModal">Exit</button>
         <button type="button" class="btn btn-danger" id="edit-account-delete-button" data-bs-toggle="modal" data-bs-target="#deleteModal">Yes</button>
       </div>
     </div>
@@ -114,7 +114,7 @@
         <div class="modal-footer">
                   <!-- Modal -->
                   <button type="button" class="edit-button-datatable red-button-delete text-nowrap me-auto" id="edit-account-delete-button" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-            <button type="button" id="edit-account-back-button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal">Back</button>
+            <button type="button" id="edit-account-back-button" class="edit-button-datatable text-nowrap" data-bs-dismiss="modal" data-bs-target="admin-accounts-edit-modal" >Back</button>
             <input type="submit" id="edit-account-save-button" form="admin-accounts-edit-form" value="Save Changes"class="edit-button-datatable text-nowrap"/>
         </div>
       </div>
@@ -267,6 +267,9 @@ function deleteAdmin(){
     body:JSON.stringify(bodyData),
   })
     .catch(error =>console.log(error))
+    .then(data => {
+      location.reload();
+    })
 }
 
 const formElement = document.querySelector("#admin-accounts-edit-form")
@@ -275,8 +278,7 @@ formElement.addEventListener('submit',async event => {
   event.preventDefault();
 
 const formData = new FormData(formElement);
-const jsonObject = {};
-
+const jsonObject = {targetEmail:oldEmailData};
 Array.from(formData.entries()).forEach(([key, value]) => {
   jsonObject[key] = value;
 });

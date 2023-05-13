@@ -7,7 +7,10 @@ const authRoutes = require('./routes/auth')
 const landingPage = require('./routes/landingPage')
 const courses = require('./routes/courses')
 const learner = require('./routes/learner')
+const Preferences = require('./routes/preference')
+const AdminLearner = require('./routes/adminToLearner')
 const { searchCourses } = require('./controllers/courses')
+const admins = require('./routes/admins')
 
 const app = express()
 require('dotenv').config()
@@ -29,11 +32,14 @@ app.use(
 )
 
 // -- Routes
+app.use('/', AdminLearner)
 app.use('/', landingPage)
 app.use('/', authRoutes)
 app.use('/', courses)
 app.use('/', learner)
 app.use('/', dashboardRouter)
+app.use('/api', admins)
+app.use('/', Preferences)
 
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {

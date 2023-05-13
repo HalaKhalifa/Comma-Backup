@@ -5,7 +5,8 @@ const {
   getNoOfCourses,
   getEnrolledFinished,
   getAllCoursesTable,
-  NumberOfCoursesInYear
+  NumberOfCoursesInYear,
+  getAllLearnerActive
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
@@ -62,12 +63,27 @@ const getDashboardAdmins = async (req, res) => {
 }
 
 const getDashboardLearners = async (req, res) => {
-  const context = {
-    title: 'All learners',
-    learners: []
-  }
+  res.render('pages/dashboard/learners.ejs', { title: 'All Learners' })
+}
 
-  res.render('pages/dashboard/learners.ejs', context)
+const getLearner = async (req, res) => {
+  try {
+    const { offset = 0, limit = 0, search = '' } = req.query
+    const queryData = { status: { $in: [1] } }
+
+    if (search) {
+      queryData.$or = [
+        { firstname: { $regex: search, $options: 'i' } },
+        { lastname: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ]
+    }
+    const { learners, count } = await getAllLearnerActive(queryData, offset, limit)
+    res.status(200).json({ learners, count })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Server error' })
+  }
 }
 
 const getContentfulDashboard = async (req, res) => {
@@ -81,10 +97,56 @@ const getContentfulDashboard = async (req, res) => {
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
 
+const getContentfulForms = async (req, res) => {
+  const context = {
+    title: 'Contentful Forms'
+  }
+
+  res.render('pages/dashboard_contentful/ui-forms.ejs', context)
+}
+
+const getContentfulButtons = async (req, res) => {
+  const context = {
+    title: 'Contentful buttons'
+  }
+
+  res.render('pages/dashboard_contentful/ui-buttons.ejs', context)
+}
+
+const getContentfulCards = async (req, res) => {
+  const context = {
+    title: 'Contentful cards'
+  }
+
+  res.render('pages/dashboard_contentful/ui-cards.ejs', context)
+}
+
+const getContentfulTypography = async (req, res) => {
+  const context = {
+    title: 'Typo. cards'
+  }
+
+  res.render('pages/dashboard_contentful/ui-typography.ejs', context)
+}
+
+const getContentfulIcons = async (req, res) => {
+  const context = {
+    title: 'Icons. cards'
+  }
+
+  res.render('pages/dashboard_contentful/icons-feather.ejs', context)
+}
+
 module.exports = {
   getDashboard,
   getContentfulDashboard,
   getDashboardCourses,
   getDashboardAdmins,
-  getDashboardLearners
+  getDashboardLearners,
+  getContentfulForms,
+  getContentfulButtons,
+  getContentfulCards,
+  getContentfulTypography,
+  getContentfulIcons,
+  getLearner
 }
