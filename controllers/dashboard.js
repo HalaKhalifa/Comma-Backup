@@ -24,7 +24,7 @@ const firstNameRegex = /^[A-Za-z][a-z]*$/;
 const lastNameRegex = /^[A-Za-z][a-z]*( [A-Za-z][a-z]*)?$/;
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z.]+\.[a-zA-Z]+$/;
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
+const Course =require('../models/course')
 const getDashboard = async (req, res) => {
   // * temporary context object
   const staticData = usersData;
@@ -82,7 +82,8 @@ const getLearner = async (req, res) => {
 
     if (search) {
       queryData.$or = [
-        { name: { $regex: search, $options: 'i' } },
+        { firstname: { $regex: search, $options: 'i' } },
+        { lastname: { $regex: search, $options: 'i' } },
         { email: { $regex: search, $options: 'i' } }
       ];
     }
@@ -104,6 +105,20 @@ const getContentfulDashboard = async (req, res) => {
   // todo: change to same route in routes => "fix /css path"
   res.render('pages/dashboard_contentful/index.ejs', context)
 }
+const softDeleted = async (courseId) => {
+  try {
+    const course = await Course.findOne({title:courseId});
+    console.log(courseId)
+    if (!course) {
+      throw new Error('course not found');
+    }
+    course.isDeleted = true;
+    await course.save();
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 const getContentfulForms = async (req, res) => {
   const context = {
@@ -240,6 +255,7 @@ module.exports = {
   getDashboardCourses,
   getDashboardAdmins,
   getDashboardLearners,
+  softDeleted,
   getContentfulForms,
   getContentfulButtons,
   getContentfulCards,

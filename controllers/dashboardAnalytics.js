@@ -138,9 +138,9 @@ async function getAllCoursesTable(limit = 20) {
   try {
     let courses = await getCourses(limit)
     courses = courses.reduce((result, course) => {
-      if (course.title)
+      if (course.isDeleted==false)
         result.push({
-          title: course.title?.substring(0, 40),
+          title: course.title,
           enrolled: course.enrolledUsers,
           rating: course.rating,
           stars: course.stars,
@@ -178,9 +178,10 @@ async function getCoursesEnrolls() {
 }
 
 const User = require('../models/learner')
+
 const getAllLearnerActive = async (queryData, offset = 0, limit = 0) => {
   try {
-    const learners = await User.find(queryData).skip(offset).limit(limit).exec()
+    const learners = await User.find(queryData).skip(Number(offset)).limit(Number(limit)).exec()
     const count = await User.countDocuments(queryData)
     return { learners, count }
   } catch (error) {
