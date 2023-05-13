@@ -175,7 +175,7 @@ const getSortedCourses = async (req, res) => {
     console.log('hi');
     const sortCriteria = req.params.sortCriteria;
     const sortOrder = req.params.sortOrder;
-    const searchQuery = req.params.searchQuery;
+    const searchQuery = req.query.searchQuery;
     console.log(sortCriteria,sortOrder,searchQuery);
     let sortObject = {};
 
