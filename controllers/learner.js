@@ -105,7 +105,7 @@ const updateLearner = async (req, res) => {
 
 const getNoOflearner = async (req, res) => {
   try {
-    const NoOflearner = await learner.countDocuments()
+    const NoOflearner = await learner.estimatedDocumentCount()
     return NoOflearner
   } catch (err) {
     // error
@@ -116,12 +116,11 @@ const getNoOflearner = async (req, res) => {
 
 const getTotalEnrolledUserCount = async (req, res) => {
   try {
-    // ! this query is really slow, need to optimize took 33000ms
-    const courses = await Course.find() // retrive all doc as a array
+    const courses = await Course.find().distinct('enrolledUsers')
     let totalEnrolledUserCount = 0
 
     courses.forEach((course) => {
-      totalEnrolledUserCount += course.enrolledUsers.length
+      totalEnrolledUserCount += course
     })
     /* enrolledUsers: [
     {
@@ -132,23 +131,11 @@ const getTotalEnrolledUserCount = async (req, res) => {
     return totalEnrolledUserCount
   } catch (error) {
     console.error(error)
-    res.status(500).send('Internal server error')
+    throw new Error('Failed to retrieve Total Enrolled User Count')
   }
 }
-//returns a promise
-
-//executed when the promise returned by getTotalEnrolledUserCount()
-getTotalEnrolledUserCount()
-  .then((count) => {
-    //console.log('Total enrollment count:' );  testing .
-    return count
-  })
-  .catch((error) => {
-    console.error(error)
-  })
-
 // NoofRegistrationPerMonth
-const NoOfMonthlyRegistration = async () => {
+const getNoOfMonthlyRegistration = async () => {
   try {
     const registrationCountByMonth = await learner.aggregate([
       {
@@ -165,14 +152,19 @@ const NoOfMonthlyRegistration = async () => {
     throw new Error('Failed to retrieve monthly registration count')
   }
 }
-NoOfMonthlyRegistration()
-  .then((registrationCountByMonth) => {
-    return registrationCountByMonth
-  })
-  .catch((error) => {
+//Number OF viewers
+const getNoOfviewers = async () => {
+  try {
+    const courses = await Course.find().distinct('view')
+    let totalviewres = 0
+    courses.forEach((courses) => {
+      totalviewres += courses
+    })
+    return totalviewres
+  } catch (error) {
     console.error(error)
-  })
-
+  }
+}
 const getLearnersList = async (req, res) => {
   const learners = await learner.find().sort({ createdAt: -1 }) // -1 mean desc
 
@@ -233,7 +225,7 @@ const postLearnerProfile = async (req, res) => {
       console.log('User data updated:', updatedUser)
       return res.status(200).send('User data updated successfully')
     }
-  )  
+  )
 }
 module.exports = {
   getLearnerProfile,
@@ -246,6 +238,7 @@ module.exports = {
   getOneLearner,
   getNoOflearner,
   getTotalEnrolledUserCount,
-  NoOfMonthlyRegistration,
-  getCountryLearners
+  getCountryLearners,
+  getNoOfMonthlyRegistration,
+  getNoOfviewers
 }

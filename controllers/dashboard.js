@@ -6,16 +6,20 @@ const {
   getEnrolledFinished,
   getAllCoursesTable,
   NumberOfCoursesInYear,
-  getAllLearnerActive,adminUpdateLearner
+  getAllLearnerActive,
+  adminUpdateLearner,
+  getTop10EnrolledCourses
 } = require('./dashboardAnalytics')
 const {
   getCountryLearners,
   getNoOflearner,
-  getTotalEnrolledUserCount,
-  NoOfMonthlyRegistration
+  getNoOfMonthlyRegistration,
+  getNoOfviewers
 } = require('./learner')
 const { usersData } = require('../helpers/dashboard')
-const Course =require('../models/course')
+
+const Course = require('../models/course')
+
 const getDashboard = async (req, res) => {
   // * temporary context object
   const staticData = usersData
@@ -34,8 +38,10 @@ const getDashboard = async (req, res) => {
       NoOflearner: await getNoOflearner(),
       // TotalEnrolledUserCount: await getTotalEnrolledUserCount(), // TODO: fix this function
       TotalEnrolledUserCount: [],
-      NoOfMonthlyRegistration: await NoOfMonthlyRegistration(),
-      enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished())
+      NoOfMonthlyRegistration: await getNoOfMonthlyRegistration(),
+      enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished()),
+      Noofviewers: await getNoOfviewers(),
+      Top10Enrolledcourses: await getTop10EnrolledCourses()
     }
   }
 
@@ -98,18 +104,17 @@ const getContentfulDashboard = async (req, res) => {
 }
 const softDeleted = async (courseId) => {
   try {
-    const course = await Course.findOne({title:courseId});
+    const course = await Course.findOne({ title: courseId })
     console.log(courseId)
     if (!course) {
-      throw new Error('course not found');
+      throw new Error('course not found')
     }
-    course.isDeleted = true;
-    await course.save();
+    course.isDeleted = true
+    await course.save()
   } catch (error) {
-    throw error;
+    throw error
   }
-};
-
+}
 
 const getContentfulForms = async (req, res) => {
   const context = {

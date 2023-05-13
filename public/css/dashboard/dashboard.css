@@ -189,3 +189,16 @@
     font-size: 16px;
   }
 }
+<<<<<<< Updated upstream
+=======
+.stylecard{
+  height: 11rem ;
+  width: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+}
+.chart-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+>>>>>>> Stashed changes

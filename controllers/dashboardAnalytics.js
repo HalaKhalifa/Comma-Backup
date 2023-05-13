@@ -2,6 +2,8 @@ const Course = require('../models/course')
 const { getCourses } = require('./courses')
 const { numbersArr, usersData } = require('../helpers/dashboard')
 const learner = require('../models/learner')
+const User = require('../models/learner')
+
 /**
  * Returns Number of courses created each month for the previous year
  *
@@ -99,7 +101,7 @@ async function getPopularCourses(limit = 5, others = false) {
 
 const getNoOfCourses = async () => {
   try {
-    const NoOfCourses = await Course.countDocuments()
+    const NoOfCourses = await Course.estimatedDocumentCount()
     return NoOfCourses
   } catch (err) {
     console.error(err)
@@ -140,7 +142,7 @@ async function getAllCoursesTable(limit = 20) {
   try {
     let courses = await getCourses(limit)
     courses = courses.reduce((result, course) => {
-      if (course.isDeleted==false)
+      if (course.isDeleted == false)
         result.push({
           title: course.title,
           enrolled: course.enrolledUsers,
@@ -179,7 +181,20 @@ async function getCoursesEnrolls() {
   }
 }
 
-const User = require('../models/learner')
+const getTop10EnrolledCourses = async () => {
+  try {
+    // Retrieve the top 10 enrolled courses based on the 'enrolledUsers' field in descending order
+    const top10Courses = await Course.find()
+      .sort({ enrolledUsers: -1 })
+      .limit(10)
+      .select({ title: 1, enrolledUsers: 1 })
+
+    return top10Courses
+  } catch (error) {
+    console.error('An error occurred while fetching the top enrolled courses:', error)
+    throw error
+  }
+}
 
 const getAllLearnerActive = async (queryData, offset = 0, limit = 0) => {
   try {
@@ -197,29 +212,33 @@ const adminUpdateLearner = async (req, res) => {
       email: req.body.emailInput,
       firstname: req.body.firstNameInput,
       lastname: req.body.lastNameInput,
-      updatedAt: new Date() 
-    };  
-    const user_email = req.body.userEmail;
-    const existingUser = await learner.findOne({ email: userData.email });
-    const user = await learner.findOne({ email: user_email });
-    if (userData.email == user.email && userData.firstname== user.firstname && userData.lastname===user.lastname ){
-      return res.status(600).json({ error: 'Nothing was Updated' });
+      updatedAt: new Date()
+    }
+    const user_email = req.body.userEmail
+    const existingUser = await learner.findOne({ email: userData.email })
+    const user = await learner.findOne({ email: user_email })
+    if (
+      userData.email == user.email &&
+      userData.firstname == user.firstname &&
+      userData.lastname === user.lastname
+    ) {
+      return res.status(600).json({ error: 'Nothing was Updated' })
     }
     if (existingUser && existingUser._id.toString() !== user._id.toString()) {
-      return res.status(400).json({ error: 'This email is already used by another user.' });
+      return res.status(400).json({ error: 'This email is already used by another user.' })
     }
     const updatedUser = await learner.findOneAndUpdate(
       { email: user_email },
       { $set: userData },
       { new: true, projection: { email: 1, firstname: 1, lastname: 1 } }
-    );
-    console.log('User data updated:', updatedUser);
-    res.status(200).json({ redirected: true });
+    )
+    console.log('User data updated:', updatedUser)
+    res.status(200).json({ redirected: true })
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error updating user data');
+    console.error(error)
+    res.status(500).send('Error updating user data')
   }
-};
+}
 module.exports = {
   getPopularCourses,
   getEnrolledFinished,
@@ -227,5 +246,6 @@ module.exports = {
   getNoOfCourses,
   NumberOfCoursesInYear,
   getAllLearnerActive,
-  adminUpdateLearner
+  adminUpdateLearner,
+  getTop10EnrolledCourses
 }
