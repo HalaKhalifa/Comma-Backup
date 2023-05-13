@@ -62,10 +62,8 @@
           width: '70px',
           id: 'id',
           formatter: (cell, row) => {
-            const editBtn = `<a href="/dashboard/admins/${row.cells[0].id}/edit" class="btn btn-sm btn-primary">+</a>`
-            const deleteBtn = `<form action="/dashboard/admins/${row.cells[0].id}?_method=DELETE" method="POST"
-            <button type="submit" class="btn btn-sm btn-danger">-</button></form>`
-            return gridjs.html(`${editBtn + ' ' + deleteBtn}`)
+            const editBtn = `<button type="button" class="edit-button-datatable edit-button-modal-opener text-nowrap" data-bs-target="#admin-accounts-edit-modal" data-bs-toggle="modal" data-email="${row.cells[2].data}">Edit</button>`
+            return gridjs.html(`${editBtn }`)
           }
         },
       ],
@@ -90,3 +88,4 @@
     }).render(allAdminsElm)
   })()
 </script>
+<script src="/js/dashboard/userstable.js"></script>
