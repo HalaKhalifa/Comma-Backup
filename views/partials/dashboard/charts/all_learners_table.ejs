@@ -1,0 +1,76 @@
+<div class="col-md-6 col-xxl-4 d-flex order-2 order-xxl-4"></div>
+<div class="card flex-fill w-100">
+  <div class="px-4 pt-3">
+    <h5 class="card-title mb-0">All learners</h5>
+  </div>
+  <div class="px-4 pb-4 d-flex">
+    <div class="align-self-center w-100">
+      <div class="py-3">
+        <div class="chart chart-xs">
+          <div id="learner-table"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+
+const coursesTableElement = document.getElementById('learner-table')
+
+const COLUMN_NAMES = ['First Name', 'Last Name', 'Email',"Status","CreatedAt","UpdatedAt"];
+
+const SERVER_URL = 'data';
+
+const getServerUrlWithPagination = (prev, page, limit) => {
+  const queryParams = `limit=${limit}&offset=${page * limit}`;
+  return prev === SERVER_URL 
+    ? `${prev}?${queryParams}` 
+    : `${prev}&${queryParams}`;
+};
+
+const getServerUrlWithSearch = (prev, keyword) => `${prev}?search=${keyword}`;
+
+
+(async () => {
+const datatable_learners_grid = new gridjs.Grid({
+  columns: [
+    ...COLUMN_NAMES,
+    {
+      name: 'Action',
+      formatter: (_, row) => gridjs.html(
+        `<button style="padding: 0.5rem 1rem; margin-bottom: 0.5rem; border: none; border-radius: 0.25rem; background-color: #1E40AF; color: white; font-size: 1rem; font-weight: 500;">
+            Edit
+          </button>
+          <button style="padding: 0.5rem 1rem; margin-bottom: 1rem; border: none; border-radius: 0.25rem; color: #fff; background-color: #f44336;color: white; font-size: 1rem; font-weight: 500">
+            Delete
+          </button>`
+      )
+    }
+  ],
+  fixedHeader: true,
+  pagination: {
+    limit: 3,
+    server: {
+      url: getServerUrlWithPagination
+    }
+  },
+  search: {
+    server: {
+      url: getServerUrlWithSearch
+    }
+  },
+  
+  server: {
+    url: SERVER_URL,
+    method: 'POST',
+    then: data => data.learners.map(learner => [learner.firstname, learner.lastname, learner.email,"Active", learner.createdAt,learner.updatedAt]),
+    total: data => data.count
+  }
+  
+  
+  //,sort: true, its make a problem for searching
+}).render(coursesTableElement);
+ })();
+
+</script>

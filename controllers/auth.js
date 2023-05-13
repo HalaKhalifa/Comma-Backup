@@ -37,7 +37,7 @@ const post_signup = async (req, res) => {
     return
   }
 
-  const learnerExists = await Learner.findOne({ email })
+  const learnerExists = await User.findOne({ email })
   if (learnerExists) {
     error = 'Email already exists'
     res.render('pages/learner/signup', { title: 'Sign Up', error })
@@ -65,11 +65,13 @@ const post_signup = async (req, res) => {
   const capitalizedLastname = capitalizefLetter(lastname)
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const learner = new Learner({
+  const learner = new User({
     firstname: capitalizedFirstname,
     lastname: capitalizedLastname,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    createdAt:new Date(),
+    status:true
   })
   console.log(learner)
   try {
