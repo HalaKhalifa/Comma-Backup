@@ -11,6 +11,7 @@ const Preferences = require('./routes/preference')
 const AdminLearner = require('./routes/adminToLearner')
 const { searchCourses } = require('./controllers/courses')
 
+
 const app = express()
 require('dotenv').config()
 require('./config/mongoose') // database connection
@@ -38,6 +39,7 @@ app.use('/', courses)
 app.use('/', learner)
 app.use('/', dashboardRouter)
 app.use('/', Preferences)
+
 
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {

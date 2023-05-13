@@ -1,10 +1,10 @@
 const Course = require('../models/course')
 
-const getCoursesList = async (req, res) => {
-  const courses = await Course.find().sort({ createdAt: -1 }) // -1 mean desc
+// const getCoursesList = async (req, res) => {
+//   const courses = await Course.find().sort({ createdAt: -1 }) // -1 mean desc
 
-  res.status(200).json(courses)
-}
+//   res.status(200).json(courses)
+// }
 
 const getCourse = async (req, res) => {
   const { id } = req.params
@@ -21,31 +21,15 @@ const getCourse = async (req, res) => {
 const createNewCourse = async (req, res) => {
   const {
     title,
-    image,
     description,
     outline,
-    totalHours,
-    enrolledUsers,
-    rating,
-    stars,
-    topicID,
-    publishedAt,
-    view
   } = req.body
 
   try {
     const newCourse = await Course.create({
       title: title,
-      image: image,
       description: description,
       outline: outline,
-      totalHours: totalHours,
-      enrolledUsers: enrolledUsers,
-      rating: rating,
-      stars: stars,
-      topicID: topicID,
-      publishedAt: publishedAt,
-      view: view
     })
 
     res.status(200).json(newCourse)
@@ -62,6 +46,7 @@ const updateCourse = async (req, res) => {
       title,
       image,
       description,
+      isDeleted,
       outline,
       totalHours,
       enrolledUsers,
@@ -75,17 +60,18 @@ const updateCourse = async (req, res) => {
     const singleCourse = await Course.findOneAndUpdate(
       { _id: id },
       {
-        title: title,
-        image: image,
-        description: description,
-        outline: outline,
-        totalHours: totalHours,
-        enrolledUsers: enrolledUsers,
-        rating: rating,
-        stars: stars,
-        topicID: topicID,
-        publishedAt: publishedAt,
-        view: view
+        title: title|Course.title,
+        image: image|Course.image,
+        description: description|Course.description,
+        isDeleted: isDeleted|Course.isDeleted,
+        outline: outline|Course.outline,
+        totalHours: totalHours|Course.totalHours,
+        enrolledUsers: enrolledUsers|Course.enrolledUsers,
+        rating: rating|Course.rating,
+        stars: stars|Course.stars,
+        topicID: topicID|Course.topicID,
+        publishedAt: publishedAt|Course.publishedAt,
+        view: view|Course.vi
       }
     )
 
@@ -103,7 +89,7 @@ const deleteCourse = async (req, res) => {
   const { id } = req.params
 
   const singleCourse = await Course.findOneAndDelete({ _id: id })
-
+  
   if (!singleCourse) {
     return res.status(404).json({ error: 'No such course.' })
   }
@@ -182,11 +168,40 @@ const coursePagination = async (req, res) => {
     .skip((page - 1) * limit)
     .limit(limit)
     .sort({ createdAt: -1 })
-  res.render('pages/home/courses_page.ejs', {
-    title: 'courses page',
-    pageCourses: pageCourses
-  })
+    return pageCourses;
 }
+
+const getSortedCourses = async (req, res) => {
+    console.log('hi');
+    const sortCriteria = req.params.sortCriteria;
+    const sortOrder = req.params.sortOrder;
+    const searchQuery = req.query.searchQuery;
+    console.log(sortCriteria,sortOrder,searchQuery);
+    let sortObject = {};
+
+    if ( sortCriteria === 'stars' || sortCriteria === 'enrollment') {
+      sortObject[sortCriteria] = sortOrder === 'desc' ? -1 : 1;
+    }
+
+    let page = parseInt(req.query.page) || 1;
+    let limit = 16;
+    let  pageCourses
+    if (searchQuery) {
+       pageCourses = await Course.find({ $text: { $search: searchQuery } })
+                                .skip((page - 1) * limit)
+                                .limit(limit)
+                                .sort(sortObject);
+    } else {
+       pageCourses = await Course.find()
+                                .skip((page - 1) * limit)
+                                .limit(limit)
+                                .sort(sortObject);
+    }
+
+    // res.json(pageCourses);
+    console.log(pageCourses);
+    return pageCourses;
+};
 
 async function searchCourses(searchQuery) {
   console.log('Search query:', searchQuery)
@@ -201,7 +216,6 @@ async function searchCourses(searchQuery) {
 }
 
 module.exports = {
-  getCoursesList,
   getCourse,
   createNewCourse,
   updateCourse,
@@ -210,5 +224,6 @@ module.exports = {
   filterCourses,
   getSingleCourse,
   coursePagination,
-  searchCourses
+  searchCourses,
+  getSortedCourses
 }
