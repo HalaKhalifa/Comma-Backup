@@ -1,5 +1,7 @@
 <%- include('../../partials/home/nav'); %>
 <%- include('../../partials/home/header', { title: 'Outline' }); %>
+<%- include('../../partials/home/preference_modal')%>
+<script src="js/preferences.js"></script>
 <div id="container">
   <div id="wrapper">
     <div id="content">
@@ -83,7 +85,7 @@
           <p class="reviews">(<%= singleCourse.rating %>) reviews</p>
         </div>
         <div class="enroll">
-          <button type="button" class="btn btn-primary" id="btn-enroll">Enroll</button>
+          <button type="button" onclick="hide();" class="btn btn-primary" id="btn-enroll" data-bs-toggle="modal" data-bs-target="#myModal">Enroll</button>
           <span class="num-enroll">
             <div id="enrolledUsers"><%= singleCourse.enrolledUsers %></div>
             <div id="distance"></div>
