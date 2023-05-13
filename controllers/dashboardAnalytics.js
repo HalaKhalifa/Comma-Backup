@@ -177,10 +177,24 @@ async function getCoursesEnrolls() {
   }
 }
 
+const User = require('../models/learner')
+
+const getAllLearnerActive = async (queryData, offset = 0, limit = 0) => {
+  try {
+    const learners = await User.find(queryData).skip(Number(offset)).limit(Number(limit)).exec()
+    const count = await User.countDocuments(queryData)
+    return { learners, count }
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
 module.exports = {
   getPopularCourses,
   getEnrolledFinished,
   getAllCoursesTable,
   getNoOfCourses,
-  NumberOfCoursesInYear
+  NumberOfCoursesInYear,
+  getAllLearnerActive
 }
