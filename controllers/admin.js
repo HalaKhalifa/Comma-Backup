@@ -1,13 +1,16 @@
-const learner = require('../models/learner') // SHOULD BE ADMIN SCHEMA BUT SINCE WE DON"T HAVE THAT YET USING LEARNER SCHEMA FOR NOW !!!
 const validator = require('validator')
 const bcrypt = require('bcrypt')
+const admin = require('../models/admin')
 
-const firstNameRegex = /^[a-zA-Z]{2,50}$/
-const lastNameRegex = /^[a-zA-Z]{2,50}([-'][a-zA-Z]{2,50})?$/
+const nameRegex = /^[a-z]+$/
+const firstNameRegex = /^[A-Za-z][a-z]*$/
+const lastNameRegex = /^[A-Za-z][a-z]*( [A-Za-z][a-z]*)?$/
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z.]+.[a-zA-Z]$/
+const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 
 const updateAdmin = async (req, res) => {
   try {
-    const doc = await learner.findOne({ email: req.body.targetEmail }).exec()
+    const doc = await admin.findOne({ email: req.body.targetEmail }).exec()
     const storage = { data: req.body }
     let msg = {}
     let keys = []
@@ -49,7 +52,7 @@ const updateAdmin = async (req, res) => {
 const deleteAdmin = async (req, res) => {
   try {
     email = req.body.email
-    const doc = await learner.findOne({ email: email }).exec()
+    const doc = await admin.findOne({ email: email }).exec()
     doc['isDeleted'] = true
     console.log('deleted ' + doc['email'])
     await doc.save()
@@ -59,7 +62,6 @@ const deleteAdmin = async (req, res) => {
     res.status(500)
   }
 }
-const admin = require('../models/admin')
 
 const getAllAdmins = async (req, res) => {
   try {
@@ -102,8 +104,89 @@ async function getAdminCount() {
   }
 }
 
+function capitalizefLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+const getNewAdminspage = async (req, res) => {
+  res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error: '' })
+}
+
+const post_Newadmin = async (req, res) => {
+  console.log(req.body)
+  const { firstNameAdmin, lastNameAdmin, adminemail, adminPassword1, confirmadminPassword } =
+    req.body
+  let error = ''
+  if (
+    !firstNameAdmin ||
+    !lastNameAdmin ||
+    !adminemail ||
+    !adminPassword1 ||
+    !confirmadminPassword
+  ) {
+    error = 'Please fill in all fields'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+  if (!nameRegex.test(firstNameAdmin)) {
+    error = 'First name should contain only lowercase letters'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+  if (!nameRegex.test(lastNameAdmin)) {
+    error = 'Last name should contain only lowercase letters'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+  // if statment always excute
+
+  let adminExists = await admin.countDocuments({ adminemail })
+  //console.log(adminExists.email)
+  if (adminExists == 1) {
+    error = 'Email already exists'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+
+  if (!emailRegex.test(adminemail)) {
+    error = 'Invalid email address'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+  if (adminPassword1 !== confirmadminPassword) {
+    error = 'Passwords do not match'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+  if (!passwordRegex.test(adminPassword1)) {
+    error =
+      'Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter'
+    res.render('pages/dashboard/new_admin.ejs', { title: 'Add New admin', error })
+    return
+  }
+
+  const capitalizedFirstname = capitalizefLetter(firstNameAdmin)
+  const capitalizedLastname = capitalizefLetter(lastNameAdmin)
+  const hashedPassword = await bcrypt.hash(adminPassword1, 10)
+  const newAdmin = new admin({
+    firstname: capitalizedFirstname,
+    lastname: capitalizedLastname,
+    email: req.body.adminemail,
+    password: hashedPassword
+  })
+  try {
+    await newAdmin.save()
+    res.status(200).json({ message: 'Data saved successfully' })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Server error' })
+  }
+}
+
 module.exports = {
   getAllAdmins,
   updateAdmin,
-  deleteAdmin
+  deleteAdmin,
+  getNewAdminspage,
+  post_Newadmin
 }

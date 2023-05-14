@@ -17,7 +17,8 @@ const {
   getCountryLearners,
   getNoOflearner,
   getNoOfMonthlyRegistration,
-  getNoOfviewers
+  getNoOfviewers,
+  getTotalEnrolledUserCount
 } = require('./learner')
 
 const { usersData } = require('../helpers/dashboard')
@@ -46,10 +47,9 @@ const getDashboard = async (req, res) => {
       NoOfCountryLearners: await getCountryLearners(),
       NoOfCourses: await getNoOfCourses(),
       NoOflearner: await getNoOflearner(),
-      // TotalEnrolledUserCount: await getTotalEnrolledUserCount(), // TODO: fix this function
-      TotalEnrolledUserCount: [],
       NoOfMonthlyRegistration: await getNoOfMonthlyRegistration(),
       enrolledFinishedCourses: JSON.stringify(await getEnrolledFinished()),
+      TotalEnrolledUserCount: await getTotalEnrolledUserCount(),
       Noofviewers: await getNoOfviewers(),
       Top10Enrolledcourses: await getTop10EnrolledCourses()
     }

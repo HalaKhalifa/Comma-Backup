@@ -152,6 +152,7 @@ const getNoOfMonthlyRegistration = async () => {
     throw new Error('Failed to retrieve monthly registration count')
   }
 }
+
 //Number OF viewers
 const getNoOfviewers = async () => {
   try {
@@ -203,9 +204,10 @@ const getLearnerProfile = async (req, res) => {
   const user_id = get_session_loggedIn(req)
   const userQuery = learner.findOne({ _id: user_id })
   const user = await userQuery.exec()
-  if(user_id ){
-  res.render('pages/learner/profile', { title: 'profile', user, isLoggedIn:user_id })}
-  res.render('./pages/something_went_wrong',{error: 'You must login'});
+  if (user_id) {
+    res.render('pages/learner/profile', { title: 'profile', user, isLoggedIn: user_id })
+  }
+  res.render('./pages/something_went_wrong', { error: 'You must login' })
 }
 const postLearnerProfile = async (req, res) => {
   const user_id = get_session_loggedIn(req)

@@ -62,7 +62,7 @@
           width: '70px',
           id: 'id',
           formatter: (cell, row) => {
-            const editBtn = `<button type="button" class="edit-button-datatable edit-button-modal-opener text-nowrap" data-bs-target="#admin-accounts-edit-modal" data-bs-toggle="modal" data-email="${row.cells[2].data}">Edit</button>`
+            const editBtn = `<button type="button" class="edit-button-datatable edit-button-modal-opener text-nowrap" data-bs-target="#admin-accounts-edit-modal" data-bs-toggle="modal" data-email="${row.cells[3].data}">Edit</button>`
             return gridjs.html(`${editBtn }`)
           }
         },

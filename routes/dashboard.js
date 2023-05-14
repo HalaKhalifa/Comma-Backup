@@ -23,6 +23,12 @@ const {
 } = require('../controllers/dashboard')
 
 const { updateLearner, getLearners } = require('../controllers/learner')
+const {
+  getNewAdminspage,
+  post_Newadmin,
+  updateAdmin,
+  deleteAdmin
+} = require('../controllers/admin')
 
 router.get('/dashboard', (req, res) => {
   getDashboard(req, res)
@@ -107,5 +113,7 @@ router.post('/dashboard/learners', (req, res) => {
 router.get('/dashboard/admins/Newadmin', (req, res) => {
   getNewAdminspage(req, res)
 })
+
+router.post('/dashboard/admins/Newadmin', post_Newadmin)
 
 module.exports = router
