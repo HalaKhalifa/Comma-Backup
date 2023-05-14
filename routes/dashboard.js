@@ -18,7 +18,8 @@ const {
   getAddNewLearner,
   postAddNewLearner,
   adminUpdateLearner,
-  softDeleted
+  softDeleted,
+  getDashboardCourses
 } = require('../controllers/dashboard')
 
 const { updateLearner, getLearners } = require('../controllers/learner')

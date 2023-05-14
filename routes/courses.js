@@ -34,7 +34,7 @@ router.get('/outline', async (req, res) => {
     res.render('pages/home/outline_page', {
       isLoggedIn: isLoggedIn,
       title: 'courses page',
-      singleCoursePage: singleCoursePage
+      singleCourse: singleCoursePage
     })
   } catch (error) {
     console.error(error)
