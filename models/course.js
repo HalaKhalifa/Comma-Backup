@@ -85,6 +85,7 @@ applications:[{
   status:{
     type:Boolean,
     required:true,
+    default: null
   },
   time:{
     timestamps: true
