@@ -1,3 +1,7 @@
+.line-chart-container {
+  height: 400px;
+  width: 600px;
+}
 .edit-button-datatable {
   background: #5e5df0;
   border-radius: 999px;
@@ -94,7 +98,7 @@
   background-color: #121212;
 
   overflow: hidden;
-
+  z-index: 2;
   position: relative;
 }
 .ag-courses-item_container:hover,
@@ -140,7 +144,7 @@
   width: 128px;
   background-color: #f9b234;
 
-  z-index: 1;
+  z-index: -1;
   position: absolute;
   top: -75px;
   right: -75px;
@@ -180,6 +184,7 @@
   }
   .ag-courses-item_container {
     padding: 22px 40px;
+    z-index: 2;
   }
   .ag-courses-item_text-box {
     font-size: 16px;
