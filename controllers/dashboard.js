@@ -58,16 +58,16 @@ const getDashboard = async (req, res) => {
   res.render('pages/dashboard/index.ejs', context)
 }
 
-// const getDashboardCourses = async (req, res) => {
-//   const context = {
-//     title: 'All courses',
-//     data: {
-//       courses: JSON.stringify(await getAllCoursesTable())
-//     }
-//   }
-// console.log(context)
-//   res.render('pages/dashboard/courses.ejs', context)
-// }
+const getDashboardCourses = async (req, res) => {
+  const context = {
+    title: 'All courses',
+    data: {
+      courses: JSON.stringify(await getAllCoursesTable())
+    }
+  }
+  console.log(context)
+  res.render('pages/dashboard/courses.ejs', context)
+}
 
 const getDashboardAdmins = async (req, res) => {
   const context = {
@@ -266,5 +266,6 @@ module.exports = {
   postAddNewLearner,
   getLearner,
   deleteLearner,
-  adminUpdateLearner
+  adminUpdateLearner,
+  getDashboardCourses
 }
