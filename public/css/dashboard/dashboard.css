@@ -1,7 +1,3 @@
-.line-chart-container {
-  height: 400px;
-  width: 600px;
-}
 .edit-button-datatable {
   background: #5e5df0;
   border-radius: 999px;
@@ -189,16 +185,19 @@
     font-size: 16px;
   }
 }
-<<<<<<< Updated upstream
-=======
-.stylecard{
-  height: 11rem ;
+.stylecard {
+  height: 11rem;
   width: auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-
 }
 .chart-scroll {
   overflow-x: auto;
   white-space: nowrap;
 }
->>>>>>> Stashed changes
+.card-title {
+  font-size: 1.2rem;
+}
+
+.card-text {
+  font-size: 2rem;
+}
