@@ -3,14 +3,15 @@
   <div class="container FilterContainer" style="display:none;">
     <div class="row FilerRow">
 
-      <select class="selectFilter">
-        <option value="stars" name="sortCriteria">Rating</option>
+   
+      <select class="selectFilter"  name="searchQuery" >
+        <option value="" >rating</option>
         <option value="Asc" name="sortOrder">Asc</option>
         <option value="Desc" name="sortOrder">Desc</option>
       </select>
-
-      <select class="selectFilter">
-        <option value="enrollment" name="sortCriteria">Enrollment</option>
+     
+      <select class="selectFilter"  name="searchQuery">
+        <option value="">enrollment</option>
         <option value="Asc" name="sortOrder">Asc</option>
         <option value="Desc" name="sortOrder">Desc</option>
       </select>
@@ -24,7 +25,7 @@
         <input type="text" class="form-control" id="search-input" aria-label="Text input with dropdown button" placeholder="Search by Tag" name="searchQuery">
       </div>
 
-      <button type="submit" class="form-control submitSort">Submit</button>
+      <input type="submit"  value="submit"  class="form-control submitSort">
     </div>
   </div>
 </form>
@@ -35,80 +36,3 @@
     container.style.display = container.style.display === 'none' ? 'block' : 'none';
   });
 </script>
-
-
-<!-- 
-<div class="filterDropDowns">
-  <div id="dropdowns" style="display: none;">
-    <div class="dropdown-container">
-      <label for="dropdown1">Rating:</label>
-      <select id="dropdown1" class="dropdown">
-        <option value="1">Ascending</option>
-        <option value="2">Descending</option>
-      </select>
-    </div>
-    <div class="dropdown-container">
-      <label for="dropdown2">Enrollment:</label>
-      <select id="dropdown2" class="dropdown">
-        <option value="1">Ascending</option>
-        <option value="2">Descending</option>
-      </select>
-    </div>
-    <div class="dropdown-container">
-      <label for="dropdown3">Dropdown 3:</label>
-      <select id="dropdown3" class="dropdown">
-        <option value="">Select an option</option>
-        <option value="7">Option 3.1</option>
-        <option value="8">Option 3.2</option>
-        <option value="9">Option 3.3</option>
-      </select>
-    </div>
-    <div class="dropdown-container">
-      <label for="dropdown4">Dropdown 4:</label>
-      <select id="dropdown4" class="dropdown">
-        <option value="">Select an option</option>
-        <option value="10">Option 4.1</option>
-        <option value="11">Option 4.2</option>
-        <option value="12">Option 4.3</option>
-      </select>
-    </div>
-  </div>
-</div>
-
-
-<script>
-  var dropdowns = document.getElementById('dropdowns');
-
-  // Show/hide the dropdowns when the button is clicked
-  document.getElementById('show-dropdowns-btn').addEventListener('click', function() {
-    if (dropdowns.style.display === 'none') {
-      dropdowns.style.display = 'block';
-    } else {
-      dropdowns.style.display = 'none';
-    }
-  });
-</script> -->
-<form>
-  <div class="container sortingContainer">
-    <div class="sortTitle">
-      <h5>Sort by </h5>
-    </div>
-    <div class="dropDownSort">
-      <select class="form-control" name="dropdown">
-        <option value="2020">Topic</option>
-      </select>
-    </div>
-
-    <div class="dropDownSort">
-      <select class="form-control" name="dropdown">
-        <option value="2020">Date </option>
-      </select>
-    </div>
-
-    <div class="dropDownSort">
-      <select class="form-control" name="dropdown">
-        <option value="5">Rating </option>
-      </select>
-    </div>
-  </div>
-</form>

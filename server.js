@@ -10,7 +10,7 @@ const learner = require('./routes/learner')
 const Preferences = require('./routes/preference')
 const AdminLearner = require('./routes/adminToLearner')
 const admins = require('./routes/admins')
-const { searchCourses } = require('./controllers/courses')
+const { searchCourses, coursePagination } = require('./controllers/courses')
 
 const app = express()
 require('dotenv').config()
@@ -44,18 +44,16 @@ app.use('/', Preferences)
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {
   const searchQuery = req.body.searchText
+  // console.log(typeof searchQuery);
   if (searchQuery && searchQuery.trim().length > 0) {
     const searchResults = await searchCourses(searchQuery)
-    console.log(searchResults)
-    if (searchResults.length) {
-      // console.log(searchResults.length)
-      res.redirect(`/courses?search=${searchQuery}`)
+    // console.log(searchResults)
+    if(searchResults.length){
+      res.redirect(`/courses?search=${searchQuery}`);
     }
-    const message = 'No matching.'
-    res.send(`<script>alert("${message}");</script>`)
-    //no results
-    // let noResults=true;
-    // res.render('/courses', { noResults:noResults, message: "Sorry, No results ☹️" })
+    else{
+    const message = "No matching.";
+    res.send(`<script>alert("${message}");</script>`);}
   } else {
     res.redirect('/courses')
   }

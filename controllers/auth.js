@@ -5,7 +5,7 @@ const { set_session, get_session_loggedIn } = require('../middleware/sessionMidd
 const bcrypt = require('bcrypt')
 
 const get_signup = (req, res) => {
-  res.render('pages/learner/signup', { title: 'Sign Up', error: '', isLoggedIn: null })
+  res.render('pages/learner/signup', { title: 'Sign Up', error:"", isLoggedIn: null })
 }
 
 const getNewAdminspage = async (req, res) => {
@@ -83,7 +83,7 @@ const post_signup = async (req, res) => {
   const capitalizedLastname = validateLastName(lastname)
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const learner = new Learner({
+  const learner = new User({
     firstname: capitalizedFirstname,
     lastname: capitalizedLastname,
     email,
@@ -92,8 +92,8 @@ const post_signup = async (req, res) => {
     status: true
   })
   try {
-    await user.save()
-    return res.redirect('/login')
+    await learner.save()
+    res.render('pages/learner/login' , {title: 'login', error: '', isLoggedIn: null} )
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Server error' })
@@ -101,7 +101,7 @@ const post_signup = async (req, res) => {
 }
 
 const get_login = (req, res) => {
-  res.render('pages/learner/login', { title: 'login', error: '', isLoggedIn: null })
+  res.render('pages/learner/login', { title: 'login', error, isLoggedIn: null })
 }
 
 const post_login = async (req, res) => {

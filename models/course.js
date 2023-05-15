@@ -87,8 +87,9 @@ applications:[{
     required:true,
     default: null
   },
-  time:{
-    timestamps: true
+  time: {
+    type: Date,
+    default: Date.now
   }
 }],
 },{timestamps:true});

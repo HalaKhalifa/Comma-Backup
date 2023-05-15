@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { coursePagination, getSingleCourse, searchCourses } = require('../controllers/courses')
+const { coursePagination, getSingleCourse, getSortedCourses } = require('../controllers/courses')
 const formController = require('../controllers/courses')
 const softDelete = require('../controllers/courses')
 // const requireAuth= require('../middleware/requireAuth.js')
@@ -44,6 +44,22 @@ router.get('/outline', async (req, res) => {
 
 // router.get('/outline',  getSingleCourse)
 router.post('/dashboard/courses', formController.createNewCourse)
+
+router.post('/courses', async (req, res) => {
+    try {
+    const isLoggedIn = get_session_loggedIn(req)
+      const pageCourses = await getSortedCourses(req, res);
+      res.render('pages/home/courses_page.ejs', {
+      isLoggedIn: isLoggedIn,
+          title: 'courses page',
+          pageCourses: pageCourses
+        })
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
 // router.post('/search', async (req, res) => {
 //   const searchQuery = req.body.searchText
 //   if (searchQuery && searchQuery.trim().length > 0) {
