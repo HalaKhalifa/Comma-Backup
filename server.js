@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 const dashboardRouter = require('./routes/dashboard')
 const authRoutes = require('./routes/auth')
@@ -10,8 +11,7 @@ const learner = require('./routes/learner')
 const Preferences = require('./routes/preference')
 const AdminLearner = require('./routes/adminToLearner')
 const admins = require('./routes/admins')
-const { searchCourses } = require('./controllers/courses')
-const cookieParser = require('cookie-parser')
+const { searchCourses, coursePagination } = require('./controllers/courses')
 
 const app = express()
 require('dotenv').config()
@@ -53,18 +53,16 @@ app.use('/', Preferences)
 // todo: Set up search route using searchController
 app.post('/search', async (req, res) => {
   const searchQuery = req.body.searchText
+  // console.log(typeof searchQuery);
   if (searchQuery && searchQuery.trim().length > 0) {
     const searchResults = await searchCourses(searchQuery)
-    console.log(searchResults)
+    // console.log(searchResults)
     if (searchResults.length) {
-      // console.log(searchResults.length)
       res.redirect(`/courses?search=${searchQuery}`)
+    } else {
+      const message = 'No matching.'
+      res.send(`<script>alert("${message}");</script>`)
     }
-    const message = 'No matching.'
-    res.send(`<script>alert("${message}");</script>`)
-    //no results
-    // let noResults=true;
-    // res.render('/courses', { noResults:noResults, message: "Sorry, No results ☹️" })
   } else {
     res.redirect('/courses')
   }

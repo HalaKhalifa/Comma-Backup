@@ -188,54 +188,71 @@ const coursePagination = async (req, res) => {
     .limit(limit)
     .sort({ createdAt: -1 })
   return pageCourses
-  // res.render('pages/home/courses_page.ejs', {
-  //   title: 'courses page',
-  //   pageCourses: pageCourses
-  // })
-  return pageCourses
 }
+
 
 const getSortedCourses = async (req, res) => {
-  console.log('hi')
-  const sortCriteria = req.params.sortCriteria
-  const sortOrder = req.params.sortOrder
-  const searchQuery = req.query.searchQuery
-  console.log(sortCriteria, sortOrder, searchQuery)
-  let sortObject = {}
-
-  if (sortCriteria === 'stars' || sortCriteria === 'enrollment') {
-    sortObject[sortCriteria] = sortOrder === 'desc' ? -1 : 1
-  }
-
+  const searchQuery = req.body.searchQuery;
   let page = parseInt(req.query.page) || 1
   let limit = 16
-  let pageCourses
-  if (searchQuery) {
-    pageCourses = await Course.find({ $text: { $search: searchQuery } })
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort(sortObject)
-  } else {
-    pageCourses = await Course.find()
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort(sortObject)
+  if (searchQuery[0]=='rating') searchQuery[0] = '';
+if (searchQuery[1]=='enrollement') searchQuery[1] = '';
+  let query = {};
+
+  if (searchQuery[0] !== null) {
+    if (searchQuery[0] === 'asc') {
+      query = { ...query, rating: { $exists: true } };
+    } else if (searchQuery[0] === 'desc') {
+      query = { ...query, rating: { $exists: true } };
+    }
   }
 
-  // res.json(pageCourses);
-  console.log(pageCourses)
+  if (searchQuery[1] !== null) {
+    if (searchQuery[1] === 'asc') {
+      query = { ...query, enrolledUsers: { $exists: true } };
+    } else if (searchQuery[1] === 'desc') {
+      query = { ...query, enrolledUsers: { $exists: true } };
+    }
+  }
+
+  if (searchQuery[2]) {
+    query = { ...query, topic: searchQuery[2] };
+  }
+
+  if (searchQuery[3]) {
+    query = { ...query, tags: { $in: [searchQuery[3]] } };
+  }
+
+  const sort = {};
+
+  if (searchQuery[0] !== null) {
+    if (searchQuery[0] === 'asc' || searchQuery[0] === 'desc') {
+      sort.rating = searchQuery[0] === 'desc' ? -1 : 1;
+    }
+  }
+
+  if (searchQuery[1] !== null) {
+    if (searchQuery[1] === 'asc' || searchQuery[1] === 'desc') {
+      sort.enrolledUsers = searchQuery[1] === 'desc' ? -1 : 1;
+    }
+  }
+
+  const pageCourses = await Course.find(query).skip((page - 1) * limit)
+  .limit(limit).sort(sort);
+// console.log(pageCourses);
   return pageCourses
-}
+};
 
 async function searchCourses(searchQuery) {
   console.log('Search query:', searchQuery)
+  console.log(typeof searchQuery);
   try {
     const regex = new RegExp(searchQuery, 'i')
     const results = await Course.find({ $or: [{ title: regex }, { description: regex }] })
     return results
   } catch (error) {
     console.error(error)
-    throw error
+
   }
 }
 
