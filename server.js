@@ -11,6 +11,7 @@ const Preferences = require('./routes/preference')
 const AdminLearner = require('./routes/adminToLearner')
 const admins = require('./routes/admins')
 const { searchCourses } = require('./controllers/courses')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 require('dotenv').config()
@@ -22,12 +23,20 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static(path.join(__dirname, '/public'))) // set path for assets folder
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
+
+app.use(cookieParser())
 app.use(
   session({
-    secret: 'your-secret-key',
+    name: 'sessionId',
+    secret: 'Kuy8fuSeYHDfR6dOCwNS6K6sy2QmhSEp',
+    saveUninitialized: true,
     resave: false,
-    saveUninitialized: false
+    cookie: {
+      maxAge: 1000 * 30 * 1,
+      secure: false,
+      httpOnly: true
+    }
   })
 )
 
