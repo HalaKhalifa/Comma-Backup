@@ -60,6 +60,9 @@ router.post('/courses', async (req, res) => {
     }
   });
 
+router.get('/outline/apply/:id',(req,res)=>{
+  
+})
 // router.post('/search', async (req, res) => {
 //   const searchQuery = req.body.searchText
 //   if (searchQuery && searchQuery.trim().length > 0) {

@@ -5,7 +5,7 @@ const post_preferences = async (req, res) => {
   let error = ''
   if (learnerId == null) {
     error = 'Please  Login'
-    res.render('pages/learner/login', { title: 'login in', error })
+    res.render('pages/learner/login', { title: 'login in', error ,isLoggedIn: learnerId})
     return
   }
   if (req.body.actionFlag2 === 'actionApply') {
@@ -18,7 +18,7 @@ const post_preferences = async (req, res) => {
         .default
       const applyForAllCoursesDefaultValue = learnerSchema.path('preferences.applyForAllCourses')
         .options.default
-
+      console.log(req.body.id)
       const userData = {
         'preferences.length': lengthDefaultValue,
         'preferences.type': typeDefaultValue,
@@ -77,7 +77,6 @@ const post_preferences = async (req, res) => {
     }
   }
 }
-
 module.exports = {
   post_preferences
 }

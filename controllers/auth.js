@@ -101,7 +101,7 @@ const post_signup = async (req, res) => {
 }
 
 const get_login = (req, res) => {
-  res.render('pages/learner/login', { title: 'login', error, isLoggedIn: null })
+  res.render('pages/learner/login', { title: 'login', error: '', isLoggedIn: null })
 }
 
 const post_login = async (req, res) => {
